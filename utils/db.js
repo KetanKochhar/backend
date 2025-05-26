@@ -180,6 +180,15 @@ async function updateDesign(designID, front_canvas_json, back_canvas_json) {
     }
 }
 
+async function GetDesignById(id) {
+    try {
+        const smt = database.prepare("SELECT * FROM Designs WHERE id = ?");
+        const data = smt.all(id);
+        return data
+    } catch (error) {
+        console.log("Error getting the data :",error.message)
+    }
+}
 
 async function updateUserPassword(email, newPassword) {
     try {
@@ -193,4 +202,4 @@ async function updateUserPassword(email, newPassword) {
         throw error;
     }
 }
-    module.exports = { addUser, getUserByEmail, getUserByPhoneNumber, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword }
+    module.exports = { addUser, getUserByEmail, getUserByPhoneNumber, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword ,GetDesignById}

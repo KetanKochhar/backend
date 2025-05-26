@@ -20,7 +20,7 @@ function scrollToGender() {
 function scrollToBoys() {
     document.getElementById('boys').classList.remove('hidden'); // Show boys
     document.getElementById('girls').classList.add('hidden'); // Hide girls
-    document.getElementById('Gender').classList.add('hidden'); // Hide Gender
+    // document.getElementById('Gender').classList.add('hidden'); // Hide Gender
     document.getElementById('boys').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -28,7 +28,7 @@ function scrollToBoys() {
 function scrollToGirls() {
     document.getElementById('girls').classList.remove('hidden'); // Show girls
     document.getElementById('boys').classList.add('hidden'); // Hide boys
-    document.getElementById('Gender').classList.add('hidden'); // Hide Gender
+    // document.getElementById('Gender').classList.add('hidden'); // Hide Gender
     document.getElementById('girls').scrollIntoView({ behavior: 'smooth' });
 }
 

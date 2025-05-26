@@ -1,23 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile</title>
-    <style>
-        img{
-            width: 30vw;
-            background: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Profile</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/JS/profile.js"></script>
 </head>
-<body>
-    <h1>hello <%= username %> </h1>
-    <% for (let i = 0; i < id.length; i++) { %>
-        <h1><%= name[i] %></h1>
-        <img src="<%= fcjp[i] %>" alt="Image">
-        <img src="<%= bcjp[i] %>" alt="Image">
+<body class="bg-gray-50 min-h-screen flex flex-col items-center p-4">
 
-    <% } %>    
+  <!-- Profile Pic Section -->
+  <section class="flex items-center space-x-6 bg-white rounded-lg shadow-md p-6 w-full max-w-4xl mb-10">
+    <% 
+      const firstName = username ? username.split(' ')[0] : '';
+      const initial = firstName ? firstName.charAt(0).toUpperCase() : '?';
+    %>
+    <div class="w-24 h-24 rounded-full bg-blue-600 flex items-center justify-center shadow-lg select-none">
+      <span class="text-white text-5xl font-extrabold tracking-wide">
+        <%= initial %>
+      </span>
+    </div>
+    <h1 class="text-4xl font-bold text-gray-900">
+      <%= firstName %>
+    </h1>
+  </section>
+
+  <!-- Greeting -->
+  <h2 class="text-3xl font-semibold text-gray-800 mb-8 w-full max-w-4xl">Hello <%= username %></h2>
+  <h2 class="text-3xl font-semibold text-gray-800 mb-8 w-full max-w-4xl">Your Designs </h2>
+
+  <% for (let i = 0; i < id.length; i++) { %>
+    <section class="w-full max-w-4xl mb-10 bg-white rounded-lg shadow-md p-6" onclick="GoToRedesign('<%= id[i] %>', '<%= type[i] %>')" style="cursor: pointer;">
+      <h1 id="<%= id[i] %>"><%= id[i] %></h1>
+      <h1><%= type[i] %></h1>
+      <h2 class="text-2xl font-semibold text-gray-800 mb-4"><%= name[i] %></h2>
+      <div class="flex flex-col sm:flex-row sm:space-x-6 space-y-6 sm:space-y-0 items-center justify-center">
+        <img src="<%= fcjp[i] %>" alt="Image 1" class="w-full max-w-xs rounded-lg shadow-lg object-cover" />
+        <img src="<%= bcjp[i] %>" alt="Image 2" class="w-full max-w-xs rounded-lg shadow-lg object-cover" />
+      </div>
+    </section>
+  <% } %>
 </body>
 </html>
