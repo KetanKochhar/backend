@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OTP Verification</title>
+  <link rel="stylesheet" href="/public/css/otp.css" />
+</head>
+<body>
+  <div class="otp-container">
+    <h2>Account Verification</h2>
+    <p>OTP has been sent to your Email ID!</p>
+    <div class="otp-inputs">
+      <input type="text" maxlength="1" oninput="moveToNext(this, 0)" onkeydown="handleBackspace(event, 0)">
+      <input type="text" maxlength="1" oninput="moveToNext(this, 1)" onkeydown="handleBackspace(event, 1)">
+      <input type="text" maxlength="1" oninput="moveToNext(this, 2)" onkeydown="handleBackspace(event, 2)">
+      <input type="text" maxlength="1" oninput="moveToNext(this, 3)" onkeydown="handleBackspace(event, 3)">
+    </div>
+    <button class="btn" onclick="verifyOTP()">Verify OTP</button>
+    <p class="resend" onclick="resendOTP()">Resend OTP</p>
+  </div>
+  <script src="/public/JS/otp.js"></script>
+</body>
+</html>

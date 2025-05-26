@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        sessionStorage.clear();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Wear</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/JS/home.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <nav class="navbar flex items-center justify-between p-4 bg-white shadow-md">
+        <div class="logo">
+            <img src="/images/logo1.svg" alt="Custom Wear Logo" class="h-10">
+        </div>
+        <ul class="nav-links hidden md:flex space-x-6">
+            <li><a onclick="scrollToDesignSteps()" class="text-gray-700 hover:text-blue-600 cursor-pointer">How it works</a></li>
+            <li><a onclick="scrollToFooter()" class="text-gray-700 hover:text-blue-600 cursor-pointer">Contacts</a></li>
+            <li><a href="#" class="text-gray-700 hover:text-blue-600">Support</a></li>
+        </ul>
+        <div class="buttons hidden md:flex space-x-4">
+            <% if (user) { %>
+                <a href="/profile" class="px-4 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-50">Profile</a>
+                <a href="/logout" class="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700">Logout</a>
+            <% } else { %>
+                <a href="/login"> <button class="login px-4 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-50">Login</button> </a>
+                <a href="/signup"> <button class="signup px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700">Signup</button> </a>
+            <% }%>
+        </div>
+        <div class="md:hidden">
+            <button id="mobile-menu-button" class="text-gray-700 focus:outline-none focus:text-blue-600">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg py-2">
+        <ul class="flex flex-col items-center space-y-2">
+            <li><a onclick="scrollToDesignSteps()" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">How it works</a></li>
+            <li><a onclick="scrollToFooter()" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">Contacts</a></li>
+            <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center">Support</a></li>
+            <% if (user) { %>
+                <li><a href="/profile" class="block px-4 py-2 text-blue-600 hover:bg-gray-100 w-full text-center">Profile</a></li>
+                <li><a href="/logout" class="block px-4 py-2 text-blue-600 hover:bg-gray-100 w-full text-center">Logout</a></li>
+            <% } else { %>
+                <li><a href="/login" class="block px-4 py-2 text-blue-600 hover:bg-gray-100 w-full text-center">Login</a></li>
+                <li><a href="/signup" class="block px-4 py-2 text-blue-600 hover:bg-gray-100 w-full text-center">Signup</a></li>
+            <% }%>
+        </ul>
+    </div>
+
+    <section class="hero">
+        <div class="text-content">
+            <h1>Create your unique style</h1>
+            <p>
+                Custom Wear is your go-to platform for designing and personalizing clothing effortlessly.
+                From custom t-shirts to unique styles, unleash your creativity with colors, text, and images.
+                Enjoy a seamless experience with real-time previews, easy ordering, and reliable delivery.
+                Express yourself and slay with style—Custom Wear has you covered!
+            </p>
+            <button class="start-designing" onclick="scrollToGender()">Start Designing</button>
+        </div>
+        <div class="image-content">
+            <img src="/images/frontimg.jpeg" alt="Custom T-Shirts">
+        </div>
+    </section>
+
+
+    <section class="pick-style" id="Gender">
+        <h2>PICK YOUR CATEGORY</h2>
+        <div class="style-container">
+            <div class="style-box" onclick="scrollToBoys()">
+                <img src="/images/Boy.jpg" alt="mainboy">
+                <p>MALE</p>
+            </div>
+            <div class="style-box" onclick="scrollToGirls()">
+                <img src="/images/Girl.jpg" alt="maingirl">
+                <p>FEMALE</p>
+            </div>
+        </div>
+    </section>
+    <section class="pick-style" id="boys">
+        <h2>EXPLORE MORE STYLES</h2>
+        <div class="style-container">
+            <a href="/design">
+                <div class="style-box" onclick="setSession('type','polo') ; setSession('gender','male')">
+                    <img src="/images/polotshirtboy.jpg" alt="poloboy">
+                    <p> POLO TSHIRTS</p>
+                </div>
+            </a>
+            <a href="/design">
+                <div class="style-box" onclick="setSession('type','sports'); setSession('gender','male')">
+                    <img src="/images/sportstshirtboy.jpg" alt="sportsboy">
+                    <p>SPORTS TSHIRTS</p>
+                </div>
+            </a>
+            <a href="/design">
+                <div class="style-box" onclick="setSession('type','cotton')">
+                    <img src="/images/cottontshirtboy.jpg" alt="cottonboy">
+                    <p>COTTON TSHIRTS</p>
+                </div>
+            </a>
+        </div>
+    </section>
+    <section class="pick-style" id="girls">
+        <h2>EXPLORE MORE STYLES</h2>
+        <div class="style-container">
+            <a href="/design">
+                <div class="style-box" onclick="setSession('type','polo') ; setSession('gender','female')">
+                    <img src="/images/polotshirtgirl.jpg" alt="pologirl">
+                    <p> POLO TSHIRTS</p>
+                </div>
+            </a>
+            <a href="/design">
+                <div class="style-box" onclick="setSession('type','sports') ; setSession('gender','female')">
+                    <img src="/images/sportstshirtgirl.jpg" alt="sportsgirl">
+                    <p>SPORTS TSHIRTS</p>
+                </div>
+            </a>
+            <a href="/design">
+                <div class="style-box" onclick="setSession('type','cotton') ; setSession('gender','female')">
+                    <img src="/images/cottontshirtgirl.jpg" alt="cottongirl">
+                    <p>COTTON TSHIRTS</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="design-steps" id="design-steps">
+        <div class="steps-container">
+            <div class="steps-image">
+                <img src="/images/middleboy.jpeg" alt="Custom Designed T-Shirt">
+            </div>
+            <div class="steps-text creative-steps">
+                <h2>Design Like Never Before: Your Style, Your Rules!</h2>
+                <div class="step">
+                    <h3>Step 1: Join the Custom Revolution</h3>
+                    <p>Sign up and step into a world where your imagination leads. No more boring clothes—this is your
+                        canvas!</p>
+                </div>
+                <div class="step">
+                    <h3>Step 2: Unleash Your Inner Designer</h3>
+                    <p>Mix, match, and make magic! Upload your favorite images, play with text, pick bold colors, and
+                        watch your creation come to life in real-time.</p>
+                </div>
+                <div class="step">
+                    <h3>Step 3: Make It Yours</h3>
+                    <p>Love what you’ve made? Place your order in just a few clicks. We’ll handle the rest with
+                        premium-quality prints and secure payments.</p>
+                </div>
+                <div class="step">
+                    <h3>Step 4: Wear the Wow</h3>
+                    <p>Delivered to your doorstep. Your design, your vibe, ready to wear and share. Get ready for
+                        compliments!</p>
+                </div>
+                <button class="start-designing" onclick="scrollToGender()">Start Designing Now</button>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+    <footer id="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="/images/logo2.svg" alt="Custom Wear Logo">
+            </div>
+
+            <div class="footer-columns">
+                <div class="footer-contact-text">
+                    <p>Have any questions? <strong>Feel free to contact us for any queries.</strong></p>
+                    <ul class="contact-details">
+                        <li><i class="fas fa-phone-alt"></i> <a href="tel:+919876543210">+91 98765 43210</a></li>
+                        <li><i class="fas fa-envelope"></i> <a
+                                href="mailto:support@customwear.com">support@customwear.com</a></li>
+                        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/customwear"
+                                target="_blank">@customwear</a></li>
+                        <li><i class="fab fa-facebook-f"></i> <a href="https://facebook.com/customwear"
+                                target="_blank">facebook.com/customwear</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat, India</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-socials">
+                <a href="https://facebook.com/customwear" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/customwear" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="mailto:support@customwear.com"><i class="fas fa-envelope"></i></a>
+                <a href="tel:+919876543210"><i class="fas fa-phone-alt"></i></a>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025, All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+
+</body>
+
+</html>

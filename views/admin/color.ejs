@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Color Management</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f0f0;
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px 0 0 4px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-weight: bold;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    .color-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .color-card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .color-box {
+      height: 40px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+
+    .hex {
+      font-family: monospace;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🎨 Admin Panel – Add & View Colors</h1>
+
+  <!-- Add Color Form -->
+  <form id="colorForm" action="/add-color" method="POST" onsubmit="prepareAndSubmit(event)">
+    <input type="text" id="forname" placeholder="this color is for " name="forname" required>
+    <input type="text" id="name" placeholder="Enter the name of the color" name="name" required>
+    <input type="text" id="colorInput" placeholder="Enter hex color (e.g. #ff8800)" name="colorName" required>
+    <input type="hidden" name="darkColor" id="darkColorInput">
+    <button type="submit">Add</button>
+  </form>
+
+  <!-- List of Colors -->
+  <div class="color-list">
+    <h1>POLO</h1>
+    <% polo.forEach(polo=> { %>
+      <div class="color-card">
+        <div class="label">for name</div>
+        <div class="color-box">
+          <%= polo.forname %>
+        </div>
+        <div class="label">Color name</div>
+        <div class="color-box">
+          <%= polo.name %>
+        </div>
+        <div class="label">Original Color</div>
+        <div class="color-box" style="background-color: <%= polo.color %>;"></div>
+        <div class="hex">
+          <%= polo.color %>
+        </div>
+        <div class="label" style="margin-top: 1rem;">Darker Shade</div>
+        <div class="color-box" style="background-color: <%= polo.dark_color %>;"></div>
+        <div class="hex">
+          <%= polo.dark_color %>
+        </div>
+      </div>
+      <% }) %>
+  </div>
+  <br><br><br>
+  <div class="color-list">
+    <h1>cotton</h1>
+    <% cotton.forEach(cotton=> { %>
+      <div class="color-card">
+        <div class="label">for name</div>
+        <div class="color-box">
+          <%= cotton.forname %>
+        </div>
+        <div class="label">Color name</div>
+        <div class="color-box">
+          <%= cotton.name %>
+        </div>
+        <div class="label">Original Color</div>
+        <div class="color-box" style="background-color: <%= cotton.color %>;"></div>
+        <div class="hex">
+          <%= cotton.color %>
+        </div>
+        <div class="label" style="margin-top: 1rem;">Darker Shade</div>
+        <div class="color-box" style="background-color: <%= cotton.dark_color %>;"></div>
+        <div class="hex">
+          <%= cotton.dark_color %>
+        </div>
+        <% }) %>
+      </div>
+      <br><br><br>
+      <div class="color-list">
+        <h1>SPORTS</h1>
+        <% sports.forEach(sports=> { %>
+          <div class="color-card">
+            <div class="label">for name</div>
+            <div class="color-box">
+              <%= sports.forname %>
+            </div>
+            <div class="label">Color name</div>
+            <div class="color-box">
+              <%= sports.name %>
+            </div>
+            <div class="label">Original Color</div>
+            <div class="color-box" style="background-color: <%= sports.color %>;"></div>
+            <div class="hex">
+              <%= sports.color %>
+            </div>
+            <div class="label" style="margin-top: 1rem;">Darker Shade</div>
+            <div class="color-box" style="background-color: <%= sports.dark_color %>;"></div>
+            <div class="hex">
+              <%= sports.dark_color %>
+            </div>
+            <% }) %>
+          </div>
+      </div>
+
+      <script>
+        function prepareAndSubmit(e) {
+          e.preventDefault();
+          const colorInput = document.getElementById('colorInput');
+          const hex = colorInput.value.trim().replace(/^#/, '');
+
+          if (!/^[0-9a-fA-F]{6}$/.test(hex)) {
+            alert('Please enter a valid 6-digit hex code');
+            return;
+          }
+
+          const r = parseInt(hex.slice(0, 2), 16);
+          const g = parseInt(hex.slice(2, 4), 16);
+          const b = parseInt(hex.slice(4, 6), 16);
+
+          const darken = (v) => Math.max(0, Math.floor(v * 0.75));
+          const rDark = darken(r);
+          const gDark = darken(g);
+          const bDark = darken(b);
+
+          const toHex = (v) => v.toString(16).padStart(2, '0');
+          const darkColor = `#${toHex(rDark)}${toHex(gDark)}${toHex(bDark)}`;
+
+          document.getElementById('darkColorInput').value = darkColor;
+          e.target.submit();
+        }
+      </script>
+
+</body>
+
+</html>

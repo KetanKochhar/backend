@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Details | Custom Wear</title>
+    <link rel="stylesheet" href="/public/css/order.css">
+</head>
+
+<body>
+    <button class="backButton" onclick="window.location.href='design.html'">
+        <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+        <svg width="800px" height="800px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path fill="white" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z" />
+            <path fill="white"
+                d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z" />
+        </svg>
+    </button>
+    <section class="order-container">
+        <img src="/public/images/logo1.svg" alt="Custom Wear Logo" class="logo">
+        <h2>Order Details</h2>
+        <form class="order-form">
+            <div class="form-group">
+                <label for="name">Customer Name</label>
+                <input type="text" id="name" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Shipping Address</label>
+                <textarea id="address" placeholder="Enter your full address" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="pincode">Pincode</label>
+                <input type="text" id="pincode" placeholder="Enter your area pincode" required>
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" placeholder="Enter your city" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number" required>
+            </div>
+
+            <div class="form-group payment">
+                <label>Payment Method</label>
+                <label><input type="radio" name="payment" value="cod" checked> Cash on Delivery</label>
+            </div>
+
+            <div class="item-details">
+                <img src="tshirt_sample.jpg" alt="Ordered Item">
+                <div class="item-info">
+                    <p><strong>Item:</strong> Cotton T-Shirt</p>
+                    <p><strong>Quantity:</strong> 2</p>
+                    <p><strong>Price:</strong> ₹799</p>
+                </div>
+            </div>
+
+            <button type="submit" class="place-order">Place Order</button>
+        </form>
+    </section>
+</body>
+
+</html>

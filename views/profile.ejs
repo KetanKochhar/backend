@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        img{
+            width: 30vw;
+            background: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>hello <%= username %> </h1>
+    <% for (let i = 0; i < id.length; i++) { %>
+        <h1><%= name[i] %></h1>
+        <img src="<%= fcjp[i] %>" alt="Image">
+        <img src="<%= bcjp[i] %>" alt="Image">
+
+    <% } %>    
+</body>
+</html>

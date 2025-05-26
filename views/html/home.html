@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Wear</title>
+    <link rel="stylesheet" href="/public/css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/public/JS/home.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <img src="/public/images/logo1.svg" alt="Custom Wear Logo">
+        </div>
+        <ul class="nav-links">
+
+            <li><a onclick="scrollToDesignSteps()">How it works</a></li>
+
+            <li><a onclick="scrollToFooter()">Contacts</a></li>
+            <li><a href="#">Support</a></li>
+        </ul>
+        <div class="buttons">
+            <a href="/views/login.html"> <button class="login">Login</button> </a>
+            <a href="/views/signup.html"> <button class="signup">Signup</button> </a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="text-content">
+            <h1>Create your unique style</h1>
+            <p>
+                Custom Wear is your go-to platform for designing and personalizing clothing effortlessly.
+                From custom t-shirts to unique styles, unleash your creativity with colors, text, and images.
+                Enjoy a seamless experience with real-time previews, easy ordering, and reliable delivery.
+                Express yourself and slay with style—Custom Wear has you covered!
+            </p>
+            <button class="start-designing" onclick="scrollToGender()">Start Designing</button>
+        </div>
+        <div class="image-content">
+            <img src="/public/images/frontimg.jpeg" alt="Custom T-Shirts">
+        </div>
+    </section>
+
+
+    <section class="pick-style" id = "Gender">
+        <h2>PICK YOUR CATEGORY</h2>
+        <div class="style-container">
+            <div class="style-box" onclick="scrollToBoys()">
+                <img src="/public/images/Boy.jpg" alt="mainboy">
+                <p>MALE</p>
+            </div>
+            <div class="style-box" onclick="scrollToGirls()">
+                <img src="/public/images/Girl.jpg" alt="maingirl">
+                <p>FEMALE</p>
+            </div>
+        </div>
+    </section>
+    <section class="pick-style" id="boys">
+        <h2>EXPLORE MORE STYLES</h2>
+        <div class="style-container">
+            <div class="style-box" onclick="window.location.href='design.html'">
+                <img src="/public/images/polotshirtboy.jpg" alt="poloboy">
+                <p> POLO TSHIRTS</p>
+            </div>
+            <div class="style-box" onclick="window.location.href='design.html'">
+                <img src="/public/images/sportstshirtboy.jpg" alt="sportsboy">
+                <p>SPORTS TSHIRTS</p>
+            </div>
+            <div class="style-box" onclick="window.location.href='design.html'">
+                <img src="/public/images/cottontshirtboy.jpg" alt="cottonboy">
+                <p>COTTON TSHIRTS</p>
+            </div>
+        </div>
+    </section>
+    <section class="pick-style" id="girls">
+        <h2>EXPLORE MORE STYLES</h2>
+        <div class="style-container" onclick="window.location.href='design.html'">
+            <div class="style-box">
+                <img src="/public/images/polotshirtgirl.jpg" alt="pologirl">
+                <p> POLO TSHIRTS</p>
+            </div>
+            <div class="style-box" onclick="window.location.href='design.html'">
+                <img src="/public/images/sportstshirtgirl.jpg" alt="sportsgirl">
+                <p>SPORTS TSHIRTS</p>
+            </div>
+            <div class="style-box" onclick="window.location.href='design.html'">
+                <img src="/public/images/cottontshirtgirl.jpg" alt="cottongirl">
+                <p>COTTON TSHIRTS</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="design-steps" id="design-steps">
+        <div class="steps-container">
+            <div class="steps-image">
+                <img src="/public/images/middleboy.jpeg" alt="Custom Designed T-Shirt">
+            </div>
+            <div class="steps-text creative-steps">
+                <h2>Design Like Never Before: Your Style, Your Rules!</h2>
+                <div class="step">
+                    <h3>Step 1: Join the Custom Revolution</h3>
+                    <p>Sign up and step into a world where your imagination leads. No more boring clothes—this is your canvas!</p>
+                </div>
+                <div class="step">
+                    <h3>Step 2: Unleash Your Inner Designer</h3>
+                    <p>Mix, match, and make magic! Upload your favorite images, play with text, pick bold colors, and watch your creation come to life in real-time.</p>
+                </div>
+                <div class="step">
+                    <h3>Step 3: Make It Yours</h3>
+                    <p>Love what you’ve made? Place your order in just a few clicks. We’ll handle the rest with premium-quality prints and secure payments.</p>
+                </div>
+                <div class="step">
+                    <h3>Step 4: Wear the Wow</h3>
+                    <p>Delivered to your doorstep. Your design, your vibe, ready to wear and share. Get ready for compliments!</p>
+                </div>
+                <button class="start-designing" onclick="scrollToGender()">Start Designing Now</button>
+            </div>
+        </div>
+    </section>
+    
+
+
+
+
+
+    <footer id="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="/public/images/logo2.svg" alt="Custom Wear Logo">
+            </div>
+    
+            <div class="footer-columns">
+                <div class="footer-contact-text">
+                    <p>Have any questions? <strong>Feel free to contact us for any queries.</strong></p>
+                    <ul class="contact-details">
+                        <li><i class="fas fa-phone-alt"></i> <a href="tel:+919876543210">+91 98765 43210</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:support@customwear.com">support@customwear.com</a></li>
+                        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/customwear" target="_blank">@customwear</a></li>
+                        <li><i class="fab fa-facebook-f"></i> <a href="https://facebook.com/customwear" target="_blank">facebook.com/customwear</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat, India</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="footer-socials">
+                <a href="https://facebook.com/customwear" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/customwear" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="mailto:support@customwear.com"><i class="fas fa-envelope"></i></a>
+                <a href="tel:+919876543210"><i class="fas fa-phone-alt"></i></a>
+            </div>
+    
+            <div class="footer-bottom">
+                <p>© 2025, All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+
+
+</body>
+
+</html>

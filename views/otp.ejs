@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OTP Verification</title>
+  <link rel="stylesheet" href="/css/otp.css" />
+</head>
+
+<body>
+  <div class="otp-container">
+    <h2>Account Verification</h2>
+    <% if (error) { %>
+          <h1>OTP DOES NOT MATCH </h1>
+    <% } %>
+    <p>OTP has been sent to your Email ID! <br><%= mail %></p>
+    <form action="/otp" method="POST">
+      <div class="otp-inputs">
+        <input type="text" maxlength="1" oninput="moveToNext(this, 0)" onkeydown="handleBackspace(event, 0)" name="otp">
+        <input type="text" maxlength="1" oninput="moveToNext(this, 1)" onkeydown="handleBackspace(event, 1)" name="otp">
+        <input type="text" maxlength="1" oninput="moveToNext(this, 2)" onkeydown="handleBackspace(event, 2)" name="otp">
+        <input type="text" maxlength="1" oninput="moveToNext(this, 3)" onkeydown="handleBackspace(event, 3)" name="otp"><br>
+      </div>
+      <input type="submit" class="btn" value="Verify OTP">
+    </form>
+    <!-- <button class="btn" onclick="verifyOTP()">Verify OTP</button> -->
+    <p class="resend" onclick="resendOTP()">Resend OTP</p>
+  </div>
+  <script src="/JS/otp.js"></script>
+</body>
+
+</html>

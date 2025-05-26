@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: url('/images/pattern.png');
+    background-size: 600px;
+    background-repeat: repeat;
+    padding: 40px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 22px;
+    color: #333;
+}
+
+.cart-item-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.cart-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.cart-item:hover {
+    background-color: #d7e0c5;
+    cursor: pointer;
+}
+
+.cart-item img {
+    width: 60px;
+    border-radius: 6px;
+}
+
+.item-details {
+    flex: 2;
+    padding-left: 15px;
+}
+
+.item-details h3 {
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.item-details p {
+    font-size: 13px;
+    color: #555;
+}
+
+.tooltip {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 10px;
+    margin-top: 8px;
+    width: 200px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 10;
+}
+
+.cart-item:hover .tooltip {
+    display: block;
+}
+
+.tooltip img {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.tooltip .price {
+    font-weight: bold;
+    color: #143109;
+    text-align: center;
+}
+
+.backButton {
+    position: absolute;
+    background-color: #143109;
+    border-radius: 50px;
+    top: 10px;
+    left: 10px;
+    width: 40px;
+    height: 40px;
+    padding: 6px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+@media (max-width: 325px) {
+    h1 {
+        font-size: 18px;
+    }
+
+    .item-details h3 {
+        font-size: 14px;
+    }
+
+    .item-details p {
+        font-size: 11px;
+    }
+
+    .tooltip .price {
+        font-size: 14px;
+    }
+}

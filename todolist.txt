@@ -1,0 +1,30 @@
+KETAN completd 
+1. moved the static to the server code with backen ejs and express js 
+2. setup the login/signup system 
+3. authentication from databse 
+4. working mail server 
+5. otp verification from the mail 
+6. basic profile page 
+
+
+later to do list (KETAN)
+1. check the auth user before visiting the desgin and other personal tabs
+2. update the design page for updating the graphics (abhi tak meine dekha bhi nahi hai design page (:|) )
+3. get the colors from the database 
+4. create the admin page 
+5. get the users desgin a id and call it after 
+6. make the admin page for geeting the input of the for name polo , cotton , sports
+
+SUNIL completd
+1. made the staic version
+
+
+later to do lsit (SUNIL)
+1. make an profile page 
+2. mail server pe login karke jo bhi meine test wale otp mail send kare hai un sabko delete kar dena 
+3. otp wala page banana hai jo user ko mail mein send karna hai page one line mein ho tho aacha hai !!
+4. who muje bata dena json mein kaise convert ho raha hai data canvas se
+5. ek bar database structure dekh lena koi change ho tho bata dena kar kar bhi dena 
+
+
+muje jaha tak pata abhi itna hi kam hai aage jo bhi aayege usko yaha pe likh dena and jada formal nahi jo samaj mein aaye who likh dena and koi kam muje dena ho tho mere mein tuje aappne app ko dena ho tho tere mein abhi tu jo bhi complete kaeregega who likh dena tere naam ke sesction mein 
