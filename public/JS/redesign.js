@@ -130,49 +130,76 @@ document.addEventListener('DOMContentLoaded', function () {
         tshirtBack: { json: null, preview: null }
     };
     fetch("/fetch-design", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          did: canvasStates.designNumber
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log('Fetched Design:', data[0].id);
-        console.log('Fetched Design:', data[0].color);
-        
-        // Parse the front and back canvas JSON
-        fcj = JSON.parse(data[0].front_canvas_json)
-        bcj = JSON.parse(data[0].back_canvas_json)
-        const frontCanvasJson = fcj.json;
-        const backCanvasJson = bcj.json;
-        
-        // Load the front design onto the canvas
-        canvas.loadFromJSON(frontCanvasJson, function() {
-          console.log("Front design loaded successfully");
-          canvas.renderAll(); // Render the canvas after loading
-        }, function(o, object) {
-          // Optional: Handle any object loading errors
-          console.error("Error loading object:", o, object);
-        });
-        loadBackDesign(backCanvasJson)
-      
-        // If you want to load the back design as well, you can do it similarly
-        // You may want to switch sides or manage layers accordingly
-        // For example, you can create a function to switch between front and back designs
-      });
-      
-      // Function to load back design (if needed)
-      function loadBackDesign(backJson) {
-        canvas.loadFromJSON(backJson, function() {
-          console.log("Back design loaded successfully");
-          canvas.renderAll(); // Render the canvas after loading
-        }, function(o, object) {
-          console.error("Error loading object:", o, object);
-        });
-      }
+    method: "POST",
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        did: canvasStates.designNumber
+    })
+})
+.then(res => res.json())
+.then(data => {
+    console.log('Fetched Design:', data[0].id);
+    console.log('Fetched Design:', data[0].color);
+    
+    // Parse the front and back canvas JSON
+    const bcj = JSON.parse(data[0].back_canvas_json);
+    const fcj = JSON.parse(data[0].front_canvas_json);
+    canvasStates.tshirtBack.json = bcj.json;
+    canvasStates.tshirtFront.json = fcj.json;
+    console.log(fcj,"\n\n\n",bcj)
+    try{
+    // Load the front design onto the canvas
+    currentSide = "tshirtFront"
+    canvas.loadFromJSON(fcj.json, function() {
+        console.log("Front design loaded successfully");
+        canvas.renderAll(); // Render the canvas after loading
+    }, function(o, object) {
+        // Optional: Handle any object loading errors
+        // console.error("Error loading front object:", o, object);
+    });
+    }
+    catch(error){
+        console.error("Error loading design:", error);
+    }
+});
+    fetch("/fetch-design", {
+    method: "POST",
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        did: canvasStates.designNumber
+    })
+})
+.then(res => res.json())
+.then(data => {
+    console.log('Fetched Design:', data[0].id);
+    console.log('Fetched Design:', data[0].color);
+    
+    // Parse the front and back canvas JSON
+    const bcj = JSON.parse(data[0].back_canvas_json);
+    const fcj = JSON.parse(data[0].front_canvas_json);
+    canvasStates.tshirtBack.json = bcj.json;
+    canvasStates.tshirtFront.json = fcj.json;
+    console.log(fcj,"\n\n\n",bcj)
+    try{
+    // Load the front design onto the canvas
+    currentSide = "tshirtback"
+    canvas.loadFromJSON(bcj.json, function() {
+        console.log("back design loaded successfully");
+        canvas.renderAll(); // Render the canvas after loading
+    }, function(o, object) {
+        // Optional: Handle any object loading errors
+        // console.error("Error loading front object:", o, object);
+    });
+    }
+    catch(error){
+        console.error("Error loading design:", error);
+    }
+});
+
     let currentSide = 'tshirtFront';  // Default to the front side
 
 

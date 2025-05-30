@@ -47,30 +47,32 @@ router.post("/update-design",async (request,response)=>{
     }
 });
 
-
 router.get("/redesign",auth.isAuthenticated , async(request , response)=>{
-  const  colors = await functionmap[request.session.type]();
-  const mail = request.session.email ;
-  a = await dbconnectiom.getUserIdByEmail(mail);
-  console.log(a)
-  data = await dbconnectiom.GetDesignById(request.session.did)
-  response.render("redesign",{type:request.session.type,
-    colors:colors,
-    name:request.session.user,
-    mail:request.session.email,
-    uid:a.id,
-    did:request.session.did})
+  response.send("cart page comming soon")
 })
+// router.get("/redesign",auth.isAuthenticated , async(request , response)=>{
+//   const  colors = await functionmap[request.session.type]();
+//   const mail = request.session.email ;
+//   a = await dbconnectiom.getUserIdByEmail(mail);
+//   console.log(a)
+//   data = await dbconnectiom.GetDesignById(request.session.did)
+//   response.render("redesign",{type:request.session.type,
+//     colors:colors,
+//     name:request.session.user,
+//     mail:request.session.email,
+//     uid:a.id,
+//     did:request.session.did})
+// })
 
-router.post("/fetch-design",auth.isAuthenticated , async(request,response)=>{
-    try {
-      const {did} = request.body;
-      const data = await dbconnectiom.GetDesignById(request.session.did);
-      // console.log(data)
-      response.status(200).json(data)
-    } catch (error) {
-      console.error("error",error.message)
-    }
-})
+// router.post("/fetch-design",auth.isAuthenticated , async(request,response)=>{
+//     try {
+//       const {did} = request.body;
+//       const data = await dbconnectiom.GetDesignById(request.session.did);
+//       // console.log(data)
+//       response.status(200).json(data)
+//     } catch (error) {
+//       console.error("error",error.message)
+//     }
+// })
 
 module.exports = router;

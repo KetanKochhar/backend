@@ -40,7 +40,7 @@ app.post('/set-session', (req, res) => {
 
 // api for graphics
 app.get('/api/categories', (req, res) => {
-    const dirPath = path.join(__dirname, '/public/images');
+    const dirPath = path.join(__dirname, '/public/images/cloths');
     fs.readdir(dirPath, (err, folders) => {
         if (err) {
             return res.status(500).json({ error: 'Unable to scan directory' });
@@ -51,7 +51,7 @@ app.get('/api/categories', (req, res) => {
             const fullPath = path.join(dirPath, folder);
             return fs.statSync(fullPath).isDirectory();
         });
-        console.log(categories)
+        // console.log(categories)
         res.json(categories);
     });
 });
@@ -59,18 +59,13 @@ app.get('/api/categories', (req, res) => {
 // Endpoint to get SVG files for a specific category
 app.get('/api/graphics/:category', (req, res) => {
     const category = req.params.category;
-    console.log("i am here",category)
-    const dirPath = path.join(__dirname, '/public/images', category);
-    console.log("i am here",dirPath)
-
+    const dirPath = path.join(__dirname, '/public/images/cloths', category);
     fs.readdir(dirPath, (err, files) => {
         if (err) {
             return res.status(500).json({ error: 'Unable to scan directory' });
         }
 
-        // const svgFiles = files.filter(file => file.endsWith('.svg')).map(file => `/cloths/${category}/${file}`);
-        const svgFiles = files.filter(file => file.endsWith('.svg')).map(file => `images/${category}/${file}`);
-        console.log("svg files ",svgFiles)
+        const svgFiles = files.filter(file => file.endsWith('.svg')).map(file => `images/cloths/${category}/${file}`);
         res.json(svgFiles);
     });
 });

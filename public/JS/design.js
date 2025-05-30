@@ -1328,43 +1328,36 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     const graphicsData = {};
-    const INITIAL_LIMIT = 6; // Limit the number of items loaded initially
+    const INITIAL_LIMIT = 3;
     
-    // Load categories dynamically from the server
     async function loadCategories() {
         try {
             const response = await fetch('/api/categories');
             const categories = await response.json();
     
-            // Create sections for each category
-            // Ensure 'graphicsContainer' exists in your EJS inside 'graphicsPanel'
             const graphicsContainer = document.getElementById('graphicsContainer');
             if (!graphicsContainer) {
                 console.error("Element with ID 'graphicsContainer' not found. Please ensure it exists in your EJS.");
                 return;
             }
-            graphicsContainer.innerHTML = ""; // Clear previous sections
+            graphicsContainer.innerHTML = ""; 
     
             for (const category of categories) {
-                // Create a section for each category
                 const section = document.createElement('div');
                 section.classList.add('section');
     
                 const sectionHeader = document.createElement('div');
                 sectionHeader.classList.add('section-header');
     
-                // Title for category
                 const title = document.createElement('span');
                 title.textContent = category.charAt(0).toUpperCase() + category.slice(1).replace(/([A-Z])/g, ' $1');
                 sectionHeader.appendChild(title);
     
-                // Editable badge
                 const editableBadge = document.createElement('span');
                 editableBadge.classList.add('editable-badge');
                 editableBadge.textContent = 'Editable';
                 sectionHeader.appendChild(editableBadge);
     
-                // Show more link
                 const showMoreLink = document.createElement('a');
                 showMoreLink.href = '#';
                 showMoreLink.classList.add('show-more');
@@ -1374,7 +1367,6 @@ document.addEventListener('DOMContentLoaded', function () {
     
                 section.appendChild(sectionHeader);
     
-                // Grid to hold graphics
                 const grid = document.createElement('div');
                 grid.classList.add('grid');
                 grid.setAttribute('data-category', category);
@@ -1382,7 +1374,6 @@ document.addEventListener('DOMContentLoaded', function () {
     
                 graphicsContainer.appendChild(section);
     
-                // Load graphics for this category
                 await loadGraphics(category);
             }
         } catch (error) {
@@ -1390,7 +1381,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     
-    // Load graphics for a specific category
     async function loadGraphics(category, showAll = false) {
         try {
             const response = await fetch(`/api/graphics/${category}`);
@@ -1401,66 +1391,56 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.warn(`Container for category "${category}" not found.`);
                 return;
             }
-            container.innerHTML = ""; // Clear previous items
+            container.innerHTML = ""; 
     
             const toShow = showAll ? items : items.slice(0, INITIAL_LIMIT);
     
             toShow.forEach(src => {
                 const img = document.createElement("img");
                 img.src = src;
-                img.alt = category; // Optional: Set alt text for accessibility
-                img.style.width = '100px'; // Set a width for the image
-                img.style.margin = '10px'; // Add some margin
+                img.alt = category; 
+                img.style.width = '100px'; 
+                img.style.margin = '10px';
                 container.appendChild(img);
             });
     
-            // Store the loaded items in graphicsData
             graphicsData[category] = items;
         } catch (error) {
             console.error(`Error loading graphics for category ${category}:`, error);
         }
     }
     
-    // Load categories and graphics on page load
     loadCategories();
     
-    // Show more handler (already uses event delegation on document, which is fine)
     document.addEventListener("click", async function (e) {
         if (e.target.classList.contains("show-more")) {
             e.preventDefault();
     
             const category = e.target.getAttribute("data-category");
-    
-            // Check if the graphics data for the category is already available
             const items = graphicsData[category];
     
             if (items) {
-                // Set category title in new panel
                 document.getElementById("categoryTitle").textContent = category.charAt(0).toUpperCase() + category.slice(1).replace(/([A-Z])/g, ' $1');
     
-                // Load all items in the new panel
                 const categoryGrid = document.getElementById("categoryGrid");
-                categoryGrid.innerHTML = ""; // Clear previous items
+                categoryGrid.innerHTML = ""; 
                 items.forEach(src => {
                     const img = document.createElement("img");
                     img.src = src;
-                    img.alt = category; // Optional: Set alt text for accessibility
-                    img.style.width = '100px'; // Set a width for the image
-                    img.style.margin = '10px'; // Add some margin
+                    img.alt = category; 
+                    img.style.width = '100px';
+                    img.style.margin = '10px';
                     categoryGrid.appendChild(img);
                 });
     
-                // Toggle visibility: hide graphicsPanel and show categoryPanel
                 document.getElementById("graphicsPanel").style.display = "none";
                 document.getElementById("categoryPanel").style.display = "block";
             } else {
-                // In case the data is still not loaded, you can call the loadGraphics function
-                await loadGraphics(category, true);  // Load all items for the category
+                await loadGraphics(category, true); 
             }
         }
     });
     
-    // Back button handler
     document.getElementById("backToGraphics").addEventListener("click", () => {
         document.getElementById("categoryPanel").style.display = "none";
         document.getElementById("graphicsPanel").style.display = "block";
@@ -1469,9 +1449,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(graphicsData);
     
     
-    // Function to load the graphic into the canvas
     function addGraphicToCanvas(src) {
-        // Ensure fabric.Image and canvas are defined before calling this function
         if (typeof fabric === 'undefined' || typeof canvas === 'undefined') {
             console.error("Fabric.js or canvas object is not defined.");
             return;
@@ -1493,29 +1471,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 hasControls: true,
                 lockUniScaling: false,
                 selectable: true,
-                customType: 'graphics' // ✅ Identify this as a graphic
+                customType: 'graphics' 
             });
     
             canvas.add(img);
             canvas.centerObject(img);
-            canvas.setActiveObject(img); // Optional: auto-select
+            canvas.setActiveObject(img);
             canvas.renderAll();
-        }, { crossOrigin: 'anonymous' }); // Add crossOrigin for images loaded from different origins if needed
+        }, { crossOrigin: 'anonymous' }); 
     }
     
-    // --- MODIFIED SECTION ---
-    // Handle image click inside the graphicsPanel grids using event delegation
     document.getElementById("graphicsPanel").addEventListener("click", function (e) {
-        // Check if the clicked element is an IMG tag and is inside a .grid
         if (e.target.tagName === "IMG" && e.target.closest('.grid')) {
             const src = e.target.src;
-            console.log("Clicked image in graphicsPanel:", src);
             addGraphicToCanvas(src);
-            // You might want to close the graphicsPanel or keep it open
-            // closePanel('graphicsPanel'); // Uncomment if you want to close the panel
+            closePanel('graphicsPanel'); 
         }
     });
-    // --- END MODIFIED SECTION ---
     
     
     // Handle image click inside the category panel (this part was already correct)
