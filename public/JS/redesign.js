@@ -125,10 +125,54 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     const canvasStates = {
+        designNumber: sessionStorage.getItem("designID"),
         tshirtFront: { json: null, preview: null },
         tshirtBack: { json: null, preview: null }
     };
-
+    fetch("/fetch-design", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          did: canvasStates.designNumber
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log('Fetched Design:', data[0].id);
+        console.log('Fetched Design:', data[0].color);
+        
+        // Parse the front and back canvas JSON
+        fcj = JSON.parse(data[0].front_canvas_json)
+        bcj = JSON.parse(data[0].back_canvas_json)
+        const frontCanvasJson = fcj.json;
+        const backCanvasJson = bcj.json;
+        
+        // Load the front design onto the canvas
+        canvas.loadFromJSON(frontCanvasJson, function() {
+          console.log("Front design loaded successfully");
+          canvas.renderAll(); // Render the canvas after loading
+        }, function(o, object) {
+          // Optional: Handle any object loading errors
+          console.error("Error loading object:", o, object);
+        });
+        loadBackDesign(backCanvasJson)
+      
+        // If you want to load the back design as well, you can do it similarly
+        // You may want to switch sides or manage layers accordingly
+        // For example, you can create a function to switch between front and back designs
+      });
+      
+      // Function to load back design (if needed)
+      function loadBackDesign(backJson) {
+        canvas.loadFromJSON(backJson, function() {
+          console.log("Back design loaded successfully");
+          canvas.renderAll(); // Render the canvas after loading
+        }, function(o, object) {
+          console.error("Error loading object:", o, object);
+        });
+      }
     let currentSide = 'tshirtFront';  // Default to the front side
 
 
@@ -1327,156 +1371,83 @@ document.addEventListener('DOMContentLoaded', function () {
             panel.classList.add('hidden');
         }
     });
-    const graphicsData = {};
-    const INITIAL_LIMIT = 6; // Limit the number of items loaded initially
-    
-    // Load categories dynamically from the server
-    async function loadCategories() {
-        try {
-            const response = await fetch('/api/categories');
-            const categories = await response.json();
-    
-            // Create sections for each category
-            // Ensure 'graphicsContainer' exists in your EJS inside 'graphicsPanel'
-            const graphicsContainer = document.getElementById('graphicsContainer');
-            if (!graphicsContainer) {
-                console.error("Element with ID 'graphicsContainer' not found. Please ensure it exists in your EJS.");
-                return;
-            }
-            graphicsContainer.innerHTML = ""; // Clear previous sections
-    
-            for (const category of categories) {
-                // Create a section for each category
-                const section = document.createElement('div');
-                section.classList.add('section');
-    
-                const sectionHeader = document.createElement('div');
-                sectionHeader.classList.add('section-header');
-    
-                // Title for category
-                const title = document.createElement('span');
-                title.textContent = category.charAt(0).toUpperCase() + category.slice(1).replace(/([A-Z])/g, ' $1');
-                sectionHeader.appendChild(title);
-    
-                // Editable badge
-                const editableBadge = document.createElement('span');
-                editableBadge.classList.add('editable-badge');
-                editableBadge.textContent = 'Editable';
-                sectionHeader.appendChild(editableBadge);
-    
-                // Show more link
-                const showMoreLink = document.createElement('a');
-                showMoreLink.href = '#';
-                showMoreLink.classList.add('show-more');
-                showMoreLink.setAttribute('data-category', category);
-                showMoreLink.textContent = 'Show more';
-                sectionHeader.appendChild(showMoreLink);
-    
-                section.appendChild(sectionHeader);
-    
-                // Grid to hold graphics
-                const grid = document.createElement('div');
-                grid.classList.add('grid');
-                grid.setAttribute('data-category', category);
-                section.appendChild(grid);
-    
-                graphicsContainer.appendChild(section);
-    
-                // Load graphics for this category
-                await loadGraphics(category);
-            }
-        } catch (error) {
-            console.error('Error loading categories:', error);
-        }
+
+
+
+    const graphicsData = {
+        curvedText: [
+            "/public/images/cloths/1.svg", "/public/images/cloths/2.svg", "/public/images/cloths/3.svg",
+            "/public/images/cloths/4.svg", "/public/images/cloths/5.svg", "/public/images/cloths/6.svg",
+            "/public/images/cloths/13.svg", "/public/images/cloths/14.svg", "/public/images/cloths/15.svg",
+            "/public/images/cloths/18.svg", "/public/images/cloths/19.svg", "/public/images/cloths/20.svg",
+            "/public/images/cloths/21.svg", "/public/images/cloths/22.svg", "/public/images/cloths/23.svg",
+            "/public/images/cloths/24.svg", "/public/images/cloths/25.svg",
+        ],
+        textElements: [
+            "/public/images/cloths/7.svg", "/public/images/cloths/8.svg", "/public/images/cloths/9.svg",
+            "/public/images/cloths/10.svg", "/public/images/cloths/11.svg", "/public/images/cloths/12.svg",
+            "/public/images/cloths/16.svg", "/public/images/cloths/17.svg", "/public/images/cloths/26.svg",
+            "/public/images/cloths/27.svg", "/public/images/cloths/28.svg", "/public/images/cloths/29.svg",
+            "/public/images/cloths/30.svg", "/public/images/cloths/31.svg", "/public/images/cloths/32.svg",
+            "/public/images/cloths/33.svg", "/public/images/cloths/34.svg",
+        ]
+    };
+
+    const INITIAL_LIMIT = 6;
+
+    // Load limited preview graphics in main panel
+    function loadGraphics(category, showAll = false) {
+        const container = document.querySelector(`.grid[data-category="${category}"]`);
+        container.innerHTML = "";
+        const items = graphicsData[category];
+        const toShow = showAll ? items : items.slice(0, INITIAL_LIMIT);
+
+        toShow.forEach(src => {
+            const img = document.createElement("img");
+            img.src = src;
+            container.appendChild(img);
+        });
     }
-    
-    // Load graphics for a specific category
-    async function loadGraphics(category, showAll = false) {
-        try {
-            const response = await fetch(`/api/graphics/${category}`);
-            const items = await response.json();
-    
-            const container = document.querySelector(`.grid[data-category="${category}"]`);
-            if (!container) {
-                console.warn(`Container for category "${category}" not found.`);
-                return;
-            }
-            container.innerHTML = ""; // Clear previous items
-    
-            const toShow = showAll ? items : items.slice(0, INITIAL_LIMIT);
-    
-            toShow.forEach(src => {
+
+    // Load preview for both categories
+    loadGraphics("curvedText");
+    loadGraphics("textElements");
+
+    // Show more handler
+    document.querySelectorAll(".show-more").forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const category = this.getAttribute("data-category");
+            const items = graphicsData[category];
+
+            // Set category title in new panel
+            document.getElementById("categoryTitle").textContent = category === "curvedText" ? "Curved Text" : "Text Elements";
+
+            // Load all items in new panel
+            const categoryGrid = document.getElementById("categoryGrid");
+            categoryGrid.innerHTML = "";
+            items.forEach(src => {
                 const img = document.createElement("img");
                 img.src = src;
-                img.alt = category; // Optional: Set alt text for accessibility
-                img.style.width = '100px'; // Set a width for the image
-                img.style.margin = '10px'; // Add some margin
-                container.appendChild(img);
+                categoryGrid.appendChild(img);
             });
-    
-            // Store the loaded items in graphicsData
-            graphicsData[category] = items;
-        } catch (error) {
-            console.error(`Error loading graphics for category ${category}:`, error);
-        }
-    }
-    
-    // Load categories and graphics on page load
-    loadCategories();
-    
-    // Show more handler (already uses event delegation on document, which is fine)
-    document.addEventListener("click", async function (e) {
-        if (e.target.classList.contains("show-more")) {
-            e.preventDefault();
-    
-            const category = e.target.getAttribute("data-category");
-    
-            // Check if the graphics data for the category is already available
-            const items = graphicsData[category];
-    
-            if (items) {
-                // Set category title in new panel
-                document.getElementById("categoryTitle").textContent = category.charAt(0).toUpperCase() + category.slice(1).replace(/([A-Z])/g, ' $1');
-    
-                // Load all items in the new panel
-                const categoryGrid = document.getElementById("categoryGrid");
-                categoryGrid.innerHTML = ""; // Clear previous items
-                items.forEach(src => {
-                    const img = document.createElement("img");
-                    img.src = src;
-                    img.alt = category; // Optional: Set alt text for accessibility
-                    img.style.width = '100px'; // Set a width for the image
-                    img.style.margin = '10px'; // Add some margin
-                    categoryGrid.appendChild(img);
-                });
-    
-                // Toggle visibility: hide graphicsPanel and show categoryPanel
-                document.getElementById("graphicsPanel").style.display = "none";
-                document.getElementById("categoryPanel").style.display = "block";
-            } else {
-                // In case the data is still not loaded, you can call the loadGraphics function
-                await loadGraphics(category, true);  // Load all items for the category
-            }
-        }
+
+            // Toggle visibility: hide graphicsPanel and show categoryPanel
+            document.getElementById("graphicsPanel").style.display = "none";
+            document.getElementById("categoryPanel").style.display = "block";
+        });
     });
-    
+
     // Back button handler
     document.getElementById("backToGraphics").addEventListener("click", () => {
         document.getElementById("categoryPanel").style.display = "none";
         document.getElementById("graphicsPanel").style.display = "block";
     });
-    
-    console.log(graphicsData);
-    
-    
+
+
     // Function to load the graphic into the canvas
     function addGraphicToCanvas(src) {
-        // Ensure fabric.Image and canvas are defined before calling this function
-        if (typeof fabric === 'undefined' || typeof canvas === 'undefined') {
-            console.error("Fabric.js or canvas object is not defined.");
-            return;
-        }
-    
         fabric.Image.fromURL(src, function (img) {
             img.set({
                 left: canvas.width / 2,
@@ -1495,60 +1466,36 @@ document.addEventListener('DOMContentLoaded', function () {
                 selectable: true,
                 customType: 'graphics' // ✅ Identify this as a graphic
             });
-    
+
             canvas.add(img);
             canvas.centerObject(img);
             canvas.setActiveObject(img); // Optional: auto-select
             canvas.renderAll();
-        }, { crossOrigin: 'anonymous' }); // Add crossOrigin for images loaded from different origins if needed
+        });
     }
-    
-    // --- MODIFIED SECTION ---
-    // Handle image click inside the graphicsPanel grids using event delegation
-    document.getElementById("graphicsPanel").addEventListener("click", function (e) {
-        // Check if the clicked element is an IMG tag and is inside a .grid
-        if (e.target.tagName === "IMG" && e.target.closest('.grid')) {
-            const src = e.target.src;
-            console.log("Clicked image in graphicsPanel:", src);
+
+    // Handle image click inside the category panel
+    document.querySelectorAll(".grid img").forEach(imgElement => {
+        imgElement.addEventListener("click", function () {
+            const src = this.src;
             addGraphicToCanvas(src);
-            // You might want to close the graphicsPanel or keep it open
-            // closePanel('graphicsPanel'); // Uncomment if you want to close the panel
-        }
+            closePanel('graphicsPanel');
+        });
     });
-    // --- END MODIFIED SECTION ---
-    
-    
-    // Handle image click inside the category panel (this part was already correct)
+
     document.getElementById("categoryGrid").addEventListener("click", function (e) {
         if (e.target.tagName === "IMG") {
             const src = e.target.src;
-            console.log("Clicked image in categoryGrid:", src);
             addGraphicToCanvas(src);
             closePanel('categoryPanel');
         }
     });
-    
+
     // Upload icon click triggers file input
     document.getElementById('uploadIcon').addEventListener('click', () => {
-        // Ensure 'graphicUploadInput' exists in your EJS
-        const graphicUploadInput = document.getElementById('graphicUploadInput');
-        if (graphicUploadInput) {
-            graphicUploadInput.click();
-        } else {
-            console.error("Element with ID 'graphicUploadInput' not found.");
-        }
+        document.getElementById('graphicUploadInput').click();
     });
-    
-    // Ensure `closePanel` function is defined somewhere if you are using it
-    function closePanel(panelId) {
-        const panel = document.getElementById(panelId);
-        if (panel) {
-            panel.style.display = 'none';
-            if (panelId === 'categoryPanel') {
-                document.getElementById('graphicsPanel').style.display = 'block';
-            }
-        }
-    }
+
     // Handle uploaded graphics (all image types including SVG)
     function handleGraphicUpload(file) {
         const reader = new FileReader();

@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>T-Shirt Customizer</title>
+  <title>Redesign </title>
 <script>
   window.addEventListener('DOMContentLoaded', () => {
     const sizeModal = document.getElementById('sizeModal');
@@ -38,21 +38,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
   
 
-  <script src="/JS/design.js"></script>
+  <script src="/JS/redesign.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 
 <body>
-  <h1 style="display: none;" id="designnumber"><%= number %></h1>
-  <h1 style="display: none;" id="id"><%= uid %></h1>
-  <script>document.addEventListener("DOMContentLoaded",function(){
-    const number = document.getElementById("designnumber").innerHTML;
-    const uid = document.getElementById("id").innerHTML;
-    sessionStorage.setItem("number",number)
-    sessionStorage.setItem("uid",uid)
-  })</script>
   <div class="content-container">
     
 
@@ -227,7 +219,26 @@
         <span class="close-btn" onclick="closePanel('graphicsPanel')">X</span>
       </div>
       <h3 class="section-title" style="margin-top: 0px;">Graphics</h3>
-      <div id="graphicsContainer"></div>
+
+      <!-- Curved Text Section -->
+      <div class="section">
+        <div class="section-header">
+          <span>Curved Text</span>
+          <span class="editable-badge">Editable</span>
+          <a href="#" class="show-more" data-category="curvedText">Show more</a>
+        </div>
+        <div class="grid" data-category="curvedText"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <span>Text elements</span>
+          <span class="editable-badge">Editable</span>
+          <a href="#" class="show-more" data-category="textElements">Show more</a>
+        </div>
+        <div class="grid" data-category="textElements"></div>
+      </div>
+    </div>
     <div class="customization-panel hidden" id="categoryPanel">
       <button id="backToGraphics">
         <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
@@ -255,20 +266,6 @@
         </svg></button>
     </div>
 
-
-    <!-- Size Selection Popup -->
-    <div id="sizeModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white p-6 rounded-xl shadow-lg w-80 text-center">
-    <h2 class="text-xl font-bold mb-4">Choose Your T-Shirt Size</h2>
-    <div class="flex flex-wrap justify-center gap-3 mb-4">
-      <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="M">M</button>
-      <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="L">L</button>
-      <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="XL">XL</button>
-      <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="XXL">XXL</button>
-    </div>
-    <p class="text-sm text-gray-600">You can change this later in your settings.</p>
-  </div>
-</div>
 
 </body>
 </html>

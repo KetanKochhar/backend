@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
+const fs = require("fs")
 const session = require("express-session");
 
 const app = express();
@@ -35,6 +36,43 @@ app.post('/set-session', (req, res) => {
     const { key, value } = req.body;
     req.session[key] = value;
     res.json({ message: 'Session set', session: req.session });
+});
+
+// api for graphics
+app.get('/api/categories', (req, res) => {
+    const dirPath = path.join(__dirname, '/public/images');
+    fs.readdir(dirPath, (err, folders) => {
+        if (err) {
+            return res.status(500).json({ error: 'Unable to scan directory' });
+        }
+
+        // Filter out non-directory items
+        const categories = folders.filter(folder => {
+            const fullPath = path.join(dirPath, folder);
+            return fs.statSync(fullPath).isDirectory();
+        });
+        console.log(categories)
+        res.json(categories);
+    });
+});
+
+// Endpoint to get SVG files for a specific category
+app.get('/api/graphics/:category', (req, res) => {
+    const category = req.params.category;
+    console.log("i am here",category)
+    const dirPath = path.join(__dirname, '/public/images', category);
+    console.log("i am here",dirPath)
+
+    fs.readdir(dirPath, (err, files) => {
+        if (err) {
+            return res.status(500).json({ error: 'Unable to scan directory' });
+        }
+
+        // const svgFiles = files.filter(file => file.endsWith('.svg')).map(file => `/cloths/${category}/${file}`);
+        const svgFiles = files.filter(file => file.endsWith('.svg')).map(file => `images/${category}/${file}`);
+        console.log("svg files ",svgFiles)
+        res.json(svgFiles);
+    });
 });
 
 //routes ka use kar raha hoon from dirrent files 
