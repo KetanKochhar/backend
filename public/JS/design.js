@@ -315,7 +315,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 type,
                 color,
                 fcj: frontCanvasJson,
-                bcj: backCanvasJson
+                bcj: backCanvasJson,
+                // yahaaaaaaaaaaaaa
+                price:500
             })
             })
             .then(res => res.json())
@@ -336,7 +338,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 body : JSON.stringify({
                     did:designnumber,
                     fcj : frontCanvasJson,
-                    bcj : backCanvasJson
+                    bcj : backCanvasJson,
+                    // aur yahaaaaaaaaaa
+                    price:500
                 })
             })
             .then(res => res.json())

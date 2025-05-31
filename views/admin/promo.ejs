@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADD the PROMO code </title>
+</head>
+<body>
+    <form action="/add-promo" method="post">
+        <input type="text" name="code" id="code" placeholder="Enter the promo code">
+        <input type="number" name="dis" id="dis" placeholder="Enter the discount percentage">
+        <input type="number" name="uses" id="uses" placeholder="Enter the max number of uses for this coupon">
+        <input type="submit" value="ADD">
+    </form>
+    <% promo.forEach(promo  => { %>
+        <div class="data">
+            <% if (promo.uses != 0) { %>
+                <p><%= promo.code %> <%= promo.discount %> <%= promo.uses %></p>
+            <% } %>
+        </div>
+    <% }) %>
+</body>
+</html>

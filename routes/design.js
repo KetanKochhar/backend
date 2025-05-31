@@ -20,13 +20,13 @@ router.get("/design",auth.isAuthenticated,async(request , response)=>{
 })
 router.post("/save-design", async (request, response) => {
     try {
-      const { uid, name, type, color, fcj, bcj } = request.body;
+      const { uid, name, type, color, fcj, bcj ,price } = request.body;
   
-      if (!uid || !name || !type || !color || !fcj || !bcj) {
+      if (!uid || !name || !type || !color || !fcj || !bcj || !price) {
         return response.status(400).json({ message: 'Missing required fields' });
       }
   
-      const designId = await dbconnectiom.addDesign(uid, name, type, color, fcj, bcj);
+      const designId = await dbconnectiom.addDesign(uid, name, type, color, fcj, bcj , price);
   
       response.json({ message: 'Design saved successfully', designId });
     } catch (error) {
@@ -38,8 +38,8 @@ router.post("/save-design", async (request, response) => {
 
 router.post("/update-design",async (request,response)=>{
     try{
-        const {did , fcj , bcj} = request.body;
-        const data = await dbconnectiom.updateDesign(did,fcj,bcj);
+        const {did , fcj , bcj,price} = request.body;
+        const data = await dbconnectiom.updateDesign(did,fcj,bcj,price);
         response.json({message:"Design updated sucessfully",data})
     }catch(error){
         console.error("Error while updating the design ",error.message);
@@ -47,9 +47,7 @@ router.post("/update-design",async (request,response)=>{
     }
 });
 
-router.get("/redesign",auth.isAuthenticated , async(request , response)=>{
-  response.send("cart page comming soon")
-})
+
 // router.get("/redesign",auth.isAuthenticated , async(request , response)=>{
 //   const  colors = await functionmap[request.session.type]();
 //   const mail = request.session.email ;

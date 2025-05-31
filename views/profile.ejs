@@ -6,7 +6,6 @@
   <title>My Profile</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/JS/profile.js"></script>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col items-center p-4">
 
@@ -25,21 +24,54 @@
       <%= firstName %>
     </h1>
   </section>
+<!-- Address Modal Trigger Button -->
+<button id="openModalBtn" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition mb-6">
+  Enter Your Address
+</button>
+<!-- Address Modal -->
+<div id="addressModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
+  <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
+    <h3 style="display: none;" id="userid"><%= userid %></h3>
+    <h3 class="text-xl font-semibold mb-4">Enter Your Address</h3>
+    <form id="addressForm">
+      <label class="block mb-2 text-sm font-medium">Address</label>
+      <textarea id="userAddress" class="w-full p-2 border border-gray-300 rounded-md resize-none mb-4" rows="3" placeholder="Street, Building..."></textarea>
+      
+      <label class="block mb-2 text-sm font-medium">Pincode</label>
+      <input type="text" id="userPincode" class="w-full p-2 border border-gray-300 rounded-md mb-4" placeholder="Enter 6-digit pincode" maxlength="6" />
+
+      <label class="block mb-2 text-sm font-medium">City</label>
+      <input type="text" id="userCity" class="w-full p-2 border border-gray-300 rounded-md mb-4" readonly />
+
+      <label class="block mb-2 text-sm font-medium">Area</label>
+      <input type="text" id="userArea" class="w-full p-2 border border-gray-300 rounded-md mb-4" readonly />
+
+      <div class="mt-4 flex justify-end space-x-4">
+        <button type="button" id="closeModalBtn" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 
   <!-- Greeting -->
   <h2 class="text-3xl font-semibold text-gray-800 mb-8 w-full max-w-4xl">Hello <%= username %></h2>
   <h2 class="text-3xl font-semibold text-gray-800 mb-8 w-full max-w-4xl">Your Designs </h2>
 
   <% for (let i = 0; i < id.length; i++) { %>
-    <section class="w-full max-w-4xl mb-10 bg-white rounded-lg shadow-md p-6" onclick="GoToRedesign('<%= id[i] %>', '<%= type[i] %>')" style="cursor: pointer;">
+    <section class="w-full max-w-4xl mb-10 bg-white rounded-lg shadow-md p-6" onclick="GoToRedesign( '<%= id[i] %>','<%= type[i] %>','<%= name[i] %>','500' , '<%= fcjp[i] %>')" style="cursor: pointer;">
       <h1 id="<%= id[i] %>"><%= id[i] %></h1>
       <h1><%= type[i] %></h1>
+      <h1>price: <p id="price" style="display: inline;">500</p></h1>
       <h2 class="text-2xl font-semibold text-gray-800 mb-4"><%= name[i] %></h2>
       <div class="flex flex-col sm:flex-row sm:space-x-6 space-y-6 sm:space-y-0 items-center justify-center">
         <img src="<%= fcjp[i] %>" alt="Image 1" class="w-full max-w-xs rounded-lg shadow-lg object-cover" />
         <img src="<%= bcjp[i] %>" alt="Image 2" class="w-full max-w-xs rounded-lg shadow-lg object-cover" />
       </div>
+      <button class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition mb-6">Add To Cart</button>
     </section>
   <% } %>
 </body>
+<script src="/JS/profile.js"></script>
 </html>

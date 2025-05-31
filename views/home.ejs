@@ -28,11 +28,11 @@
         </ul>
         <div class="buttons hidden md:flex space-x-4">
             <% if (user) { %>
-                <a href="/profile" class="px-4 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-50">Profile</a>
-                <a href="/logout" class="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700">Logout</a>
+                <a href="/profile"><button class="login">Profile</button></a>
+                <a href="/logout" ><button class="signup">Logout</button></a>
             <% } else { %>
-                <a href="/login"> <button class="login px-4 py-2 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-50">Login</button> </a>
-                <a href="/signup"> <button class="signup px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700">Signup</button> </a>
+                <a href="/login"> <button class="login">Login</button> </a>
+                <a href="/signup"> <button class="signup ">Signup</button> </a>
             <% }%>
         </div>
         <div class="md:hidden">
@@ -48,11 +48,11 @@
             <li><a onclick="scrollToFooter()" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">Contacts</a></li>
             <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center">Support</a></li>
             <% if (user) { %>
-                <li><a href="/profile" class="block px-4 py-2 text-blue-600 hover:bg-gray-100 w-full text-center">Profile</a></li>
-                <li><a href="/logout" class="block px-4 py-2 text-blue-600 hover:bg-gray-100 w-full text-center">Logout</a></li>
+                <a href="/profile"><button class="login">Profile</button></a>
+                <a href="/logout" ><button class="signup">Logout</button></a>
             <% } else { %>
-                <li><a href="/login" class="block px-4 py-2 text-blue-600 hover:bg-gray-100 w-full text-center">Login</a></li>
-                <li><a href="/signup" class="block px-4 py-2 text-blue-600 hover:bg-gray-100 w-full text-center">Signup</a></li>
+                <a href="/login"> <button class="login">Login</button> </a>
+                <a href="/signup"> <button class="signup ">Signup</button> </a>
             <% }%>
         </ul>
     </div>

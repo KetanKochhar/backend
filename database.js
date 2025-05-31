@@ -22,6 +22,7 @@ db.exec(`
         color TEXT NOT NULL,
         front_canvas_json TEXT,
         back_canvas_json TEXT,
+        price INTEGER,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES Users(id)
     );
@@ -69,6 +70,23 @@ db.exec(`
         color TEXT NOT NULL,
         dark_color TEXT NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS Promo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    code TEXT NOT NULL,
+    discount INTEGER NOT NULL,
+    uses INTEGER NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS Addresses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    address TEXT NOT NULL,
+    pincode TEXT NOT NULL,
+    city TEXT NOT NULL,
+    area TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE
+    );
+
 `);
 
 module.exports = db;

@@ -153,14 +153,14 @@ async function getDesignsByUserIdnumber(userId) {
     return stmt.all(userId);
 }
 
-async function addDesign(userId, name, type, color, frontCanvasJson, backCanvasJson,) {
+async function addDesign(userId, name, type, color, frontCanvasJson, backCanvasJson,price) {
     try {
         const insertStmt = database.prepare(`
-            INSERT INTO Designs (user_id, name, type,color, front_canvas_json, back_canvas_json)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO Designs (user_id, name, type,color, front_canvas_json, back_canvas_json,price)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         `);
 
-        const info = insertStmt.run(userId, name, type, color, frontCanvasJson, backCanvasJson);
+        const info = insertStmt.run(userId, name, type, color, frontCanvasJson, backCanvasJson,price);
         return info.lastInsertRowid;
     } catch (error) {
         console.error('Error adding design:', error.message);
@@ -168,10 +168,10 @@ async function addDesign(userId, name, type, color, frontCanvasJson, backCanvasJ
     }
 }
 
-async function updateDesign(designID, front_canvas_json, back_canvas_json) {
+async function updateDesign(designID, front_canvas_json, back_canvas_json , price) {
     try {
-        const updatesmt = database.prepare("UPDATE Designs SET front_canvas_json = ? , back_canvas_json = ? where id = ?;");
-        const data = updatesmt.run(front_canvas_json, back_canvas_json, designID);
+        const updatesmt = database.prepare("UPDATE Designs SET front_canvas_json = ? , back_canvas_json = ?,price =? where id = ?;");
+        const data = updatesmt.run(front_canvas_json, back_canvas_json,price, designID);
         return data
     }
     catch (error) {
@@ -202,4 +202,51 @@ async function updateUserPassword(email, newPassword) {
         throw error;
     }
 }
-    module.exports = { addUser, getUserByEmail, getUserByPhoneNumber, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword ,GetDesignById}
+
+async function addpromo(name,discount,uses) {
+    try{
+        insersmt = database.prepare(`INSERT INTO Promo (code , discount , uses) VALUES (?,?,?)`)
+        data = insersmt.run(name,discount,uses)
+        return data.lastInsertRowid;
+    }
+    catch (error){
+        console.error(error);
+    }
+}
+async function getpromo(name) {
+    try {
+        smt = database.prepare(`SELECT * FROM Promo WHERE code = ?`)
+        data = smt.all(name)
+        if (data[0].uses == 0){
+            return "max number of promo is been used";
+        }
+        rsmt = database.prepare(`UPDATE Promo SET uses = uses - 1 WHERE code = ?`)
+        remove = rsmt.run(name)
+        console.log("updated data is ",remove)
+        return data
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+async function getallpromo() {
+    try {
+        smt = database.prepare(`SELECT * FROM Promo `)
+        data = smt.all()
+        console.log(data)
+        return data 
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+async function addAddress(userid,address,pincode,city,area) {
+    try {
+        smt = database.prepare(`INSERT INTO Addresses (user_id, address, pincode, city, area) VALUES (?, ?, ?, ?, ?)`)
+        data = smt.run(userid,address,pincode,city,area)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+    module.exports = { addUser, getUserByEmail, getUserByPhoneNumber, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword ,GetDesignById,addpromo,getpromo,getallpromo,addAddress}
