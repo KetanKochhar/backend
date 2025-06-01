@@ -1,0 +1,345 @@
+<style>
+    footer {
+        background-color: rgb(20, 49, 9);
+        padding: 40px 20px;
+    }
+
+    .footer-container {
+        max-width: 1300px;
+        margin: auto;
+    }
+
+    .footer-columns {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 40px;
+    }
+
+    .footer-column {
+        flex: 1 1 200px;
+        margin: 10px 20px;
+    }
+
+    .footer-column h4 {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: white;
+    }
+
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-column ul li {
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: white;
+        cursor: pointer;
+    }
+
+    .footer-column ul li:hover {
+        text-decoration: underline;
+    }
+
+    .footer-socials {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .footer-socials i {
+        font-size: 20px;
+        color: white;
+        margin: 0 10px;
+        cursor: pointer;
+    }
+
+    .footer-socials i:hover {
+        color: white;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        font-size: 13px;
+        color: white;
+    }
+
+    .footer-links {
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        color: white;
+        margin: 0 10px;
+        text-decoration: none;
+        font-size: 13px;
+    }
+
+    .footer-links a:hover {
+        text-decoration: underline;
+    }
+
+    .contact-details {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+        font-size: 0.95rem;
+    }
+
+    .contact-details li {
+        margin: 5px 0;
+        color: #ffffff;
+        font-size: 20px;
+    }
+
+    .contact-details li i {
+        margin-right: 8px;
+        color: #ffffff;
+    }
+
+    .contact-details a {
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 20px;
+    }
+
+    .contact-details a:hover {
+        text-decoration: underline;
+    }
+
+    .footer-socials a {
+        margin: 0 8px;
+        font-size: 1.2rem;
+        color: #ffffff;
+        transition: color 0.3s ease;
+    }
+
+    .footer-socials a:hover {
+        color: #ffffff;
+    }
+
+    .footer-contact-text {
+        color: white;
+        font-size: 25px;
+    }
+
+    .footer-logo img {
+        width: 300px;
+    }
+
+    .footer-links {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        margin: 0 10px;
+        color: white;
+        text-decoration: underline;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+    }
+
+    @media (max-width: 768px) {
+        footer {
+            background-color: rgb(20, 49, 9);
+            padding: 40px 20px;
+        }
+
+        .footer-container {
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        .footer-logo img {
+            width: 250px;
+            margin-bottom: 30px;
+        }
+
+        .footer-columns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1 1 200px;
+            margin: 10px 20px;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .footer-column ul li:hover {
+            text-decoration: underline;
+        }
+
+        .footer-socials {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-socials i {
+            font-size: 20px;
+            color: white;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .footer-socials i:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 13px;
+            color: white;
+        }
+
+        .footer-links {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-details {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .contact-details li {
+            margin: 5px 0;
+            color: #ffffff;
+            font-size: 20px;
+        }
+
+        .contact-details li i {
+            margin-right: 8px;
+            color: #ffffff;
+        }
+
+        .contact-details a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 20px;
+        }
+
+        .contact-details a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-socials a {
+            margin: 0 8px;
+            font-size: 1.2rem;
+            color: #ffffff;
+            transition: color 0.3s ease;
+        }
+
+        .footer-socials a:hover {
+            color: #ffffff;
+        }
+
+        .footer-contact-text {
+            color: white;
+            font-size: 25px;
+        }
+
+    }
+
+    @media (max-width: 426px) {
+        .footer {
+            text-align: center;
+            padding: 20px 10px;
+            background-color: #143109;
+            color: white;
+
+        }
+
+        .footer-logo img {
+            width: 190px;
+            margin-bottom: 20px;
+        }
+
+        .footer-container,
+        .footer-container p,
+        .footer-container ul,
+        .footer-container li,
+        .footer-container a,
+        .footer-bottom {
+            font-size: 12px;
+            line-height: 1.4;
+        }
+    }
+</style>
+<footer id="footer">
+    <div class="footer-container">
+        <div class="footer-logo">
+            <center><img src="/images/logo2.svg" alt="Custom Wear Logo"></center>
+        </div>
+
+        <div class="footer-columns">
+            <div class="footer-contact-text">
+                <p>Have any questions? <strong>Feel free to contact us for any queries.</strong></p>
+                <ul class="contact-details">
+                    <li><i class="fas fa-phone-alt"></i> <a href="tel:+919876543210">+91 9016123341</a></li>
+                    <li><i class="fas fa-envelope"></i> <a
+                            href="mailto:support@customwear.com">support@customwear.co.in</a></li>
+                    <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/customwear_official_"
+                            target="_blank">@customwear_official_</a></li>
+                    <li><i class="fab fa-facebook-f"></i> <a href="https://www.facebook.com/share/1FoSD1AXpB/"
+                            target="_blank">facebook.com/customwear</a></li>
+                    <li><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat, India</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-socials">
+            <a href="https://www.facebook.com/share/1FoSD1AXpB/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com/customwear_official_" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="mailto:support@customwear.com"><i class="fas fa-envelope"></i></a>
+            <a href="tel:+919016123341"><i class="fas fa-phone-alt"></i></a>
+        </div>
+
+        <div class="footer-links">
+            <a href="Terms-And-Conditions">terms and conditions</a>
+            <a href="/Refund-And-Cancellation-Policy">refund and cancellation policy</a>
+            <a href="Shipping-And-Delivery-Policy">shipping and delivery policy</a>
+            <a href="/privacy-policy">Privacy Policy</a>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025, All rights reserved.</p>
+        </div>
+
+    </div>
+</footer>

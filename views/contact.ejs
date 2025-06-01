@@ -5,10 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contact Us - Custom Wear</title>
-    <link rel="stylesheet" href="/css/home.css" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="/JS/home.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
 
     <style>
@@ -20,11 +18,10 @@
             background-repeat: repeat;
             font-family: Arial, sans-serif;
             color: #333;
-            overflow: hidden;
         }
 
         .container {
-            max-width: 800px;
+            width: 80vw;
             margin: 100px auto;
             background-color: rgba(255, 255, 255, 0.9);
             padding: 30px;
@@ -86,7 +83,6 @@
 
         @media (max-width: 600px) {
             .container {
-                margin: 50px 20px;
                 padding: 20px;
             }
 
@@ -94,55 +90,12 @@
                 width: 100px;
             }
         }
+
     </style>
 </head>
 
 <body>
-    <nav class="navbar flex items-center justify-between p-4 bg-white shadow-md">
-        <div class="logo">
-            <img src="/images/logo1.svg" alt="Custom Wear Logo" class="h-10">
-        </div>
-        <ul class="nav-links hidden md:flex space-x-6">
-            <li><a href="/" class="text-gray-700 hover:text-blue-600">Home</a></li>
-            <li><a onclick="scrollToDesignSteps()" class="text-gray-700 hover:text-blue-600 cursor-pointer">How it
-                    works</a></li>
-            <li><a onclick="scrollToFooter()" class="text-gray-700 hover:text-blue-600 cursor-pointer">Contacts</a></li>
-        </ul>
-        <div class="buttons hidden md:flex space-x-4">
-            <% if (user) { %>
-                <a href="/profile"><button class="login">Profile</button></a>
-                <a href="/logout"><button class="signup">Logout</button></a>
-                <% } else { %>
-                    <a href="/login"> <button class="login">Login</button> </a>
-                    <a href="/signup"> <button class="signup ">Signup</button> </a>
-                    <% }%>
-        </div>
-        <div class="md:hidden">
-            <button id="mobile-menu-button" class="text-gray-700 focus:outline-none focus:text-blue-600">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-        </div>
-    </nav>
-
-    <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg py-2">
-        <ul class="flex flex-col items-center space-y-2">
-            <li><a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center">Home</a></li>
-            <li><a onclick="scrollToDesignSteps()"
-                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">How it
-                    works</a></li>
-            <li><a onclick="scrollToFooter()"
-                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">Contacts</a>
-            </li>
-            <% if (user) { %>
-                <a href="/profile"><button class="login">Profile</button></a>
-                <a href="/logout"><button class="signup">Logout</button></a>
-                <% } else { %>
-                    <a href="/login"> <button class="login">Login</button> </a>
-                    <a href="/signup"> <button class="signup ">Signup</button> </a>
-                    <% }%>
-        </ul>
-    </div>
-
+<%- include('partials/nav', { user: user }) %>
 
     <div class="container">
         <center>
@@ -223,50 +176,7 @@
         </div>
     </div>
 
-    <footer id="footer">
-        <div class="footer-container">
-            <div class="footer-logo">
-                <center><img src="/images/logo2.svg" alt="Custom Wear Logo"></center>
-            </div>
-
-            <div class="footer-columns">
-                <div class="footer-contact-text">
-                    <p>Have any questions? <strong>Feel free to contact us for any queries.</strong></p>
-                    <ul class="contact-details">
-                        <li><i class="fas fa-phone-alt"></i> <a href="tel:+919876543210">+91 9016123341</a></li>
-                        <li><i class="fas fa-envelope"></i> <a
-                                href="mailto:support@customwear.com">support@customwear.co.in</a></li>
-                        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/customwear_official_"
-                                target="_blank">@customwear_official_</a></li>
-                        <li><i class="fab fa-facebook-f"></i> <a href="https://www.facebook.com/share/1FoSD1AXpB/"
-                                target="_blank">facebook.com/customwear</a></li>
-                        <li><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat, India</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-socials">
-                <a href="https://www.facebook.com/share/1FoSD1AXpB/" target="_blank"><i
-                        class="fab fa-facebook-f"></i></a>
-                <a href="https://instagram.com/customwear_official_" target="_blank"><i
-                        class="fab fa-instagram"></i></a>
-                <a href="mailto:support@customwear.com"><i class="fas fa-envelope"></i></a>
-                <a href="tel:+919016123341"><i class="fas fa-phone-alt"></i></a>
-            </div>
-
-            <div class="footer-links">
-                <a href="/html/tc.html">terms and conditions</a>
-                <a href="/html/rc.html">refund and cancellation policy</a>
-                <a href="/html/sd.html">shipping and delivery policy</a>
-                <a href="/html/pp.html">Privacy Policy</a>
-            </div>
-
-            <div class="footer-bottom">
-                <p>© 2025, All rights reserved.</p>
-            </div>
-
-        </div>
-    </footer>
+<%- include('partials/footer', { user: user }) %>
 </body>
 <script>
     const sunilCard = document.querySelector('#sunil');

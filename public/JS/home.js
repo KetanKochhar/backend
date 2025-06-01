@@ -33,19 +33,8 @@ function scrollToGirls() {
 }
 
 
-// Hamburger menu functionality
+// // Hamburger menu functionality
 document.addEventListener('DOMContentLoaded', () => {
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (mobileMenuButton && mobileMenu) {
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-    }
-
-    // Initialize display state for sections
-    // All specific style sections are hidden by default, only Gender is shown
     document.getElementById('boys').classList.add('hidden');
     document.getElementById('girls').classList.add('hidden');
 });
@@ -99,4 +88,6 @@ function setSession(key, value) {
       });
     });
   });
+
+  
 
