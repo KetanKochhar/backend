@@ -22,18 +22,19 @@
             <img src="/images/logo1.svg" alt="Custom Wear Logo" class="h-10">
         </div>
         <ul class="nav-links hidden md:flex space-x-6">
-            <li><a onclick="scrollToDesignSteps()" class="text-gray-700 hover:text-blue-600 cursor-pointer">How it works</a></li>
-            <li><a onclick="scrollToFooter()" class="text-gray-700 hover:text-blue-600 cursor-pointer">Contacts</a></li>
-            <li><a href="#" class="text-gray-700 hover:text-blue-600">Support</a></li>
+            <li><a href="/" class="text-gray-700 hover:text-blue-600">Home</a></li>
+            <li><a onclick="scrollToDesignSteps()" class="text-gray-700 hover:text-blue-600 cursor-pointer">How it
+                    works</a></li>
+            <li><a href="/html/contact.html" class="text-gray-700 hover:text-blue-600 cursor-pointer">Contacts</a></li>
         </ul>
         <div class="buttons hidden md:flex space-x-4">
             <% if (user) { %>
                 <a href="/profile"><button class="login">Profile</button></a>
-                <a href="/logout" ><button class="signup">Logout</button></a>
-            <% } else { %>
-                <a href="/login"> <button class="login">Login</button> </a>
-                <a href="/signup"> <button class="signup ">Signup</button> </a>
-            <% }%>
+                <a href="/logout"><button class="signup">Logout</button></a>
+                <% } else { %>
+                    <a href="/login"> <button class="login">Login</button> </a>
+                    <a href="/signup"> <button class="signup ">Signup</button> </a>
+                    <% }%>
         </div>
         <div class="md:hidden">
             <button id="mobile-menu-button" class="text-gray-700 focus:outline-none focus:text-blue-600">
@@ -41,32 +42,38 @@
             </button>
         </div>
     </nav>
-    
+
     <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg py-2">
         <ul class="flex flex-col items-center space-y-2">
-            <li><a onclick="scrollToDesignSteps()" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">How it works</a></li>
-            <li><a onclick="scrollToFooter()" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">Contacts</a></li>
-            <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center">Support</a></li>
+            <li><a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center">Home</a></li>
+            <li><a onclick="scrollToDesignSteps()"
+                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">How it
+                    works</a></li>
+            <li><a onclick="scrollToFooter()"
+                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">Contacts</a>
+            </li>
             <% if (user) { %>
                 <a href="/profile"><button class="login">Profile</button></a>
-                <a href="/logout" ><button class="signup">Logout</button></a>
-            <% } else { %>
-                <a href="/login"> <button class="login">Login</button> </a>
-                <a href="/signup"> <button class="signup ">Signup</button> </a>
-            <% }%>
+                <a href="/logout"><button class="signup">Logout</button></a>
+                <% } else { %>
+                    <a href="/login"> <button class="login">Login</button> </a>
+                    <a href="/signup"> <button class="signup ">Signup</button> </a>
+                    <% }%>
         </ul>
     </div>
 
     <section class="hero">
         <div class="text-content">
-            <h1>Create your unique style</h1>
-            <p>
-                Custom Wear is your go-to platform for designing and personalizing clothing effortlessly.
-                From custom t-shirts to unique styles, unleash your creativity with colors, text, and images.
-                Enjoy a seamless experience with real-time previews, easy ordering, and reliable delivery.
-                Express yourself and slay with style—Custom Wear has you covered!
-            </p>
-            <button class="start-designing" onclick="scrollToGender()">Start Designing</button>
+            <center>
+                <h1>Create your unique style</h1>
+                <p>
+                    Custom Wear is your go-to platform for designing and personalizing clothing effortlessly.
+                    From custom t-shirts to unique styles, unleash your creativity with colors, text, and images.
+                    Enjoy a seamless experience with real-time previews, easy ordering, and reliable delivery.
+                    Express yourself and slay with style—Custom Wear has you covered!
+                </p>
+                <button class="start-designing" onclick="scrollToGender()">Start Designing</button>
+            </center>
         </div>
         <div class="image-content">
             <img src="/images/frontimg.jpeg" alt="Custom T-Shirts">
@@ -134,6 +141,20 @@
         </div>
     </section>
 
+        <!-- Size Selection Popup -->
+        <div id="sizeModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white p-6 rounded-xl shadow-lg w-80 text-center">
+                <h2 class="text-xl font-bold mb-4">Choose Your T-Shirt Size</h2>
+                <div class="flex flex-wrap justify-center gap-3 mb-4">
+                    <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="M">M</button>
+                    <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="L">L</button>
+                    <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="XL">XL</button>
+                    <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="XXL">XXL</button>
+                </div>
+                <p class="text-sm text-gray-600">You can change this later in your settings.</p>
+            </div>
+        </div>
+
     <section class="design-steps" id="design-steps">
         <div class="steps-container">
             <div class="steps-image">
@@ -174,19 +195,19 @@
     <footer id="footer">
         <div class="footer-container">
             <div class="footer-logo">
-                <img src="/images/logo2.svg" alt="Custom Wear Logo">
+                <center><img src="/images/logo2.svg" alt="Custom Wear Logo"></center>
             </div>
 
             <div class="footer-columns">
                 <div class="footer-contact-text">
                     <p>Have any questions? <strong>Feel free to contact us for any queries.</strong></p>
                     <ul class="contact-details">
-                        <li><i class="fas fa-phone-alt"></i> <a href="tel:+919876543210">+91 98765 43210</a></li>
+                        <li><i class="fas fa-phone-alt"></i> <a href="tel:+919876543210">+91 9016123341</a></li>
                         <li><i class="fas fa-envelope"></i> <a
-                                href="mailto:support@customwear.com">support@customwear.com</a></li>
-                        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/customwear"
-                                target="_blank">@customwear</a></li>
-                        <li><i class="fab fa-facebook-f"></i> <a href="https://facebook.com/customwear"
+                                href="mailto:support@customwear.com">support@customwear.co.in</a></li>
+                        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/customwear_official_"
+                                target="_blank">@customwear_official_</a></li>
+                        <li><i class="fab fa-facebook-f"></i> <a href="https://www.facebook.com/share/1FoSD1AXpB/"
                                 target="_blank">facebook.com/customwear</a></li>
                         <li><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat, India</li>
                     </ul>
@@ -194,15 +215,25 @@
             </div>
 
             <div class="footer-socials">
-                <a href="https://facebook.com/customwear" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://instagram.com/customwear" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/share/1FoSD1AXpB/" target="_blank"><i
+                        class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/customwear_official_" target="_blank"><i
+                        class="fab fa-instagram"></i></a>
                 <a href="mailto:support@customwear.com"><i class="fas fa-envelope"></i></a>
-                <a href="tel:+919876543210"><i class="fas fa-phone-alt"></i></a>
+                <a href="tel:+919016123341"><i class="fas fa-phone-alt"></i></a>
+            </div>
+
+            <div class="footer-links">
+                <a href="/html/tc.html">terms and conditions</a>
+                <a href="/html/rc.html">refund and cancellation policy</a>
+                <a href="/html/sd.html">shipping and delivery policy</a>
+                <a href="/html/pp.html">Privacy Policy</a>
             </div>
 
             <div class="footer-bottom">
                 <p>© 2025, All rights reserved.</p>
             </div>
+
         </div>
     </footer>
 

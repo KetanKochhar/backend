@@ -48,14 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // All specific style sections are hidden by default, only Gender is shown
     document.getElementById('boys').classList.add('hidden');
     document.getElementById('girls').classList.add('hidden');
-    // Ensure Gender section is visible on load if desired, otherwise add 'hidden' here too
-    // document.getElementById('Gender').classList.remove('hidden'); // uncomment if you want Gender to be always visible
 });
-// document.querySelectorAll('.style-box').forEach(box => {
-//     box.addEventListener('click', () => {
-//         window.location.href = 'design.html';
-//     });
-// });
+
 
 function setSession(key, value) {
     sessionStorage.setItem(key, value);
@@ -72,3 +66,37 @@ function setSession(key, value) {
         })
         .catch(error => console.error('Error:', error));
 }
+
+
+  function openSizePopup() {
+    document.getElementById("sizeModal").classList.remove("hidden");
+  }
+
+  function closeSizePopup() {
+    document.getElementById("sizeModal").classList.add("hidden");
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const tshirtBoxes = document.querySelectorAll("#boys .style-box, #girls .style-box");
+    tshirtBoxes.forEach(box => {
+      box.addEventListener("click", openSizePopup);
+    });
+
+    // Optional: Close modal when clicking outside the popup
+    document.getElementById("sizeModal").addEventListener("click", (e) => {
+      if (e.target.id === "sizeModal") {
+        closeSizePopup();
+      }
+    });
+
+    // Add logic for size button clicks (if needed)
+    const sizeButtons = document.querySelectorAll(".size-btn");
+    sizeButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const selectedSize = button.getAttribute("data-size");
+        console.log("Selected size:", selectedSize);
+        closeSizePopup(); // Close after selection
+      });
+    });
+  });
+

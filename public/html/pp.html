@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy Policy</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/home.css" />
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #b5bfa1;
+            background-image: url("..//images/pattern.png");
+        }
+
+        .container {
+            margin-top: 20vh;
+            text-align: left;
+            margin-bottom: 20vh;
+            background: white;
+            max-width: 800px;
+            width: 100%;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #222;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            margin-top: 30px;
+            color: #444;
+        }
+
+        p,
+        ul {
+            line-height: 1.6;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <script src="/JS/home.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar flex items-center justify-between p-4 bg-white shadow-md">
+        <div class="logo">
+            <img src="/images/logo1.svg" alt="Custom Wear Logo" class="h-10">
+        </div>
+        <ul class="nav-links hidden md:flex space-x-6">
+            <li><a href="/" class="text-gray-700 hover:text-blue-600">Home</a></li>
+            <li><a onclick="scrollToDesignSteps()" class="text-gray-700 hover:text-blue-600 cursor-pointer">How it
+                    works</a></li>
+            <li><a onclick="scrollToFooter()" class="text-gray-700 hover:text-blue-600 cursor-pointer">Contacts</a></li>
+        </ul>
+        <div class="buttons hidden md:flex space-x-4">
+            <% if (user) { %>
+                <a href="/profile"><button class="login">Profile</button></a>
+                <a href="/logout"><button class="signup">Logout</button></a>
+                <% } else { %>
+                    <a href="/login"> <button class="login">Login</button> </a>
+                    <a href="/signup"> <button class="signup ">Signup</button> </a>
+                    <% }%>
+        </div>
+        <div class="md:hidden">
+            <button id="mobile-menu-button" class="text-gray-700 focus:outline-none focus:text-blue-600">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg py-2">
+        <ul class="flex flex-col items-center space-y-2">
+            <li><a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center">Home</a></li>
+            <li><a onclick="scrollToDesignSteps()"
+                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">How it
+                    works</a></li>
+            <li><a onclick="scrollToFooter()"
+                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">Contacts</a>
+            </li>
+            <% if (user) { %>
+                <a href="/profile"><button class="login">Profile</button></a>
+                <a href="/logout"><button class="signup">Logout</button></a>
+                <% } else { %>
+                    <a href="/login"> <button class="login">Login</button> </a>
+                    <a href="/signup"> <button class="signup ">Signup</button> </a>
+                    <% }%>
+        </ul>
+    </div>
+    <center>
+        <div class="container">
+            <h1>Privacy Policy</h1>
+
+            <p>This Privacy Policy describes how CustomWear ("we", "our", or "us") collects, uses, and protects your
+                information when you visit our website <a href="https://customwear.co.in">customwear.co.in</a>.</p>
+
+            <h2>1. Information We Collect</h2>
+            <p>We collect the following personal information when you register or place an order on our website:</p>
+            <ul>
+                <li>Full Name</li>
+                <li>Email Address</li>
+                <li>Phone Number</li>
+                <li>Date of Birth</li>
+                <li>Shipping Address</li>
+            </ul>
+
+            <h2>2. Payment Information</h2>
+            <p>We use Razorpay as our third-party payment gateway provider. We do not store your payment details on our
+                servers.</p>
+
+            <h2>3. Sharing of Information</h2>
+            <p>We do not sell or rent your personal data. However, we share your pincode with the Indian Post service
+                solely
+                for shipping purposes.</p>
+
+            <h2>4. Data Storage</h2>
+            <p>All user data is securely stored in cloud storage. Our business is located in Rajkot, India.</p>
+
+            <h2>5. User Accounts</h2>
+            <p>Users have the option to create an account for a personalized experience and to manage their orders.</p>
+
+            <h2>6. Marketing</h2>
+            <p>We may use your email address to send promotional offers, updates, or newsletters. You can opt out at any
+                time by clicking the unsubscribe link in our emails.</p>
+
+            <h2>7. Cookies and Tracking</h2>
+            <p>We do not currently use cookies or third-party tracking tools.</p>
+
+            <h2>8. Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy, feel free to contact us at:
+                <br><a href="mailto:support@customwear.co.in">support@customwear.co.in</a>
+            </p>
+
+        </div>
+    </center>
+    <footer id="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <center><img src="/images/logo2.svg" alt="Custom Wear Logo"></center>
+            </div>
+
+            <div class="footer-columns">
+                <div class="footer-contact-text">
+                    <p>Have any questions? <strong>Feel free to contact us for any queries.</strong></p>
+                    <ul class="contact-details">
+                        <li><i class="fas fa-phone-alt"></i> <a href="tel:+919876543210">+91 9016123341</a></li>
+                        <li><i class="fas fa-envelope"></i> <a
+                                href="mailto:support@customwear.com">support@customwear.co.in</a></li>
+                        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/customwear_official_"
+                                target="_blank">@customwear_official_</a></li>
+                        <li><i class="fab fa-facebook-f"></i> <a href="https://www.facebook.com/share/1FoSD1AXpB/"
+                                target="_blank">facebook.com/customwear</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat, India</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-socials">
+                <a href="https://www.facebook.com/share/1FoSD1AXpB/" target="_blank"><i
+                        class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/customwear_official_" target="_blank"><i
+                        class="fab fa-instagram"></i></a>
+                <a href="mailto:support@customwear.com"><i class="fas fa-envelope"></i></a>
+                <a href="tel:+919016123341"><i class="fas fa-phone-alt"></i></a>
+            </div>
+
+            <div class="footer-links">
+                <a href="/html/tc.html">terms and conditions</a>
+                <a href="/html/rc.html">refund and cancellation policy</a>
+                <a href="/html/sd.html">shipping and delivery policy</a>
+                <a href="/html/pp.html">Privacy Policy</a>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025, All rights reserved.</p>
+            </div>
+
+        </div>
+    </footer>
+
+
+</body>
+
+</html>

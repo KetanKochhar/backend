@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Terms & Conditions</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/home.css" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #b5bfa1;
+            background-image: url("/public/images/pattern.png");
+        }
+
+        .container {
+            margin-top: 20vh;
+            text-align: left;
+            margin-bottom: 20vh;
+            background: white;
+            max-width: 600px;
+            width: 100%;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #222;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            color: #222;
+            margin-top: 30px;
+            font-size: 1.3em;
+        }
+
+        p,
+        li {
+            line-height: 1.6;
+            font-size: 1.05em;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .email {
+            font-weight: bold;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .email:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar flex items-center justify-between p-4 bg-white shadow-md">
+        <div class="logo">
+            <img src="/images/logo1.svg" alt="Custom Wear Logo" class="h-10">
+        </div>
+        <ul class="nav-links hidden md:flex space-x-6">
+            <li><a href="/" class="text-gray-700 hover:text-blue-600">Home</a></li>
+            <li><a onclick="scrollToDesignSteps()" class="text-gray-700 hover:text-blue-600 cursor-pointer">How it
+                    works</a></li>
+            <li><a onclick="scrollToFooter()" class="text-gray-700 hover:text-blue-600 cursor-pointer">Contacts</a></li>
+        </ul>
+        <div class="buttons hidden md:flex space-x-4">
+            <% if (user) { %>
+                <a href="/profile"><button class="login">Profile</button></a>
+                <a href="/logout"><button class="signup">Logout</button></a>
+                <% } else { %>
+                    <a href="/login"> <button class="login">Login</button> </a>
+                    <a href="/signup"> <button class="signup ">Signup</button> </a>
+                    <% }%>
+        </div>
+        <div class="md:hidden">
+            <button id="mobile-menu-button" class="text-gray-700 focus:outline-none focus:text-blue-600">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg py-2">
+        <ul class="flex flex-col items-center space-y-2">
+            <li><a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center">Home</a></li>
+            <li><a onclick="scrollToDesignSteps()"
+                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">How it
+                    works</a></li>
+            <li><a onclick="scrollToFooter()"
+                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">Contacts</a>
+            </li>
+            <% if (user) { %>
+                <a href="/profile"><button class="login">Profile</button></a>
+                <a href="/logout"><button class="signup">Logout</button></a>
+                <% } else { %>
+                    <a href="/login"> <button class="login">Login</button> </a>
+                    <a href="/signup"> <button class="signup ">Signup</button> </a>
+                    <% }%>
+        </ul>
+    </div>
+
+
+    <center>
+        <div class="container">
+            <h1>Terms & Conditions</h1>
+            <p><strong>Effective Date:</strong> 1st June 2025</p>
+
+            <h2>1. Ordering & Customization</h2>
+            <ul>
+                <li>All products on Custom Wear are <strong>custom-made</strong> based on your selected design, style,
+                    and preferences.</li>
+                <li><strong>Orders cannot be changed or canceled</strong> once submitted, as we begin processing
+                    immediately.</li>
+                <li>Please double-check your design, size, and contact details before placing an order.</li>
+            </ul>
+
+            <h2>2. Refund & Return Policy</h2>
+            <ul>
+                <li>Due to the personalized nature of our products, <strong>we do not offer refunds, exchanges, or
+                        returns</strong> unless:
+                    <ul>
+                        <li>The product is damaged upon arrival</li>
+                        <li>There is a manufacturing defect</li>
+                    </ul>
+                </li>
+                <li>If eligible, claims must be submitted within <strong>7 days</strong> of receiving the product, along
+                    with clear images as proof.</li>
+            </ul>
+
+            <h2>3. Product Appearance Disclaimer</h2>
+            <ul>
+                <li>The digital preview on your screen may <strong>differ slightly</strong> from the actual product due
+                    to:
+                    <ul>
+                        <li>Screen brightness, resolution, and color calibration</li>
+                        <li>Fabric texture and print method</li>
+                    </ul>
+                </li>
+                <li>These <strong>minor variations are normal</strong> and are not considered defects.</li>
+            </ul>
+
+            <h2>4. Intellectual Property</h2>
+            <ul>
+                <li>All designs created by Custom Wear (e.g., templates, logos, artworks) are protected and remain our
+                    intellectual property.</li>
+                <li>User-uploaded designs must not:
+                    <ul>
+                        <li>Infringe any third-party copyright or trademark</li>
+                        <li>Contain offensive, abusive, or illegal content</li>
+                    </ul>
+                </li>
+                <li>You are fully responsible for the content you upload.</li>
+            </ul>
+
+            <h2>5. Payment</h2>
+            <ul>
+                <li>We use secure third-party payment gateways. We do not store your credit/debit card details.</li>
+                <li>Pricing may change without prior notice.</li>
+            </ul>
+
+            <h2>6. Limitation of Liability</h2>
+            <ul>
+                <li>Custom Wear is not responsible for any indirect, incidental, or consequential damages resulting from
+                    the use of our products or services.</li>
+            </ul>
+
+            <h2>7. User Account</h2>
+            <ul>
+                <li>You are responsible for maintaining the confidentiality of your login credentials.</li>
+                <li>Any activity under your account is considered authorized unless reported otherwise.</li>
+            </ul>
+
+            <h2>8. Changes to Terms</h2>
+            <ul>
+                <li>We may update these terms from time to time. Updates will be posted on this page with a revised
+                    date.</li>
+            </ul>
+
+            <h2>9. Contact Information</h2>
+            <p>If you have any questions, contact us at:
+                <a href="mailto:team@customwear.co.in" class="email">team@customwear.co.in</a>
+            </p>
+
+        </div>
+    </center>
+
+    <footer id="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <center><img src="/images/logo2.svg" alt="Custom Wear Logo"></center>
+            </div>
+
+            <div class="footer-columns">
+                <div class="footer-contact-text">
+                    <p>Have any questions? <strong>Feel free to contact us for any queries.</strong></p>
+                    <ul class="contact-details">
+                        <li><i class="fas fa-phone-alt"></i> <a href="tel:+919876543210">+91 9016123341</a></li>
+                        <li><i class="fas fa-envelope"></i> <a
+                                href="mailto:support@customwear.com">support@customwear.co.in</a></li>
+                        <li><i class="fab fa-instagram"></i> <a href="https://instagram.com/customwear_official_"
+                                target="_blank">@customwear_official_</a></li>
+                        <li><i class="fab fa-facebook-f"></i> <a href="https://www.facebook.com/share/1FoSD1AXpB/"
+                                target="_blank">facebook.com/customwear</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i> Rajkot, Gujarat, India</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-socials">
+                <a href="https://www.facebook.com/share/1FoSD1AXpB/" target="_blank"><i
+                        class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/customwear_official_" target="_blank"><i
+                        class="fab fa-instagram"></i></a>
+                <a href="mailto:support@customwear.com"><i class="fas fa-envelope"></i></a>
+                <a href="tel:+919016123341"><i class="fas fa-phone-alt"></i></a>
+            </div>
+
+            <div class="footer-links">
+                <a href="/html/tc.html">terms and conditions</a>
+                <a href="/html/rc.html">refund and cancellation policy</a>
+                <a href="/html/sd.html">shipping and delivery policy</a>
+                <a href="/html/pp.html">Privacy Policy</a>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025, All rights reserved.</p>
+            </div>
+
+        </div>
+    </footer>
+
+</body>
+
+</html>
