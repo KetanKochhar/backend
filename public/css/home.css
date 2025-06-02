@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #b5bfa1;
-    background-image: url('/public/images/pattern.png');
+    background-image: url('/images/pattern.png');
     padding-top: 70px;
 
 }
@@ -138,19 +138,19 @@ body {
     flex-wrap: wrap;
 }
 
-.style-box {
+.style-box, .style-box1 {
     width: 250px;
     text-align: center;
 }
 
-.style-box img {
+.style-box img, .style-box1 img {
     width: 100%;
     border-radius: 10px;
     height: 350px;
     cursor: pointer;
 }
 
-.style-box p {
+.style-box p, .style-box1 p {
     font-size: 16px;
     font-weight: bold;
     margin-top: 10px;
@@ -257,11 +257,14 @@ body {
 
 .tshirt-box:hover,
 .style-box:hover,
+.style-box1:hover,
 .signup:hover,
 .start-designing:hover {
     transform: scale(1.05);
     transition: transform 0.3s ease-in-out;
 }
+
+
 
 
 @media (max-width: 768px) {
@@ -306,13 +309,13 @@ body {
         /* Prevent wrapping of the images */
     }
 
-    .style-box {
+    .style-box, .style-box1 {
         width: 200px;
         /* Adjust width of each image box */
         text-align: center;
     }
 
-    .style-box img {
+    .style-box img, .style-box1 img {
         width: 100%;
         /* Make the images fill the box */
         height: auto;
@@ -402,6 +405,7 @@ body {
 
     .tshirt-box:hover,
     .style-box:hover,
+    .style-box1:hover,
     .signup:hover,
     .start-designing:hover {
         transform: scale(1.05);
@@ -424,7 +428,7 @@ body {
             text-align: center;
             height: auto;
             background: #b5bfa1;
-            background-image: url('/public/images/pattern.png');
+            background-image: url('/images/pattern.png');
         }
 
         .hero h1 {
@@ -500,6 +504,13 @@ body {
             margin-left: 0px;
         }
 
-    }
+        .style-box1 {
+            width: 100px;
+        }
 
+        .style-box1 p {
+            font-size: 10px;
+        }
+
+    }
 
