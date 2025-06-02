@@ -63,7 +63,7 @@
     <section class="w-full max-w-4xl mb-10 bg-white rounded-lg shadow-md p-6" onclick="GoToRedesign( '<%= id[i] %>','<%= type[i] %>','<%= name[i] %>','500' , '<%= fcjp[i] %>')" style="cursor: pointer;">
       <h1 id="<%= id[i] %>"><%= id[i] %></h1>
       <h1><%= type[i] %></h1>
-      <h1>price: <p id="price" style="display: inline;">500</p></h1>
+      <h1>price: <p id="price" style="display: inline;"><%= price[i] %></p></h1>
       <h2 class="text-2xl font-semibold text-gray-800 mb-4"><%= name[i] %></h2>
       <div class="flex flex-col sm:flex-row sm:space-x-6 space-y-6 sm:space-y-0 items-center justify-center">
         <img src="<%= fcjp[i] %>" alt="Image 1" class="w-full max-w-xs rounded-lg shadow-lg object-cover" />

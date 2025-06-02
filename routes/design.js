@@ -16,7 +16,7 @@ router.get("/design",auth.isAuthenticated,async(request , response)=>{
         return response.send("NO MORE DESIGNS FOR YOU !!")
     }
     console.log(a.id)
-    response.render("design",{type:request.session.type,colors:colors,name:request.session.user,mail:request.session.email,uid:a.id,number:num+1})
+    response.render("design",{type:request.session.type,colors:colors,name:request.session.user,mail:request.session.email,uid:a.id,number:num+1,  user: request.session.user})
 })
 router.post("/save-design", async (request, response) => {
     try {

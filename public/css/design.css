@@ -154,7 +154,7 @@ body {
 
 .FinalButton {
     position: absolute;
-    top: 10px;
+    top: 85px;
     right: 20px;
     display: flex;
     gap: 25px;
@@ -164,16 +164,10 @@ body {
     display: flex;
     align-items: center;
     gap: 4px;
-    /*gap-2 = 0.5rem*/
     background-color: white;
     padding: 0.5rem 1rem;
-    /* px-4 py-2 */
     border-radius: 0.5rem;
-    /* rounded-lg */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* shadow-md */
-    transition: transform 0.2s ease;
-    /* for hover scaling */
     cursor: pointer;
     transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -229,7 +223,7 @@ body {
 }
 
 /* Bottom icon */
-.bottom-icon {
+.bottom-icon, .price {
     cursor: pointer;
     position: relative;
     padding: 10px;
@@ -256,6 +250,8 @@ body {
 .bottom-icon:hover img {
     transform: scale(1.1);
 }
+
+
 
 /* Bottom bar text */
 .bottom-text {
@@ -331,7 +327,7 @@ body {
 
 /* Customization panel styling */
 .customization-panel {
-    top: 0;
+    top: 70px;
     position: absolute;
     left: 72px;
     bottom: 16px;
@@ -722,10 +718,10 @@ body {
     color: #fff;
     padding: 16px 24px;
     border-radius: 10px;
-    margin-top: 10px;
+    top: 85px;
     font-weight: bold;
     text-align: center;
-    animation: slideDown 0.5s ease, fadeOut 0.5s ease 2.5s;
+    animation: slideDown 3s ease, fadeOut 2s ease 3s;
     opacity: 1;
 }
 
@@ -737,7 +733,7 @@ body {
     }
 
     to {
-        transform: translate(0, 0px);
+        transform: translate(0, 85px);
         /* End at normal position */
         opacity: 1;
     }
@@ -871,7 +867,7 @@ body {
         align-items: flex-end;
     }
 
-    .bottom-icon {
+    .bottom-icon, .price {
         padding: 0.5rem;
         /* same as p-2 */
         background-color: white;
@@ -939,18 +935,18 @@ body {
         padding: 10px 19px;
         width: 250px;
         font-size: 12px;
-        margin-top: 55px;
+        top: 85px;
     }
 
     @keyframes slideDown {
         from {
-            transform: translate(0, -100px);
+            transform: translate(0, -10px);
             /* Start from above */
             opacity: 0;
         }
 
         to {
-            transform: translate(0, 0px);
+            transform: translate(0, 85px);
             /* End at normal position */
             opacity: 1;
         }
@@ -1100,3 +1096,6 @@ canvas {
     touch-action: none;
 }
 
+.price {
+    cursor:auto;
+}

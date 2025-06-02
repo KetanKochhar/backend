@@ -44,7 +44,9 @@
 </head>
 
 
+<%- include('partials/dnav', { user: user }) %> 
 <body>
+
   <h1 style="display: none;" id="designnumber"><%= number %></h1>
   <h1 style="display: none;" id="id"><%= uid %></h1>
   <script>document.addEventListener("DOMContentLoaded",function(){
@@ -97,7 +99,7 @@
         </div>
         <div class="bottom-text"> Create Your style</div>
         <div class="action-buttons">
-          <div class="bottom-icon" id="AddToCart" title="Add to Cart"><img src="/images/SideBar/Add to cart.svg">
+          <div class="price" id="price"><p id="totalPriceDisplay" style="color: #143109">₹0</p>
           </div>
           <div class="bottom-icon" id="OrderNow" title="Order Now"><img src="/images/SideBar/Buy now.svg"></div>
         </div>
@@ -268,8 +270,8 @@
     </div>
     <p class="text-sm text-gray-600">You can change this later in your settings.</p>
   </div>
-</div>
-<div id="totalPriceDisplay" style="color: #ffffff;">Total: ₹0</div> -->
+</div> -->
+
 
 </body>
 </html>

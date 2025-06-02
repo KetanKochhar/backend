@@ -14,6 +14,7 @@ router.get("/profile",auth.isAuthenticated , async(request,response)=>{
     const color = []
     const fcjp = []
     const bcjp = []
+    const price = []
     for (let i = 0; i < designs.length; i++) {
         // console.log(designs[i].id)
         id.push(designs[i].id)
@@ -27,8 +28,9 @@ router.get("/profile",auth.isAuthenticated , async(request,response)=>{
         fcjp.push(JSON.parse(designs[i].front_canvas_json).preview)
         // console.log(JSON.parse(designs[i].back_canvas_json).preview)
         bcjp.push(JSON.parse(designs[i].back_canvas_json).preview)
+        price.push(designs[i].price)
     }
-    response.render("profile",{userid:uid.id,username : request.session.user,id:id, name:name , type:type , color:color , fcjp:fcjp , bcjp:bcjp})
+    response.render("profile",{userid:uid.id,username : request.session.user,id:id, name:name , type:type , color:color , fcjp:fcjp , bcjp:bcjp , price:price})
 })
 
 router.get("/cart",auth.isAuthenticated , async(request , response)=>{

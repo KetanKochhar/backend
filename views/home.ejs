@@ -17,153 +17,172 @@
 </head>
 
 <body>
-<%- include('partials/nav', { user: user }) %>
+    <%- include('partials/nav', { user: user }) %>
 
-    <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg py-2">
-        <ul class="flex flex-col items-center space-y-2">
-            <li><a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center">Home</a></li>
-            <li><a onclick="scrollToDesignSteps()"
-                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">How it
-                    works</a></li>
-            <li><a onclick="scrollToFooter()"
-                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">Contacts</a>
-            </li>
-            <% if (user) { %>
-                <a href="/profile"><button class="login">Profile</button></a>
-                <a href="/logout"><button class="signup">Logout</button></a>
-                <% } else { %>
-                    <a href="/login"> <button class="login">Login</button> </a>
-                    <a href="/signup"> <button class="signup ">Signup</button> </a>
-                    <% }%>
-        </ul>
-    </div>
-
-    <section class="hero">
-        <div class="text-content">
-            <center>
-                <h1>Create your unique style</h1>
-                <p>
-                    Custom Wear is your go-to platform for designing and personalizing clothing effortlessly.
-                    From custom t-shirts to unique styles, unleash your creativity with colors, text, and images.
-                    Enjoy a seamless experience with real-time previews, easy ordering, and reliable delivery.
-                    Express yourself and slay with style—Custom Wear has you covered!
-                </p>
-                <button class="start-designing" onclick="scrollToGender()">Start Designing</button>
-            </center>
+        <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg py-2">
+            <ul class="flex flex-col items-center space-y-2">
+                <li><a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center">Home</a></li>
+                <li><a onclick="scrollToDesignSteps()"
+                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">How it
+                        works</a></li>
+                <li><a onclick="scrollToFooter()"
+                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">Contacts</a>
+                </li>
+                <% if (user) { %>
+                    <a href="/profile"><button class="login">Profile</button></a>
+                    <a href="/logout"><button class="signup">Logout</button></a>
+                    <% } else { %>
+                        <a href="/login"> <button class="login">Login</button> </a>
+                        <a href="/signup"> <button class="signup ">Signup</button> </a>
+                        <% }%>
+            </ul>
         </div>
-        <div class="image-content">
-            <img src="/images/frontimg.jpeg" alt="Custom T-Shirts">
-        </div>
-    </section>
 
-
-    <section class="pick-style" id="Gender">
-        <h2>PICK YOUR CATEGORY</h2>
-        <div class="style-container">
-            <div class="style-box" onclick="scrollToBoys()">
-                <img src="/images/Boy.jpg" alt="mainboy">
-                <p>MALE</p>
+        <section class="hero">
+            <div class="text-content">
+                <center>
+                    <h1>Create your unique style</h1>
+                    <p>
+                        Custom Wear is your go-to platform for designing and personalizing clothing effortlessly.
+                        From custom t-shirts to unique styles, unleash your creativity with colors, text, and images.
+                        Enjoy a seamless experience with real-time previews, easy ordering, and reliable delivery.
+                        Express yourself and slay with style—Custom Wear has you covered!
+                    </p>
+                    <button class="start-designing" onclick="scrollToGender()">Start Designing</button>
+                </center>
             </div>
-            <div class="style-box" onclick="scrollToGirls()">
-                <img src="/images/Girl.jpg" alt="maingirl">
-                <p>FEMALE</p>
+            <div class="image-content">
+                <img src="/images/frontimg.jpeg" alt="Custom T-Shirts">
             </div>
-        </div>
-    </section>
-    <section class="pick-style" id="boys">
-        <h2>EXPLORE MORE STYLES</h2>
-        <div class="style-container">
-            <a href="/design">
-                <div class="style-box1" onclick="setSession('type','polo') ; setSession('gender','male')">
-                    <img src="/images/polotshirtboy.jpg" alt="poloboy">
-                    <p> POLO TSHIRTS</p>
+        </section>
+
+
+        <section class="pick-style" id="Gender">
+            <h2>PICK YOUR CATEGORY</h2>
+            <div class="style-container">
+                <div class="style-box" onclick="scrollToBoys()">
+                    <img src="/images/Boy.jpg" alt="mainboy">
+                    <p>MALE</p>
                 </div>
-            </a>
-            <a href="/design">
-                <div class="style-box1" onclick="setSession('type','sports'); setSession('gender','male')">
-                    <img src="/images/sportstshirtboy.jpg" alt="sportsboy">
-                    <p>SPORTS TSHIRTS</p>
+                <div class="style-box" onclick="scrollToGirls()">
+                    <img src="/images/Girl.jpg" alt="maingirl">
+                    <p>FEMALE</p>
                 </div>
-            </a>
-            <a href="/design">
-                <div class="style-box1" onclick="setSession('type','cotton')">
-                    <img src="/images/cottontshirtboy.jpg" alt="cottonboy">
-                    <p>COTTON TSHIRTS</p>
-                </div>
-            </a>
-        </div>
-    </section>
-    <section class="pick-style" id="girls">
-        <h2>EXPLORE MORE STYLES</h2>
-        <div class="style-container">
-            <a href="/design">
-                <div class="style-box1" onclick="setSession('type','polo') ; setSession('gender','female')">
-                    <img src="/images/polotshirtgirl.jpg" alt="pologirl">
-                    <p> POLO TSHIRTS</p>
-                </div>
-            </a>
-            <a href="/design">
-                <div class="style-box1" onclick="setSession('type','sports') ; setSession('gender','female')">
-                    <img src="/images/sportstshirtgirl.jpg" alt="sportsgirl">
-                    <p>SPORTS TSHIRTS</p>
-                </div>
-            </a>
-            <a href="/design">
-                <div class="style-box1" onclick="setSession('type','cotton') ; setSession('gender','female')">
-                    <img src="/images/cottontshirtgirl.jpg" alt="cottongirl">
-                    <p>COTTON TSHIRTS</p>
-                </div>
-            </a>
-        </div>
-    </section>
+            </div>
+        </section>
+        <section class="pick-style" id="boys">
+            <h2>EXPLORE MORE STYLES</h2>
+            <div class="style-container">
+                <a>
+                    <div class="style-box1"
+                        onclick="setSession('type','polo') ; setSession('gender','male'); openSizePopup()">
+                        <img src="/images/polotshirtboy.jpg" alt="poloboy">
+                        <p> POLO TSHIRTS</p>
+                    </div>
+                </a>
+                <a>
+                    <div class="style-box1"
+                        onclick="setSession('type','sports'); setSession('gender','male'); openSizePopup()">
+                        <img src="/images/sportstshirtboy.jpg" alt="sportsboy">
+                        <p>SPORTS TSHIRTS</p>
+                    </div>
+                </a>
+                <a>
+                    <div class="style-box1" onclick="setSession('type','cotton'); openSizePopup()">
+                        <img src="/images/cottontshirtboy.jpg" alt="cottonboy">
+                        <p>COTTON TSHIRTS</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+        <section class="pick-style" id="girls">
+            <h2>EXPLORE MORE STYLES</h2>
+            <div class="style-container">
+                <a>
+                    <div class="style-box1"
+                        onclick="setSession('type','polo') ; setSession('gender','female'); openSizePopup()">
+                        <img src="/images/polotshirtgirl.jpg" alt="pologirl">
+                        <p> POLO TSHIRTS</p>
+                    </div>
+                </a>
+                <a>
+                    <div class="style-box1"
+                        onclick="setSession('type','sports') ; setSession('gender','female'); openSizePopup()">
+                        <img src="/images/sportstshirtgirl.jpg" alt="sportsgirl">
+                        <p>SPORTS TSHIRTS</p>
+                    </div>
+                </a>
+                <a>
+                    <div class="style-box1"
+                        onclick="setSession('type','cotton') ; setSession('gender','female'); openSizePopup()">
+                        <img src="/images/cottontshirtgirl.jpg" alt="cottongirl">
+                        <p>COTTON TSHIRTS</p>
+                    </div>
+                </a>
+            </div>
+        </section>
 
         <!-- Size Selection Popup -->
         <div id="sizeModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white p-6 rounded-xl shadow-lg w-80 text-center">
                 <h2 class="text-xl font-bold mb-4">Choose Your T-Shirt Size</h2>
                 <div class="flex flex-wrap justify-center gap-3 mb-4">
-                    <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="M">M</button>
-                    <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="L">L</button>
-                    <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="XL">XL</button>
-                    <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="XXL">XXL</button>
+                    <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="M"
+                        onclick="setSession('size','M'); window.location = '/design';">
+                        M
+                    </button>
+                    <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="L"
+                        onclick="setSession('size','L'); window.location = '/design';">
+                        L
+                    </button>
+                    <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="XL"
+                        onclick="setSession('size','XL'); window.location = '/design';">
+                        XL
+                    </button>
+                    <button class="size-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" data-size="XXL"
+                        onclick="setSession('size','XXL'); window.location = '/design';">
+                        XXL
+                    </button>
                 </div>
                 <p class="text-sm text-gray-600">You can change this later in your settings.</p>
             </div>
         </div>
 
-    <section class="design-steps" id="design-steps">
-        <div class="steps-container">
-            <div class="steps-image">
-                <img src="/images/middleboy.jpeg" alt="Custom Designed T-Shirt">
+        <section class="design-steps" id="design-steps">
+            <div class="steps-container">
+                <div class="steps-image">
+                    <img src="/images/middleboy.jpeg" alt="Custom Designed T-Shirt">
+                </div>
+                <div class="steps-text creative-steps">
+                    <h2>Design Like Never Before: Your Style, Your Rules!</h2>
+                    <div class="step">
+                        <h3>Step 1: Join the Custom Revolution</h3>
+                        <p>Sign up and step into a world where your imagination leads. No more boring clothes—this is
+                            your
+                            canvas!</p>
+                    </div>
+                    <div class="step">
+                        <h3>Step 2: Unleash Your Inner Designer</h3>
+                        <p>Mix, match, and make magic! Upload your favorite images, play with text, pick bold colors,
+                            and
+                            watch your creation come to life in real-time.</p>
+                    </div>
+                    <div class="step">
+                        <h3>Step 3: Make It Yours</h3>
+                        <p>Love what you’ve made? Place your order in just a few clicks. We’ll handle the rest with
+                            premium-quality prints and secure payments.</p>
+                    </div>
+                    <div class="step">
+                        <h3>Step 4: Wear the Wow</h3>
+                        <p>Delivered to your doorstep. Your design, your vibe, ready to wear and share. Get ready for
+                            compliments!</p>
+                    </div>
+                    <button class="start-designing" onclick="scrollToGender()">Start Designing Now</button>
+                </div>
             </div>
-            <div class="steps-text creative-steps">
-                <h2>Design Like Never Before: Your Style, Your Rules!</h2>
-                <div class="step">
-                    <h3>Step 1: Join the Custom Revolution</h3>
-                    <p>Sign up and step into a world where your imagination leads. No more boring clothes—this is your
-                        canvas!</p>
-                </div>
-                <div class="step">
-                    <h3>Step 2: Unleash Your Inner Designer</h3>
-                    <p>Mix, match, and make magic! Upload your favorite images, play with text, pick bold colors, and
-                        watch your creation come to life in real-time.</p>
-                </div>
-                <div class="step">
-                    <h3>Step 3: Make It Yours</h3>
-                    <p>Love what you’ve made? Place your order in just a few clicks. We’ll handle the rest with
-                        premium-quality prints and secure payments.</p>
-                </div>
-                <div class="step">
-                    <h3>Step 4: Wear the Wow</h3>
-                    <p>Delivered to your doorstep. Your design, your vibe, ready to wear and share. Get ready for
-                        compliments!</p>
-                </div>
-                <button class="start-designing" onclick="scrollToGender()">Start Designing Now</button>
-            </div>
-        </div>
-    </section>
+        </section>
 
-<%- include('partials/footer', { user: user }) %>
+        <%- include('partials/footer', { user: user }) %>
 </body>
 
 </html>

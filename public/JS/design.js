@@ -114,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentClothing = null;
     let tshirtBorder = null;
     let totalPrice = 0;
+    const selectedTshirtSize = sessionStorage.getItem("size")
     let userInitiatedDelete = false;
     const zoomFactor = 0.2;
     const zoomFactorForTouchPad = 0.05;
@@ -366,15 +367,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-
-    document.getElementById('AddToCart').addEventListener('click', function () {
-        if (isDesignSaved) {
-            window.location.href = 'addtocart.html';
-        } else {
-            showToast("Please save the design first!", "#ab3131");
-        }
-    });
-
     document.getElementById('OrderNow').addEventListener('click', function () {
         if (isDesignSaved) {
             window.location.href = 'order.html';
@@ -556,10 +548,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 2000); // Hide after 3s
     }
 
-    const selectedTshirtSize = sessionStorage.getItem("size")
-    // console.log(size)
-    console.log(selectedTshirtSize)
-
 
     function drawTshirtBorder(type) {
         if (!currentClothing) return;
@@ -608,32 +596,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         canvas.add(tshirtBorder);
-
-
-
-
-        const printableSize = {
-            M: {
-                printableWidth: borderWidth / 25.523684210526,
-                printableHeight: borderHeight / 27.3666
-            },
-            L: {
-                printableWidth: borderWidth / 23.092857142857,
-                printableHeight: borderHeight / 24.986956521739
-            },
-            XL: {
-                printableWidth: borderWidth / 21.084782608695,
-                printableHeight: borderHeight / 22.988
-            },
-            XXL: {
-                printableWidth: borderWidth / 19.398,
-                printableHeight: borderHeight / 21.285185185185
-            }
-        };
-
-        // You can now use this:
-        const selectedPrintArea = printableSize[selectedTshirtSize];
-        // console.log(`Selected Size (${selectedTshirtSize}) - Width (inches): ${selectedPrintArea.printableWidth.toFixed(2)}, Height (inches): ${selectedPrintArea.printableHeight.toFixed(2)}`);
 
 
         // Prepare clip group
@@ -1756,7 +1718,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Update price display in UI
     function updateTotalPriceDisplay() {
-        document.getElementById("totalPriceDisplay").innerText = `Total: ₹${totalPrice}`;
+        document.getElementById("totalPriceDisplay").innerText = `₹${totalPrice}`;
     }
 
     canvas.on('object:removed', e => {
