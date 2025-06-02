@@ -71,50 +71,51 @@
 
 <body>
 
-<%- include('partials/nav', { user: user }) %>
+    <%- include('partials/nav', { user: user }) %>
 
 
-    <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg py-2">
-        <ul class="flex flex-col items-center space-y-2">
-            <li><a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center">Home</a></li>
-            <li><a onclick="scrollToDesignSteps()"
-                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">How it
-                    works</a></li>
-            <li><a onclick="scrollToFooter()"
-                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">Contacts</a>
-            </li>
-            <% if (user) { %>
-                <a href="/profile"><button class="login">Profile</button></a>
-                <a href="/logout"><button class="signup">Logout</button></a>
-                <% } else { %>
-                    <a href="/login"> <button class="login">Login</button> </a>
-                    <a href="/signup"> <button class="signup ">Signup</button> </a>
-                    <% }%>
-        </ul>
-    </div>
-
-
-    <center>
-        <div class="container">
-            <h1>Shipping & Delivery Policy</h1>
-            <p>
-                We aim to process and ship your order within <strong>2-4 business days</strong> after order
-                confirmation.
-            </p>
-            <ul>
-                <li>Delivery times may vary based on your location and shipping method chosen.</li>
-                <li>Standard shipping typically takes <strong>5-10 business days</strong>.</li>
-                <li>
-                    Please ensure your shipping address is correct. We are not responsible for delays or lost packages
-                    due
-                    to incorrect addresses.
+        <div id="mobile-menu" class="mobile-menu hidden md:hidden bg-white shadow-lg py-2">
+            <ul class="flex flex-col items-center space-y-2">
+                <li><a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center">Home</a></li>
+                <li><a onclick="scrollToDesignSteps()"
+                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">How it
+                        works</a></li>
+                <li><a onclick="scrollToFooter()"
+                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-center cursor-pointer">Contacts</a>
                 </li>
+                <% if (user) { %>
+                    <a href="/profile"><button class="login">Profile</button></a>
+                    <a href="/logout"><button class="signup">Logout</button></a>
+                    <% } else { %>
+                        <a href="/login"> <button class="login">Login</button> </a>
+                        <a href="/signup"> <button class="signup ">Signup</button> </a>
+                        <% }%>
             </ul>
-            <p>
-                If your order is delayed or you have any shipping questions, please contact us at:
-                <a href="mailto:support@customwear.co.in" class="email">support@customwear.co.in</a>
-            </p>
         </div>
+
+
+        <center>
+            <div class="container">
+                <h1>Shipping & Delivery Policy</h1>
+                <p>
+                    We aim to process and ship your order within <strong>2-4 business days</strong> after order
+                    confirmation.
+                </p>
+                <ul>
+                    <li>Delivery times may vary based on your location and shipping method chosen.</li>
+                    <li>Standard shipping typically takes <strong>5-10 business days</strong>.</li>
+                    <li>
+                        Please ensure your shipping address is correct. We are not responsible for delays or lost
+                        packages
+                        due
+                        to incorrect addresses.
+                    </li>
+                </ul>
+                <p>
+                    If your order is delayed or you have any shipping questions, please contact us at:
+                    <a href="mailto:support@customwear.co.in" class="email">support@customwear.co.in</a>
+                </p>
+            </div>
 </body>
 
 </html>
@@ -124,4 +125,4 @@
 
 
 
-</html>
+    </html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Refund & Return Policy</title>
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
 
@@ -71,31 +71,32 @@
 
 <body>
 
-<%- include('partials/nav', { user: user }) %>
+    <%- include('partials/nav', { user: user }) %>
 
 
-    <center><div class="container">
-        <h1>Refund & Return Policy</h1>
-        <p>
-            Due to the personalized nature of our products, we <strong>do not offer refunds, exchanges, or
-                returns</strong> unless:
-        </p>
-        <ul>
-            <li>The product is <strong>damaged upon arrival</strong></li>
-            <li>There is a <strong>manufacturing defect</strong></li>
-        </ul>
-        <p>
-            If your order is eligible for a claim, please submit your request within <strong>7 days</strong> of
-            receiving the product. Claims must include <strong>clear images</strong> as proof.
-        </p>
-        <p>
-            For all refund or return inquiries, please email us at:
-            <a href="mailto:support@customwear.co.in" class="email">support@customwear.co.in</a>
-        </p>
-    </div>
-    </center>
+        <center>
+            <div class="container">
+                <h1>Refund & Return Policy</h1>
+                <p>
+                    Due to the personalized nature of our products, we <strong>do not offer refunds, exchanges, or
+                        returns</strong> unless:
+                </p>
+                <ul>
+                    <li>The product is <strong>damaged upon arrival</strong></li>
+                    <li>There is a <strong>manufacturing defect</strong></li>
+                </ul>
+                <p>
+                    If your order is eligible for a claim, please submit your request within <strong>7 days</strong> of
+                    receiving the product. Claims must include <strong>clear images</strong> as proof.
+                </p>
+                <p>
+                    For all refund or return inquiries, please email us at:
+                    <a href="mailto:support@customwear.co.in" class="email">support@customwear.co.in</a>
+                </p>
+            </div>
+        </center>
 
-<%- include('partials/footer', { user: user }) %>
+        <%- include('partials/footer', { user: user }) %>
 
 </body>
 

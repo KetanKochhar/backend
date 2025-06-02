@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -72,116 +69,110 @@
     </style>
 </head>
 
-<body class="pt-20">
-
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo">
-            <img src="/images/logo1.svg" alt="Custom Wear Logo" />
-        </div>
-
-        <!-- Desktop Links -->
-        <ul class="nav-links hidden md:flex gap-10 items-center">
-            <li><a href="/">Home</a></li>
-            <li><a href="javascript:void(0)" onclick="goToHowItWorks()">How it works</a></li>
-            <li><a href="/Contact-Us">Contacts</a></li>
-        </ul>
-
-        <!-- Desktop Buttons -->
-        <div class="buttons hidden md:flex space-x-4">
-            <% if (user) { %>
-                <a href="/profile"><button class="login">Profile</button></a>
-                <a href="/logout"><button class="signup">Logout</button></a>
-                <% } else { %>
-                    <a href="/login"><button class="login">Login</button></a>
-                    <a href="/signup"><button class="signup">Signup</button></a>
-                    <% } %>
-        </div>
-
-        <!-- Hamburger Icon -->
-        <div class="md:hidden">
-            <button id="mobile-menu-button" class="text-gray-700">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Drawer -->
-    <div id="mobile-menu"
-        class="fixed top-0 right-0 w-64 h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50 md:hidden">
-        <div class="p-4 flex justify-between items-center border-b">
-            <span class="font-bold text-lg">Menu</span>
-            <button id="close-mobile-menu" class="text-gray-700">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-        </div>
-        <ul class="flex flex-col px-6 py-4 space-y-4">
-            <li><a href="/">Home</a></li>
-            <li><a href="javascript:void(0)" onclick="goToHowItWorks()">How it works</a></li>
-            <li><a href="/Contact-Us" onclick="closeMobileMenu()">Contacts</a></li>
-            <% if (user) { %>
-                <li><a href="/profile"><button class="login w-full text-left">Profile</button></a></li>
-                <li><a href="/logout"><button class="signup w-full text-left">Logout</button></a></li>
-                <% } else { %>
-                    <li><a href="/login"><button class="login w-full text-left">Login</button></a></li>
-                    <li><a href="/signup"><button class="signup w-full text-left">Signup</button></a></li>
-                    <% } %>
-        </ul>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <img src="/images/logo1.svg" alt="Custom Wear Logo" />
     </div>
 
+    <!-- Desktop Links -->
+    <ul class="nav-links hidden md:flex gap-10 items-center">
+        <li><a href="/">Home</a></li>
+        <li><a href="javascript:void(0)" onclick="goToHowItWorks()">How it works</a></li>
+        <li><a href="/Contact-Us">Contacts</a></li>
+    </ul>
+
+    <!-- Desktop Buttons -->
+    <div class="buttons hidden md:flex space-x-4">
+        <% if (user) { %>
+            <a href="/profile"><button class="login">Profile</button></a>
+            <a href="/logout"><button class="signup">Logout</button></a>
+            <% } else { %>
+                <a href="/login"><button class="login">Login</button></a>
+                <a href="/signup"><button class="signup">Signup</button></a>
+                <% } %>
+    </div>
+
+    <!-- Hamburger Icon -->
+    <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-gray-700">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div id="mobile-menu"
+    class="fixed top-0 right-0 w-64 h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50 md:hidden">
+    <div class="p-4 flex justify-between items-center border-b">
+        <span class="font-bold text-lg">Menu</span>
+        <button id="close-mobile-menu" class="text-gray-700">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+    </div>
+    <ul class="flex flex-col px-6 py-4 space-y-4">
+        <li><a href="/">Home</a></li>
+        <li><a href="javascript:void(0)" onclick="goToHowItWorks()">How it works</a></li>
+        <li><a href="/Contact-Us" onclick="closeMobileMenu()">Contacts</a></li>
+        <% if (user) { %>
+            <li><a href="/profile"><button class="login w-full text-left">Profile</button></a></li>
+            <li><a href="/logout"><button class="signup w-full text-left">Logout</button></a></li>
+            <% } else { %>
+                <li><a href="/login"><button class="login w-full text-left">Login</button></a></li>
+                <li><a href="/signup"><button class="signup w-full text-left">Signup</button></a></li>
+                <% } %>
+    </ul>
+</div>
 
 
-    <!-- Scripts -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const openBtn = document.getElementById('mobile-menu-button');
-            const closeBtn = document.getElementById('close-mobile-menu');
 
-            openBtn.addEventListener('click', () => {
-                mobileMenu.classList.remove('translate-x-full');
-            });
+<!-- Scripts -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileMenu = document.getElementById('mobile-menu');
+        const openBtn = document.getElementById('mobile-menu-button');
+        const closeBtn = document.getElementById('close-mobile-menu');
 
-            closeBtn.addEventListener('click', () => {
+        openBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !openBtn.contains(e.target)) {
                 mobileMenu.classList.add('translate-x-full');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!mobileMenu.contains(e.target) && !openBtn.contains(e.target)) {
-                    mobileMenu.classList.add('translate-x-full');
-                }
-            });
-
-            mobileMenu.querySelectorAll('a, button').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('translate-x-full');
-                });
-            });
-
-            // Scroll on homepage if needed
-            if (localStorage.getItem('scrollToDesignSteps') === 'true') {
-                localStorage.removeItem('scrollToDesignSteps');
-                setTimeout(() => {
-                    document.getElementById('design-steps')?.scrollIntoView({ behavior: 'smooth' });
-                }, 300);
             }
         });
 
-        function goToHowItWorks() {
-            if (window.location.pathname === '/') {
+        mobileMenu.querySelectorAll('a, button').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+            });
+        });
+
+        // Scroll on homepage if needed
+        if (localStorage.getItem('scrollToDesignSteps') === 'true') {
+            localStorage.removeItem('scrollToDesignSteps');
+            setTimeout(() => {
                 document.getElementById('design-steps')?.scrollIntoView({ behavior: 'smooth' });
-                closeMobileMenu();
-            } else {
-                localStorage.setItem('scrollToDesignSteps', 'true');
-                window.location.href = '/';
-            }
+            }, 300);
         }
+    });
 
-        function closeMobileMenu() {
-            document.getElementById('mobile-menu')?.classList.add('translate-x-full');
+    function goToHowItWorks() {
+        if (window.location.pathname === '/') {
+            document.getElementById('design-steps')?.scrollIntoView({ behavior: 'smooth' });
+            closeMobileMenu();
+        } else {
+            localStorage.setItem('scrollToDesignSteps', 'true');
+            window.location.href = '/';
         }
-    </script>
+    }
 
-</body>
-
-</html>
+    function closeMobileMenu() {
+        document.getElementById('mobile-menu')?.classList.add('translate-x-full');
+    }
+</script>

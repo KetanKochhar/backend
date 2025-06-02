@@ -6,29 +6,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Redesign </title>
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const sizeModal = document.getElementById('sizeModal');
-    const sizeButtons = document.querySelectorAll('.size-btn');
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const sizeModal = document.getElementById('sizeModal');
+      const sizeButtons = document.querySelectorAll('.size-btn');
 
-    // Show the popup
-    sizeModal.style.display = 'flex';
+      // Show the popup
+      sizeModal.style.display = 'flex';
 
-    // Handle size selection
-    sizeButtons.forEach(button => {
+      // Handle size selection
+      sizeButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const selectedSize = button.getAttribute('data-size');
-            console.log("Selected Size:", selectedSize);
+          const selectedSize = button.getAttribute('data-size');
+          console.log("Selected Size:", selectedSize);
 
-            // You can store the selected size in localStorage or a variable
-            sessionStorage.setItem('size', selectedSize);
+          // You can store the selected size in localStorage or a variable
+          sessionStorage.setItem('size', selectedSize);
 
-            // Hide the modal
-            sizeModal.style.display = 'none';
+          // Hide the modal
+          sizeModal.style.display = 'none';
         });
+      });
     });
-});
-</script>
+  </script>
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link
@@ -36,7 +36,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="/css/design.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
-  
+
 
   <script src="/JS/redesign.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -46,7 +46,7 @@
 
 <body>
   <div class="content-container">
-    
+
 
     <!-- Sidebar for T-Shirt Customization Options -->
     <div class="sidebar">
@@ -102,19 +102,24 @@
       <div class="panel-title">
         <span class="close-btn" onclick="closePanel('colorPanel')">X</span>
       </div>
-      <h1><% colors %></h1>
-      <% if (colors && colors.length > 0) { %>
-        <% colors.forEach(color => { %>
-            <div class="color-option <%= color.name === 'White' ? 'selected' : '' %>" data-color="<%= color.color %>" data-color1="<%= color.dark_color %>">
-                <div class="left-side">
-                    <div class="circle" style="background-color: <%= color.color %>;"></div>
-                    <span class="color-name"><%= color.name %></span>
-                </div>
+      <h1>
+        <% colors %>
+      </h1>
+      <% if (colors && colors.length> 0) { %>
+        <% colors.forEach(color=> { %>
+          <div class="color-option <%= color.name === 'White' ? 'selected' : '' %>" data-color="<%= color.color %>"
+            data-color1="<%= color.dark_color %>">
+            <div class="left-side">
+              <div class="circle" style="background-color: <%= color.color %>;"></div>
+              <span class="color-name">
+                <%= color.name %>
+              </span>
             </div>
-        <% }); %>
-    <% } else { %>
-        <p>No colors available.</p>
-    <% } %>
+          </div>
+          <% }); %>
+            <% } else { %>
+              <p>No colors available.</p>
+              <% } %>
     </div>
 
 
@@ -268,4 +273,5 @@
 
 
 </body>
+
 </html>

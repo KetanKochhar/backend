@@ -23,25 +23,30 @@
       </svg>
     </button>
     <!-- <a href="product1.html" class="cart-item-link"> -->
-      <div class="cart-item">
-        <img src="<%= img %>" alt="T-shirt 1" />
-        <div class="item-details">
-          <h3><%= dname.split("-")[1] %></h3>
-          <h3 id="price">Price : ₹<%= price %></h3>
-          <p>Size :<%= dname.split("-")[2] %></p>
-        </div>
-        <div class="tooltip">
-          <img src="<%= img %>" alt="Preview">
-          <div class="price">₹<%= price %></div>
+    <div class="cart-item">
+      <img src="<%= img %>" alt="T-shirt 1" />
+      <div class="item-details">
+        <h3>
+          <%= dname.split("-")[1] %>
+        </h3>
+        <h3 id="price">Price : ₹<%= price %>
+        </h3>
+        <p>Size :<%= dname.split("-")[2] %>
+        </p>
+      </div>
+      <div class="tooltip">
+        <img src="<%= img %>" alt="Preview">
+        <div class="price">₹<%= price %>
         </div>
       </div>
-      <div class="promo">
-        <h2>Add promo code</h2>
-        <form id="promoForm">
-          <input type="text" name="promo" id="promo" />
-          <button type="submit">Apply!</button>
-        </form>
-      </div>      
+    </div>
+    <div class="promo">
+      <h2>Add promo code</h2>
+      <form id="promoForm">
+        <input type="text" name="promo" id="promo" />
+        <button type="submit">Apply!</button>
+      </form>
+    </div>
     <!-- </a> -->
   </div>
 </body>
@@ -49,7 +54,7 @@
   sessionStorage.removeItem("promoapplied")
   document.getElementById("promoForm").addEventListener("submit", async function (e) {
     e.preventDefault();
-    if(!sessionStorage.getItem("promoapplied")){
+    if (!sessionStorage.getItem("promoapplied")) {
       const promoCode = document.getElementById("promo").value;
       const response = await fetch("/check-promo", {
         method: "POST",
@@ -58,25 +63,25 @@
         },
         body: JSON.stringify({ promo: promoCode })
       });
-  console.log(typeof(response))
-      if (!response.ok || typeof(response) != JSON) {
+      console.log(typeof (response))
+      if (!response.ok || typeof (response) != JSON) {
         alert("Invalid promo code or server error.");
         return;
       }
-  
-      const result = await response.json(); 
-      sessionStorage.setItem("promoapplied","true")
+
+      const result = await response.json();
+      sessionStorage.setItem("promoapplied", "true")
       const discount = result.discount;
-  
+
       // Assuming the original price is present in the HTML like this
       const priceElement = document.getElementById("price");
       const originalPriceText = priceElement.textContent.match(/\d+/g); // Extract price from "Price : 100"
       const originalPrice = parseFloat(originalPriceText[0]);
-  
+
       const newPrice = originalPrice - (originalPrice * discount / 100);
       priceElement.textContent = `Price : ${newPrice.toFixed(2)}`;
     }
-    else{
+    else {
       // alert("One promo at a time")
       console.log("one promo at a time")
     }

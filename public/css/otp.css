@@ -6,13 +6,16 @@
 body {
     background: url('/images/pattern.png');
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
     margin: 0;
+    overflow-x: hidden;
 }
 
 .otp-container {
+    margin-top: 100px;
+    margin-bottom: 50px;
     background: #d7e0c5;
     padding: 40px 30px;
     border-radius: 12px;
@@ -27,7 +30,7 @@ h2 {
     color: #333;
 }
 
-p {
+#p {
     font-size: 14px;
     margin-bottom: 20px;
     color: #555;
@@ -79,4 +82,8 @@ p {
 
 .resend:hover {
     color: black;
+}
+
+footer {
+    width: 100vw;
 }

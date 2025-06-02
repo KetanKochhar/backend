@@ -4,17 +4,22 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+
 body {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
     background: url('/images/pattern.png');
-    background-size: 600px; 
+    background-size: 600px;
     background-repeat: repeat;
+    overflow-x: hidden;
 
 }
+
 .login-container {
+    margin-top: 100px;
+    margin-bottom: 50px;
     display: flex;
     align-items: center;
     background: rgba(255, 255, 255, 0.8);
@@ -22,22 +27,26 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
 .login-box {
     background: #d7e0c5;
     padding: 30px;
     border-radius: 10px;
     width: 300px;
 }
+
 .login-box h2 {
     text-align: center;
     margin-bottom: 20px;
     font-weight: 600;
 }
+
 .login-box label {
     display: block;
     margin-bottom: 5px;
     font-weight: 400;
 }
+
 .login-box input {
     width: 100%;
     padding: 10px;
@@ -45,6 +54,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
 .login-box button {
     width: 100%;
     padding: 10px;
@@ -56,9 +66,11 @@ body {
     cursor: pointer;
     transition: 0.3s;
 }
+
 .login-box button:hover {
     background-color: #142109;
 }
+
 .branding {
     margin-left: 40px;
     text-align: center;
@@ -68,15 +80,22 @@ body {
     width: 120px;
     margin-bottom: 10px;
 }
-a{
+
+a {
     color: #143109;
     font-size: 0.8rem;
 }
+
+footer {
+    width: 100vw;
+}
+
 @media (max-width: 430px) {
     .login-container {
         flex-direction: column;
         padding: 30px;
     }
+
     .branding {
         margin-left: 0;
         margin-top: 20px;
