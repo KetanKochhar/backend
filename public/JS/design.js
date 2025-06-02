@@ -1,7 +1,7 @@
 function getpolo(color = "white", color1 = "white", stroke = "black") {
-    const poloFrontSVG = `<svg width="540" height="530" viewBox="0 0 540 530" fill="none" xmlns="http://www.w3.org/2000/svg"> <rect width="915" height="821" fill="none"/> <line y1="-0.5" x2="125.485" y2="-0.5" transform="matrix(0.233143 0.972442 0.971048 -0.238883 2903.91 20.3065)" stroke="${stroke}" stroke-dasharray="2 2"/> <path d="M220.336 33.0898L217.458 33.8827L218.744 36.5764C223.579 46.7105 227.975 54.3102 233.47 61.1508C238.964 67.9912 245.483 73.98 254.464 80.9726L255.142 81.5H256H272H272.883L273.57 80.9452C282.282 73.9122 288.582 67.8755 293.968 61.0294C299.348 54.1896 303.749 46.6261 308.738 36.615L310.116 33.8484L307.123 33.0787C289.442 28.533 275.759 26.297 262.442 26.3361C249.116 26.3753 236.293 28.6922 220.336 33.0898Z" fill="${color1}" stroke="${stroke}" stroke-width="5"/> <path d="M112.046 65.189L114.902 64.0109L115.459 67.0489C121.179 98.2291 124.408 123.376 123.643 148.02C122.877 172.697 118.111 196.762 107.966 225.824L107.364 227.55L105.537 227.499L33.0699 225.495L31.162 225.443L30.7101 223.588L3.57113 112.242L3.06303 110.157L5.04647 109.339L112.046 65.189Z" fill="${color}" stroke="#060606" stroke-width="5"/> <path d="M411.138 59.688L408.262 58.5048L407.725 61.5678C396.315 126.577 404.361 165.78 424.402 225.792L424.98 227.523L426.805 227.5L497.151 226.611L499.11 226.586L499.554 224.679L526.435 109.393L526.917 107.322L524.951 106.513L411.138 59.688Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> <path d="M111.883 64.9216L110.22 65.7212L110.494 67.5457C116.462 107.306 117.629 135.116 115.384 158.736C113.14 182.342 107.479 201.887 99.631 225.169L99.5 225.557V225.967V504V505.691L101.069 506.32C167.633 533.014 219.204 546.502 269.795 546.521C320.402 546.54 369.789 533.081 431.989 506.296L433.5 505.645V504V225.967V225.52L433.345 225.1C413.52 171.513 411.981 133.392 423.076 67.5903L423.395 65.6941L421.645 64.8986L342.034 28.724L339.076 27.3796L338.535 30.584C334.959 51.7701 329.478 63.3781 318.993 70.4958C308.284 77.7648 291.931 80.6966 265.468 82.9934C236.699 81.243 219.992 77.5789 209.496 69.8682C199.145 62.2642 194.385 50.3679 190.651 30.5373L190.048 27.3346L187.111 28.747L111.883 64.9216Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> <line y1="-0.5" x2="123.656" y2="-0.5" transform="matrix(-0.231952 0.972727 -0.971347 -0.237666 512.527 106.05)" stroke="${stroke}" stroke-dasharray="2 2"/> <line y1="-0.5" x2="125.485" y2="-0.5" transform="matrix(-0.233143 0.972442 -0.971048 -0.238883 508.512 104.306)" stroke="${stroke}" stroke-dasharray="2 2"/> <line y1="-0.5" x2="123.656" y2="-0.5" transform="matrix(0.231952 0.972727 0.971347 -0.237666 16.8992 106.05)" stroke="${stroke}" stroke-dasharray="2 2"/> <line y1="-0.5" x2="125.485" y2="-0.5" transform="matrix(0.233143 0.972442 0.971048 -0.238883 20.9148 104.306)" stroke="${stroke}" stroke-dasharray="2 2"/> <rect x="259.5" y="82.5" width="10" height="91" fill="${color}" stroke="${stroke}" stroke-width="5"/> <path d="M188.102 29.373L187.27 30.3433L187.57 31.5856C198.28 76.039 206.434 96.859 227.422 113.939L229.377 115.53L230.952 113.562L256.952 81.0617L258.511 79.1131L256.565 77.5507C243.786 67.2887 235.711 59.531 229.105 49.7587C222.476 39.9499 217.237 27.9812 210.348 9.14143L208.881 5.1304L206.102 8.37302L188.102 29.373ZM341.43 31.5856L341.725 30.3645L340.921 29.3995L323.421 8.39954L320.642 5.06575L319.152 9.14143C312.268 27.9672 306.907 39.9347 300.156 49.7412C293.426 59.5198 285.223 67.2815 272.435 77.5507L270.489 79.1131L272.048 81.0617L298.048 113.562L299.623 115.53L301.578 113.939C322.566 96.859 330.72 76.039 341.43 31.5856Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> <path d="M211.061 2.70407C252.947 7.66005 277.045 7.51365 317.333 2.80795C313.975 13.6653 311.296 20.6044 306.111 31.5959C286.886 27.0341 272.614 25.1333 259.571 25.3545C246.737 25.5721 235.216 27.8428 221.492 31.5076C217.282 21.0072 214.73 14.4144 210.692 3.56565L211.061 2.70407Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> </svg> `;
+    const poloFrontSVG = `<svg width="540" height="530" viewBox="0 0 540 530" fill="none" xmlns="http://www.w3.org/2000/svg"> <rect width="540" height="530" fill="none"/> <line y1="-0.5" x2="125.485" y2="-0.5" transform="matrix(0.233143 0.972442 0.971048 -0.238883 2903.91 20.3065)" stroke="${stroke}" stroke-dasharray="2 2"/> <path d="M220.336 33.0898L217.458 33.8827L218.744 36.5764C223.579 46.7105 227.975 54.3102 233.47 61.1508C238.964 67.9912 245.483 73.98 254.464 80.9726L255.142 81.5H256H272H272.883L273.57 80.9452C282.282 73.9122 288.582 67.8755 293.968 61.0294C299.348 54.1896 303.749 46.6261 308.738 36.615L310.116 33.8484L307.123 33.0787C289.442 28.533 275.759 26.297 262.442 26.3361C249.116 26.3753 236.293 28.6922 220.336 33.0898Z" fill="${color1}" stroke="${stroke}" stroke-width="5"/> <path d="M112.046 65.189L114.902 64.0109L115.459 67.0489C121.179 98.2291 124.408 123.376 123.643 148.02C122.877 172.697 118.111 196.762 107.966 225.824L107.364 227.55L105.537 227.499L33.0699 225.495L31.162 225.443L30.7101 223.588L3.57113 112.242L3.06303 110.157L5.04647 109.339L112.046 65.189Z" fill="${color}" stroke="#060606" stroke-width="5"/> <path d="M411.138 59.688L408.262 58.5048L407.725 61.5678C396.315 126.577 404.361 165.78 424.402 225.792L424.98 227.523L426.805 227.5L497.151 226.611L499.11 226.586L499.554 224.679L526.435 109.393L526.917 107.322L524.951 106.513L411.138 59.688Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> <path d="M111.883 64.9216L110.22 65.7212L110.494 67.5457C116.462 107.306 117.629 135.116 115.384 158.736C113.14 182.342 107.479 201.887 99.631 225.169L99.5 225.557V225.967V504V505.691L101.069 506.32C167.633 533.014 219.204 546.502 269.795 546.521C320.402 546.54 369.789 533.081 431.989 506.296L433.5 505.645V504V225.967V225.52L433.345 225.1C413.52 171.513 411.981 133.392 423.076 67.5903L423.395 65.6941L421.645 64.8986L342.034 28.724L339.076 27.3796L338.535 30.584C334.959 51.7701 329.478 63.3781 318.993 70.4958C308.284 77.7648 291.931 80.6966 265.468 82.9934C236.699 81.243 219.992 77.5789 209.496 69.8682C199.145 62.2642 194.385 50.3679 190.651 30.5373L190.048 27.3346L187.111 28.747L111.883 64.9216Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> <line y1="-0.5" x2="123.656" y2="-0.5" transform="matrix(-0.231952 0.972727 -0.971347 -0.237666 512.527 106.05)" stroke="${stroke}" stroke-dasharray="2 2"/> <line y1="-0.5" x2="125.485" y2="-0.5" transform="matrix(-0.233143 0.972442 -0.971048 -0.238883 508.512 104.306)" stroke="${stroke}" stroke-dasharray="2 2"/> <line y1="-0.5" x2="123.656" y2="-0.5" transform="matrix(0.231952 0.972727 0.971347 -0.237666 16.8992 106.05)" stroke="${stroke}" stroke-dasharray="2 2"/> <line y1="-0.5" x2="125.485" y2="-0.5" transform="matrix(0.233143 0.972442 0.971048 -0.238883 20.9148 104.306)" stroke="${stroke}" stroke-dasharray="2 2"/> <rect x="259.5" y="82.5" width="10" height="91" fill="${color}" stroke="${stroke}" stroke-width="5"/> <path d="M188.102 29.373L187.27 30.3433L187.57 31.5856C198.28 76.039 206.434 96.859 227.422 113.939L229.377 115.53L230.952 113.562L256.952 81.0617L258.511 79.1131L256.565 77.5507C243.786 67.2887 235.711 59.531 229.105 49.7587C222.476 39.9499 217.237 27.9812 210.348 9.14143L208.881 5.1304L206.102 8.37302L188.102 29.373ZM341.43 31.5856L341.725 30.3645L340.921 29.3995L323.421 8.39954L320.642 5.06575L319.152 9.14143C312.268 27.9672 306.907 39.9347 300.156 49.7412C293.426 59.5198 285.223 67.2815 272.435 77.5507L270.489 79.1131L272.048 81.0617L298.048 113.562L299.623 115.53L301.578 113.939C322.566 96.859 330.72 76.039 341.43 31.5856Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> <path d="M211.061 2.70407C252.947 7.66005 277.045 7.51365 317.333 2.80795C313.975 13.6653 311.296 20.6044 306.111 31.5959C286.886 27.0341 272.614 25.1333 259.571 25.3545C246.737 25.5721 235.216 27.8428 221.492 31.5076C217.282 21.0072 214.73 14.4144 210.692 3.56565L211.061 2.70407Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> </svg> `;
 
-    const poloBackSVG = `<svg width="540" height="530" viewBox="0 0 540 530" fill="none" xmlns="http://www.w3.org/2000/svg"> <rect width="915" height="820" fill="none"/> <path d="M112.046 59.689L114.902 58.5109L115.459 61.5489C121.179 92.7291 124.408 117.876 123.643 142.52C122.877 167.197 118.111 191.262 107.966 220.324L107.364 222.05L105.537 221.999L33.0699 219.995L31.162 219.943L30.7101 218.088L3.57113 106.742L3.06303 104.657L5.04647 103.839L112.046 59.689Z" fill="${color}" stroke="#060606" stroke-width="5"/> <line y1="-0.5" x2="123.656" y2="-0.5" transform="matrix(0.231952 0.972727 0.971347 -0.237666 16.8992 100.55)" stroke="${stroke}" stroke-dasharray="2 2"/> <line y1="-0.5" x2="125.485" y2="-0.5" transform="matrix(0.233143 0.972442 0.971048 -0.238883 20.9148 98.8065)" stroke="${stroke}" stroke-dasharray="2 2"/> <path d="M411.138 54.2613L408.262 53.078L407.725 56.1411C396.315 121.15 404.361 160.353 424.402 220.365L424.98 222.096L426.805 222.073L497.151 221.184L499.11 221.159L499.554 219.252L526.435 103.966L526.917 101.896L524.951 101.087L411.138 54.2613Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> <path d="M111.883 59.5998L110.22 60.3994L110.494 62.2239C116.462 101.984 117.629 129.794 115.384 153.415C113.14 177.021 107.479 196.565 99.631 219.847L99.5 220.236V220.646V498.678V500.369L101.069 500.998C167.633 527.692 219.204 541.18 269.795 541.199C320.402 541.218 369.789 527.759 431.989 500.974L433.5 500.323V498.678V220.646V220.198L433.345 219.778C413.52 166.192 411.981 128.07 423.076 62.2685L423.392 60.39L421.665 59.5862L341.555 22.3067L340.928 22.0148L340.24 22.0869C319.187 24.2923 311.455 25.2165 306.364 25.825C298.746 26.7355 297.043 26.9392 265.468 29.6717C238.267 28.0207 227.682 25.9253 220.228 24.4496C219.849 24.3745 219.477 24.3009 219.112 24.2291C211.22 22.6776 206.098 21.922 188.02 23.1843L187.542 23.2176L187.111 23.4252L111.883 59.5998Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> <line y1="-0.5" x2="123.656" y2="-0.5" transform="matrix(-0.231952 0.972727 -0.971347 -0.237666 512.527 100.623)" stroke="${stroke}" stroke-dasharray="2 2"/> <line y1="-0.5" x2="125.485" y2="-0.5" transform="matrix(-0.233143 0.972442 -0.971048 -0.238883 508.512 98.8797)" stroke="${stroke}" stroke-dasharray="2 2"/> <line y1="-0.5" x2="125.485" y2="-0.5" transform="matrix(0.233143 0.972442 0.971048 -0.238883 2316.91 17.3065)" stroke="${stroke}" stroke-dasharray="2 2"/> <path d="M205.797 2.50873H204.605L203.855 3.43462L188.868 21.9259L186.892 24.3649L189.711 25.7454C206.811 34.1168 236.006 38.5497 264.92 38.609C293.809 38.6682 323.179 34.3645 340.529 24.6831L343.925 22.7879L340.791 20.4852L316.98 2.99394L316.32 2.50873H315.5H205.797Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> </svg> `;
+    const poloBackSVG = `<svg width="540" height="530" viewBox="0 0 540 530" fill="none" xmlns="http://www.w3.org/2000/svg"> <rect width="540" height="530" fill="none"/> <path d="M112.046 59.689L114.902 58.5109L115.459 61.5489C121.179 92.7291 124.408 117.876 123.643 142.52C122.877 167.197 118.111 191.262 107.966 220.324L107.364 222.05L105.537 221.999L33.0699 219.995L31.162 219.943L30.7101 218.088L3.57113 106.742L3.06303 104.657L5.04647 103.839L112.046 59.689Z" fill="${color}" stroke="#060606" stroke-width="5"/> <line y1="-0.5" x2="123.656" y2="-0.5" transform="matrix(0.231952 0.972727 0.971347 -0.237666 16.8992 100.55)" stroke="${stroke}" stroke-dasharray="2 2"/> <line y1="-0.5" x2="125.485" y2="-0.5" transform="matrix(0.233143 0.972442 0.971048 -0.238883 20.9148 98.8065)" stroke="${stroke}" stroke-dasharray="2 2"/> <path d="M411.138 54.2613L408.262 53.078L407.725 56.1411C396.315 121.15 404.361 160.353 424.402 220.365L424.98 222.096L426.805 222.073L497.151 221.184L499.11 221.159L499.554 219.252L526.435 103.966L526.917 101.896L524.951 101.087L411.138 54.2613Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> <path d="M111.883 59.5998L110.22 60.3994L110.494 62.2239C116.462 101.984 117.629 129.794 115.384 153.415C113.14 177.021 107.479 196.565 99.631 219.847L99.5 220.236V220.646V498.678V500.369L101.069 500.998C167.633 527.692 219.204 541.18 269.795 541.199C320.402 541.218 369.789 527.759 431.989 500.974L433.5 500.323V498.678V220.646V220.198L433.345 219.778C413.52 166.192 411.981 128.07 423.076 62.2685L423.392 60.39L421.665 59.5862L341.555 22.3067L340.928 22.0148L340.24 22.0869C319.187 24.2923 311.455 25.2165 306.364 25.825C298.746 26.7355 297.043 26.9392 265.468 29.6717C238.267 28.0207 227.682 25.9253 220.228 24.4496C219.849 24.3745 219.477 24.3009 219.112 24.2291C211.22 22.6776 206.098 21.922 188.02 23.1843L187.542 23.2176L187.111 23.4252L111.883 59.5998Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> <line y1="-0.5" x2="123.656" y2="-0.5" transform="matrix(-0.231952 0.972727 -0.971347 -0.237666 512.527 100.623)" stroke="${stroke}" stroke-dasharray="2 2"/> <line y1="-0.5" x2="125.485" y2="-0.5" transform="matrix(-0.233143 0.972442 -0.971048 -0.238883 508.512 98.8797)" stroke="${stroke}" stroke-dasharray="2 2"/> <line y1="-0.5" x2="125.485" y2="-0.5" transform="matrix(0.233143 0.972442 0.971048 -0.238883 2316.91 17.3065)" stroke="${stroke}" stroke-dasharray="2 2"/> <path d="M205.797 2.50873H204.605L203.855 3.43462L188.868 21.9259L186.892 24.3649L189.711 25.7454C206.811 34.1168 236.006 38.5497 264.92 38.609C293.809 38.6682 323.179 34.3645 340.529 24.6831L343.925 22.7879L340.791 20.4852L316.98 2.99394L316.32 2.50873H315.5H205.797Z" fill="${color}" stroke="${stroke}" stroke-width="5"/> </svg> `;
     return [poloFrontSVG, poloBackSVG]
 }
 function getcotton(color = "white", color1 = "white", stroke = "black") {
@@ -273,6 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
             showToast("Please deselect the object before saving.", "#ab3131");
             return;
         }
+
         const userObjects = canvas.getObjects().filter(obj => obj !== currentClothing && obj !== tshirtBorder);
         const existingToast = document.querySelector('.toast');
         if (existingToast) existingToast.remove();
@@ -288,7 +289,8 @@ document.addEventListener('DOMContentLoaded', function () {
             objectsBySide[currentSide] = [];
             isDesignSaved = true;
             document.getElementById('previewBtn').disabled = false;
-            showToast("Design saved successfully!");  // Show success toast after saving
+            showToast("Design saved successfully!");
+            saveDesignToServer(); // Save to server once (even for blank)
             return;
         }
 
@@ -303,70 +305,66 @@ document.addEventListener('DOMContentLoaded', function () {
                     objectsBySide[currentSide] = clonedObjects;
                     isDesignSaved = true;
                     document.getElementById('previewBtn').disabled = false;
-                    showToast("Design saved successfully!");  // Show success toast after saving
+                    showToast("Design saved successfully!");
+
+                    saveDesignToServer(); // Save only once
                 }
             });
         });
-        const designnumber = sessionStorage.getItem("designID")
+    });
+
+    function saveDesignToServer() {
+        const designnumber = sessionStorage.getItem("designID");
         const uid = sessionStorage.getItem("uid");
         const number = sessionStorage.getItem("number");
         const type = sessionStorage.getItem("type");
         const size = sessionStorage.getItem("size");
         const gender = sessionStorage.getItem("gender");
-        const designname = `${number}-${type}-${size}-${gender}`;
         const color = currentTshirtColor;
         const frontCanvasJson = JSON.stringify(canvasStates.tshirtFront);
         const backCanvasJson = JSON.stringify(canvasStates.tshirtBack);
-        if (!designnumber) {
-            fetch('/save-design', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    uid,
-                    name: designname,
-                    type,
-                    color,
-                    fcj: frontCanvasJson,
-                    bcj: backCanvasJson,
-                    price: totalPrice
-                })
+        const price = totalPrice;
+
+        const designname = `${number}-${type}-${size}-${gender}`;
+
+        const data = {
+            uid,
+            name: designname,
+            type,
+            color,
+            fcj: frontCanvasJson,
+            bcj: backCanvasJson,
+            price
+        };
+
+        const updateData = {
+            did: designnumber,
+            fcj: frontCanvasJson,
+            bcj: backCanvasJson,
+            price
+        };
+
+        const url = designnumber ? "/update-design" : "/save-design";
+        const payload = designnumber ? updateData : data;
+
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+            .then(res => res.json())
+            .then(response => {
+                console.log(designnumber ? 'Design Updated:' : 'Design Saved:', response);
+                if (!designnumber && response.designId) {
+                    sessionStorage.setItem("designID", response.designId);
+                }
             })
-                .then(res => res.json())
-                .then(data => {
-                    console.log('Design saved:', data);
-                    sessionStorage.setItem("designID", data.designId);
-                })
-                .catch(err => {
-                    console.error('Error saving design:', err);
-                });
-        }
-        else {
-            fetch("/update-design", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    did: designnumber,
-                    fcj: frontCanvasJson,
-                    bcj: backCanvasJson,
-                    price: totalPrice
-                })
-            })
-                .then(res => res.json())
-                .then(data => {
-                    console.log('Design Updated:', data);
-                })
-                .catch(err => {
-                    console.error('Error saving design:', err);
-                });
-        }
+            .catch(err => {
+                console.error('Error saving design:', err);
+            });
+    }
 
-
-    });
-
+    // Order Now button
     document.getElementById('OrderNow').addEventListener('click', function () {
         if (isDesignSaved) {
             window.location.href = 'order.html';
@@ -376,25 +374,35 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    document.getElementById('previewBtn').addEventListener('click', async function () {
+    document.getElementById('previewBtn').addEventListener('click', function () {
         if (!isDesignSaved) {
             showToast("Please save the design first!", "#ab3131");
             return;
         }
 
+        const frontPreview = canvasStates.tshirtFront.preview;
+        const backPreview = canvasStates.tshirtBack.preview;
+
+        if (!frontPreview && !backPreview) {
+            showToast("No preview available. Please save your design first.", "#ab3131");
+            return;
+        }
+
+        const previews = [];
+        if (frontPreview) previews.push({ src: frontPreview, label: "Front View" });
+        if (backPreview) previews.push({ src: backPreview, label: "Back View" });
+
+        let currentIndex = 0;
+
         // Backdrop
         const backdrop = document.createElement('div');
         backdrop.className = 'preview-backdrop';
 
-        // Modal container
+        // Container
         const previewContainer = document.createElement('div');
         previewContainer.className = 'preview-container';
 
-        // Carousel wrapper for mobile swipe
-        const carouselWrapper = document.createElement('div');
-        carouselWrapper.className = 'carousel-wrapper';
-
-        // Close button
+        // Close Button
         const closeBtn = document.createElement('button');
         closeBtn.className = 'preview-close-btn';
         closeBtn.innerText = '×';
@@ -402,121 +410,68 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.removeChild(previewContainer);
             document.body.removeChild(backdrop);
         });
+
+        // Image display
+        const img = document.createElement('img');
+        img.className = 'preview-image';
+        img.style.cursor = 'pointer';
+
+        // Label
+        const label = document.createElement('div');
+        label.className = 'preview-label';
+
+        // Update image content
+        const updatePreview = () => {
+            img.src = previews[currentIndex].src;
+            img.alt = previews[currentIndex].label;
+            label.innerText = previews[currentIndex].label;
+        };
+
+        img.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.href = img.src;
+            link.download = `${img.alt}.png`;
+            link.click();
+        });
+
+        // Arrows
+        const leftArrow = document.createElement('button');
+        leftArrow.innerText = '‹';
+        leftArrow.className = 'arrow left';
+        leftArrow.onclick = () => {
+            currentIndex = (currentIndex - 1 + previews.length) % previews.length;
+            updatePreview();
+        };
+
+        const rightArrow = document.createElement('button');
+        rightArrow.innerText = '›';
+        rightArrow.className = 'arrow right';
+        rightArrow.onclick = () => {
+            currentIndex = (currentIndex + 1) % previews.length;
+            updatePreview();
+        };
+
+        // Swipe support
+        let startX = 0;
+        img.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+        img.addEventListener('touchend', e => {
+            let endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) rightArrow.click();
+            else if (endX - startX > 50) leftArrow.click();
+        });
+
+        // Final DOM assembly
         previewContainer.appendChild(closeBtn);
+        previewContainer.appendChild(leftArrow);
+        previewContainer.appendChild(img);
+        previewContainer.appendChild(rightArrow);
+        previewContainer.appendChild(label);
 
         document.body.appendChild(backdrop);
         document.body.appendChild(previewContainer);
-        previewContainer.appendChild(carouselWrapper);
 
-        const createPreviewImage = async (side, label) => {
-            return new Promise(resolve => {
-                const tempCanvas = new fabric.StaticCanvas(null, {
-                    width: canvas.getWidth(),
-                    height: canvas.getHeight(),
-                    backgroundColor: null
-                });
-
-                const svg = clothingImages[side];
-                const sideObjects = objectsBySide[side] || [];
-
-                fabric.loadSVGFromURL(svg, (objects, options) => {
-                    const clothingGroup = fabric.util.groupSVGElements(objects, options);
-                    const screenWidth = window.innerWidth;
-
-                    if (screenWidth > 1439) clothingGroup.scaleToWidth(canvas.width * 0.34);
-                    else if (screenWidth > 1023) clothingGroup.scaleToWidth(canvas.width * 0.5);
-                    else if (screenWidth > 767) clothingGroup.scaleToWidth(canvas.width * 0.645);
-                    else if (screenWidth > 424) clothingGroup.scaleToWidth(canvas.width * 0.8);
-                    else if (screenWidth > 374) clothingGroup.scaleToWidth(canvas.width * 0.9);
-                    else clothingGroup.scaleToWidth(canvas.width * 1);
-
-                    clothingGroup.set({
-                        left: canvas.width / 2,
-                        top: canvas.height / 2,
-                        originX: 'center',
-                        originY: 'center',
-                        selectable: false,
-                        evented: false
-                    });
-
-                    tempCanvas.add(clothingGroup);
-
-                    let cloneCount = 0;
-                    const finalize = () => {
-                        tempCanvas.renderAll();
-
-                        // Compute visible bounds
-                        const allObjects = tempCanvas.getObjects();
-                        const group = new fabric.Group(allObjects);
-                        const bounds = group.getBoundingRect(true, true);
-
-                        const scaleFactor = 4; // or 4 for even higher
-                        const retina = window.devicePixelRatio || 1;
-
-                        const croppedCanvas = document.createElement('canvas');
-                        croppedCanvas.width = bounds.width * scaleFactor * retina;
-                        croppedCanvas.height = bounds.height * scaleFactor * retina;
-
-                        const ctx = croppedCanvas.getContext('2d');
-                        ctx.scale(scaleFactor * retina, scaleFactor * retina);
-
-                        ctx.drawImage(
-                            tempCanvas.lowerCanvasEl,
-                            bounds.left,
-                            bounds.top,
-                            bounds.width,
-                            bounds.height,
-                            0,
-                            0,
-                            bounds.width,
-                            bounds.height
-                        );
-
-                        const dataURL = croppedCanvas.toDataURL('image/png');
-                        const img = new Image();
-                        img.src = dataURL;
-                        img.alt = label;
-                        img.title = `Click to download ${label}`;
-                        img.className = 'preview-image';
-                        img.style.cursor = 'pointer';
-                        img.dataset.label = label;
-
-                        img.addEventListener('click', () => {
-                            const link = document.createElement('a');
-                            link.href = dataURL;
-                            link.download = `${label}.png`;
-                            link.click();
-                        });
-
-                        resolve(img);
-                    };
-
-
-                    if (sideObjects.length === 0) {
-                        finalize();
-                    } else {
-                        sideObjects.forEach(obj => {
-                            obj.clone(cloned => {
-                                tempCanvas.add(cloned);
-                                cloneCount++;
-                                if (cloneCount === sideObjects.length) finalize();
-                            });
-                        });
-                    }
-                });
-            });
-        };
-
-        const [frontImg, backImg] = await Promise.all([
-            createPreviewImage('tshirtFront', 'Front View'),
-            createPreviewImage('tshirtBack', 'Back View')
-        ]);
-
-        // Append both images side-by-side
-        previewContainer.appendChild(frontImg);
-        previewContainer.appendChild(backImg);
+        updatePreview(); // Load initial
     });
-
 
 
     let isToastVisible = false; // Track if a toast is already visible
@@ -552,11 +507,17 @@ document.addEventListener('DOMContentLoaded', function () {
     function drawTshirtBorder(type) {
         if (!currentClothing) return;
 
+        const tshirtype = sessionStorage.getItem("type")
         const scale = currentClothing.scaleX;
-        const groupLeft = currentClothing.left;
+        let groupLeft = currentClothing.left;
         const groupTop = currentClothing.top;
 
         let borderWidth, borderHeight, topOffset;
+
+        if (tshirtype === 'polo') {
+            groupLeft -= 3;
+        }
+
 
         if (type === 'tshirtFront') {
             borderWidth = currentClothing.width * 0.53;
@@ -707,11 +668,17 @@ document.addEventListener('DOMContentLoaded', function () {
     function applyClipPathToObject(obj) {
         if (!currentClothing || !tshirtBorder || obj === currentClothing || obj === tshirtBorder) return;
 
+        const tshirtype = sessionStorage.getItem("type")
         const scale = currentClothing.scaleX;
         const groupLeft = currentClothing.left;
         const groupTop = currentClothing.top;
 
         let borderWidth, borderHeight, topOffset;
+
+        if (tshirtype === 'polo') {
+            groupLeft -= 3;
+        }
+
         // console.log (currentSide)
         if (currentSide === 'tshirtFront') {
             borderWidth = currentClothing.width * 0.53;
