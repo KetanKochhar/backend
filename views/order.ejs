@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Now | CustomWear</title>
+    <link rel="stylesheet" href="/css/order.css" />
+</head>
+
+<body>
+    <%- include('partials/nav', { user: user }) %>
+
+    <div class="order-page">
+        <!-- LEFT PANEL -->
+        <div class="left-panel">
+            <b><h1 style="font-size: 25px;">Your Custom T-Shirt</h1></b><br>
+            <div class="product-preview">
+                <img src="/images/tshirt_sample.png" alt="T-Shirt Preview" />
+                <div class="product-details">
+                    <p><strong>Name:</strong> Cotton Comfort Tee</p>
+                    <p><strong>Size:</strong> L</p>
+                    <p><strong>Color:</strong> White</p>
+                    <p><strong>No. of Designs:</strong> 2</p>
+                </div>
+            </div>
+
+            <form class="customer-info">
+                <h3>Shipping Info</h3>
+                <input type="text" placeholder="Full Name" required />
+                <input type="text" placeholder="Address" required />
+                <input type="text" placeholder="City" required />
+                <input type="text" placeholder="Pincode" required />
+                <input type="tel" placeholder="Phone Number" required />
+            </form>
+            <div class="payment-option">
+                <b><h1 style="font-size: 25px;">payment Method</h1></b><br>
+                <label><input type="radio" name="payment" checked /> Cash on Delivery</label>
+            </div>
+        </div>
+        
+        <!-- RIGHT PANEL -->
+        <div class="right-panel">
+            <b><h1 style="font-size: 25px;">Order Summary</h1></b><br>
+            <div class="summary-item">
+                <span>Base Price</span>
+                <span>₹499</span>
+            </div>
+            <div class="summary-item">
+                <span>Design Charges (x2)</span>
+                <span>₹150</span>
+            </div>
+            <div class="summary-item">
+                <span>Shipping</span>
+                <span>₹50</span>
+            </div>
+            <div class="summary-total">
+                <span>Total</span>
+                <span>₹699</span>
+            </div>
+            <button class="pay-button">Order Now</button>
+            <p class="terms">
+                By placing this order, you agree to our<br />
+                <u><b><a href="/privacy-policy">Privacy Policy</a></b></u>   and <u><b><a href="/Terms-And-Conditions">Terms & Conditions</a></b></u> . 
+            </p>
+        </div>
+    </div>
+    <%- include('partials/footer', { user: user }) %>
+    
+</body>
+
+</html>

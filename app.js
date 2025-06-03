@@ -57,6 +57,11 @@ app.get("/Terms-And-Conditions", (request, response) => {
     response.render("termsAndConditions", { user: request.session.user });
 });
 
+app.get("/order", (request, response) => {
+    console.log(request.path);
+    response.render("order", { user: request.session.user });
+});
+
 app.post('/set-session', (req, res) => {
     const { key, value } = req.body;
     req.session[key] = value;
