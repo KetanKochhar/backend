@@ -99,7 +99,7 @@ router.get("/otp", (request, response) => {
         console.log(request.session.mail)
         return response.render("otp", { error: null, mail: request.session.mail, user: request.session.user });
     }
-    response.redirect("/");
+    response.redirect("/login");
 })
 
 router.post("/otp", async (request, response) => {
