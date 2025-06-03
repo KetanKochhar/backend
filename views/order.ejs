@@ -68,5 +68,48 @@
     <%- include('partials/footer', { user: user }) %>
     
 </body>
-
+<script>
+    document.querySelector('.pay-button').addEventListener('click', async () => {
+      const name = document.querySelector('input[placeholder="Full Name"]').value;
+      const address = document.querySelector('input[placeholder="Address"]').value;
+      const city = document.querySelector('input[placeholder="City"]').value;
+      const pincode = document.querySelector('input[placeholder="Pincode"]').value;
+      const phone = document.querySelector('input[placeholder="Phone Number"]').value;
+  
+      const orderData = {
+        user_id: 1, // replace with actual user session ID
+        design_id: 2, // get from design being ordered
+        quantity: 1,
+        size: 'L',
+        customer_name: name,
+        shipping_address: address,
+        pincode: pincode,
+        city: city,
+        phone_number: phone,
+        email: 'user@example.com', // get from session/user data
+        payment_method: 'COD',
+        total_price: 699
+      };
+  
+      try {
+        const response = await fetch('/confirm-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderData)
+        });
+  
+        const result = await response.json();
+  
+        if (result.success) {
+          alert("Order placed! Order ID: " + result.orderId);
+          window.location.href = '/thank-you'; // optional redirect
+        } else {
+          alert("Order failed.");
+        }
+      } catch (error) {
+        console.error("Error placing order:", error);
+      }
+    });
+  </script>
+  
 </html>

@@ -249,4 +249,89 @@ async function addAddress(userid,address,pincode,city,area) {
     }
 }
 
-    module.exports = { addUser, getUserByEmail, getUserByPhoneNumber, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword ,GetDesignById,addpromo,getpromo,getallpromo,addAddress}
+async function GetAddress(userid) {
+    try {
+        smt = database.prepare(`SELECT * FROM Addresses WHERE user_id = ?`)
+        data = smt.all(userid)
+        return data
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function updateAddress(userid, address, pincode, city, area) {
+    try {
+      const stmt = database.prepare(`UPDATE Addresses SET address = ?, pincode = ?, city = ?, area = ? WHERE user_id = ?`);
+      const data = stmt.run(address, pincode, city, area, userid);
+      console.log("Database update result:", data);
+      return data; // 'data' will likely contain 'changes' property for SQLite
+    } catch (error) {
+      console.error("Error in updateAddress DB function:", error);
+      throw error; // Re-throw to be caught by the API endpoint
+    }
+  }
+
+  async function addToCart(user_id, design_id, quantity) {
+    try {
+        const stmt = database.prepare(`INSERT INTO Cart (user_id, design_id, quantity) VALUES (?, ?, ?)`);
+        const data = stmt.run(user_id, design_id, quantity);
+        return data; // { changes: number, lastInsertRowid: number }
+    } catch (error) {
+        console.error('Error in addToCart DB function:', error);
+        throw error;
+    }
+}
+
+async function updateCartQuantity(user_id, design_id, quantity) {
+    try {
+        const stmt = database.prepare(`UPDATE Cart SET quantity = ? WHERE user_id = ? AND design_id = ?`);
+        const data = stmt.run(quantity, user_id, design_id);
+        return data; // { changes: number }
+    } catch (error) {
+        console.error('Error in updateCartQuantity DB function:', error);
+        throw error;
+    }
+}
+
+async function getCartItem(user_id, design_id) {
+    try {
+        const stmt = database.prepare(`SELECT * FROM Cart WHERE user_id = ? AND design_id = ?`);
+        const data = stmt.get(user_id, design_id);
+        return data; // Object or undefined
+    } catch (error) {
+        console.error('Error in getCartItem DB function:', error);
+        throw error;
+    }
+}
+
+async function getCart(user_id) {
+    try {
+        const stmt = database.prepare(`SELECT c.*, d.name, d.price, JSON_EXTRACT(d.front_canvas_json, '$.preview') as preview 
+                                     FROM Cart c 
+                                     JOIN Designs d ON c.design_id = d.id 
+                                     WHERE c.user_id = ?`);
+        const data = stmt.all(user_id);
+        return data; // Array of cart items with design details
+    } catch (error) {
+        console.error('Error in getCart DB function:', error);
+        throw error;
+    }
+}
+
+async function addorder(orderData , callback) {
+    try {
+    const {user_id,design_id,quantity,size,customer_name,shipping_address,pincode,city,phone_number,email,payment_method,total_price} = orderData;
+    const query = database.prepare(`INSERT INTO Orders (user_id,design_id,quantity,size,customer_name,shipping_address,pincode,city,phone_number,email,payment_method,total_price) VALUES  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+    const values = [user_id,design_id,quantity,size,customer_name,shipping_address,pincode,city,phone_number,email,payment_method,total_price];
+    const data = query.run(values)
+    console.log(data)
+    return data
+}
+catch (error){
+    console.error("error while adding the order ",error)
+    throw error;
+}
+    
+}
+
+    module.exports = { addUser, getUserByEmail, getUserByPhoneNumber, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword ,GetDesignById,addpromo,getpromo,getallpromo,addAddress,GetAddress , updateAddress , addToCart , updateCartQuantity , getCartItem , getCart , addorder}
