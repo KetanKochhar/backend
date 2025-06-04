@@ -31,7 +31,6 @@ db.exec(`
         user_id INTEGER NOT NULL,
         design_id INTEGER NOT NULL,
         quantity INTEGER NOT NULL DEFAULT 1,
-        size TEXT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES Users(id),
         FOREIGN KEY (design_id) REFERENCES Designs(id)

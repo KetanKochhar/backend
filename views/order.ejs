@@ -2,83 +2,106 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Order Now | CustomWear</title>
-    <link rel="stylesheet" href="/css/order.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Now | CustomWear</title>
+  <link rel="stylesheet" href="/css/order.css" />
 </head>
 
 <body>
     <%- include('partials/nav', { user: user }) %>
 
-    <div class="order-page">
-        <!-- LEFT PANEL -->
-        <div class="left-panel">
-            <b><h1 style="font-size: 25px;">Your Custom T-Shirt</h1></b><br>
-            <div class="product-preview">
-                <img src="/images/tshirt_sample.png" alt="T-Shirt Preview" />
-                <div class="product-details">
-                    <p><strong>Name:</strong> Cotton Comfort Tee</p>
-                    <p><strong>Size:</strong> L</p>
-                    <p><strong>Color:</strong> White</p>
-                    <p><strong>No. of Designs:</strong> 2</p>
-                </div>
-            </div>
 
-            <form class="customer-info">
-                <h3>Shipping Info</h3>
-                <input type="text" placeholder="Full Name" required />
-                <input type="text" placeholder="Address" required />
-                <input type="text" placeholder="City" required />
-                <input type="text" placeholder="Pincode" required />
-                <input type="tel" placeholder="Phone Number" required />
-            </form>
-            <div class="payment-option">
-                <b><h1 style="font-size: 25px;">payment Method</h1></b><br>
-                <label><input type="radio" name="payment" checked /> Cash on Delivery</label>
-            </div>
-        </div>
-        
-        <!-- RIGHT PANEL -->
-        <div class="right-panel">
-            <b><h1 style="font-size: 25px;">Order Summary</h1></b><br>
-            <div class="summary-item">
-                <span>Base Price</span>
-                <span>₹499</span>
-            </div>
-            <div class="summary-item">
-                <span>Design Charges (x2)</span>
-                <span>₹150</span>
-            </div>
-            <div class="summary-item">
-                <span>Shipping</span>
-                <span>₹50</span>
-            </div>
-            <div class="summary-total">
-                <span>Total</span>
-                <span>₹699</span>
-            </div>
-            <button class="pay-button">Order Now</button>
-            <p class="terms">
-                By placing this order, you agree to our<br />
-                <u><b><a href="/privacy-policy">Privacy Policy</a></b></u>   and <u><b><a href="/Terms-And-Conditions">Terms & Conditions</a></b></u> . 
-            </p>
-        </div>
+  <div class="order-page">
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+
+      <form class="customer-info">
+        <h1 style="font-size: 25px; margin: 20px 0 5px">Shipping Info</h1>
+        <hr style="border: none; height: 2px; background-color: #163109; margin-bottom: 20px" />
+        <p style="color: red;"><i>(you can change the personal detail <a href="/profile"><u>here</u>)</a></i></p>
+
+        <input type="text" placeholder="Full Name" value="Sunil Sihag" readonly disabled style="cursor: not-allowed;" />
+        <input type="text" placeholder="Address" value="123 Custom Street" readonly disabled style="cursor: not-allowed;" />
+        <input type="text" placeholder="City" value="Rajkot" readonly disabled style="cursor: not-allowed;" />
+        <input type="text" placeholder="Pincode" value="360001" readonly disabled style="cursor: not-allowed;" />
+        <input type="tel" placeholder="Phone Number" value="9876543210" readonly disabled style="cursor: not-allowed;" />
+      </form>
+
+      <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+
+      <div class="payment-option">
+        <h1 style="font-size: 25px;">Payment Method</h1><br />
+        <label><input type="radio" name="payment" checked /> Cash on Delivery</label>
+      </div>
+
+      <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+
+      <h1 style="font-size: 25px;">Your Custom T-Shirt</h1><br />
+
+      <!-- Static Sample Designs -->
+      <div class="container design-grid">
+        <section class="design-card">
+          <div class="design-images">
+            <center><img src="/images/Boy.jpg" alt="Design Front" /></center>
+          </div>
+          <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20PX" />
+          <div>
+            <h3><b>Design ID:</b> D123</h3>
+            <h3><b>Name:</b> Cool Dragon</h3>
+            <h3><b>Type:</b> Front & Back</h3>
+            <h3><b>Price:</b> ₹150</h3>
+          </div>
+        </section>
+        <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+      </div>
+
     </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+      <h1 style="font-size: 25px;">Order Summary</h1><br />
+
+      <div class="summary-item">
+        <span>Base Price</span>
+        <span>₹499</span>
+      </div>
+      <div class="summary-item">
+        <span>Design Charges (x2)</span>
+        <span>₹150</span>
+      </div>
+      <div class="summary-item">
+        <span>Shipping</span>
+        <span>₹50</span>
+      </div>
+      <div class="summary-total">
+        <span>Total</span>
+        <span>₹699</span>
+      </div>
+
+      <button class="pay-button">Order Now</button>
+
+      <p class="terms">
+        By placing this order, you agree to our<br />
+        <u><b><a href="/privacy-policy">Privacy Policy</a></b></u> and <u><b><a href="/Terms-And-Conditions">Terms & Conditions</a></b></u>.
+      </p>
+    </div>
+  </div>
+
     <%- include('partials/footer', { user: user }) %>
-    
-</body>
-<script>
+
+
+  <script>
     document.querySelector('.pay-button').addEventListener('click', async () => {
       const name = document.querySelector('input[placeholder="Full Name"]').value;
       const address = document.querySelector('input[placeholder="Address"]').value;
       const city = document.querySelector('input[placeholder="City"]').value;
       const pincode = document.querySelector('input[placeholder="Pincode"]').value;
       const phone = document.querySelector('input[placeholder="Phone Number"]').value;
-  
+
       const orderData = {
-        user_id: 1, // replace with actual user session ID
-        design_id: 2, // get from design being ordered
+        user_id: 1,
+        design_id: 2,
         quantity: 1,
         size: 'L',
         customer_name: name,
@@ -86,23 +109,23 @@
         pincode: pincode,
         city: city,
         phone_number: phone,
-        email: 'user@example.com', // get from session/user data
+        email: 'user@example.com',
         payment_method: 'COD',
         total_price: 699
       };
-  
+
       try {
         const response = await fetch('/confirm-order', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(orderData)
         });
-  
+
         const result = await response.json();
-  
+
         if (result.success) {
           alert("Order placed! Order ID: " + result.orderId);
-          window.location.href = '/thank-you'; // optional redirect
+          window.location.href = '/thank-you';
         } else {
           alert("Order failed.");
         }
@@ -111,5 +134,6 @@
       }
     });
   </script>
-  
+
+</body>
 </html>

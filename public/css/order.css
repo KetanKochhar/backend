@@ -121,6 +121,31 @@ body {
     color: #143109;
     text-decoration: none;
 }
+        .design-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .design-images img {
+            width: 50%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .text-green {
+            color: green;
+            font-weight: bold;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
 
 @media (max-width: 768px) {
     .order-page {

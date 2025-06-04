@@ -38,7 +38,7 @@ router.get('/cart', auth.isAuthenticated, async (req, res) => {
   try {
       const userId = await dbconnection.getUserByEmail(req.session.email);
       const cartItems = await dbconnection.getCart(userId.id);
-      res.render('cart', { cartItems });
+      res.render('cart', { cartItems, user: req.session.user});
   } catch (error) {
       console.error('Error rendering cart page:', error);
       res.status(500).send('Server error while loading cart.');

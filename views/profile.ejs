@@ -1,152 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>My Profile</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #b5bfa1;
+            background-image: url("/images/pattern.png");
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .profile-section {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-section.container {
+            margin-top: 100px;
+            justify-content: center;
+        }
+
+        @media (min-width: 640px) {
+            .profile-section {
+                flex-direction: row;
+                justify-content: start;
+            }
+        }
+
+        .avatar {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            background: linear-gradient(to bottom right, #143109, #b5bfa1);
+            color: white;
+            font-size: 64px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-msg {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .welcome-msg span {
+            color: #143109;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+        }
+
+        .text-bold {
+            font-weight: bold;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-blue {
+            background-color: #143109;
+        }
+
+        .btn-blue:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-green {
+            background-color: #059669;
+        }
+
+        .btn-green:hover {
+            background-color: #047857;
+            transform: translateY(-3px);
+        }
+
+        .btn-gray {
+            background-color: #e5e7eb;
+            color: #1f2937;
+        }
+
+        .btn-gray:hover {
+            background-color: #d1d5db;
+        }
+
+        .address-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .address-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .modal-bg {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            display: none;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 600px;
+            transition: all 0.3s ease;
+            transform: scale(0.95);
+            opacity: 0;
+        }
+
+        .modal-content.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        textarea,
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            outline: none;
+        }
+
+        input[readonly] {
+            background-color: #f3f4f6;
+            cursor: not-allowed;
+        }
+
+        .designs-header {
+            font-weight: bold;
+            color: #1f2937;
+            margin: 0px 0 40px;
+            text-align: center;
+        }
+
+        .designs-header h1 {
+            font-size: 3rem;
+        }
+
+        .designs-header.container{
+            color: #143109;
+            background-color: white;
+            width: auto;
+            border-radius: 15px;
+        }
+
+        @media (min-width: 640px) {
+            .designs-header {
+                text-align: left;
+            }
+        }
+
+        .design-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 640px) {
+            .design-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .design-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .design-card {
+            background: #b5bfa1;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .design-card:hover {
+            transform: scale(1.05);
+        }
+
+        .design-images {
+            grid-template-columns: 1fr 1fr;
+            margin-top: auto;
+        }
+
+        .design-images img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .text-green {
+            color: green;
+            font-weight: bold;
+        }
+
+        .text-center {
+            text-align: center;
         }
     </style>
 </head>
+
 <%- include('partials/nav', { user: user }) %>
-<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6 sm:p-10">
 
-    <section class="flex flex-col sm:flex-row items-center space-y-6 sm:space-y-0 sm:space-x-8 bg-white rounded-xl shadow-lg p-8 w-full max-w-5xl mb-12">
-        <% const firstName = username ? username.split(' ')[0] : ''; const initial = firstName ? firstName.charAt(0).toUpperCase() : '?'; %>
-        <div class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-xl select-none flex-shrink-0">
-            <span class="text-white text-6xl font-extrabold tracking-tight"><%= initial %></span>
-        </div>
-        <h1 class="text-5xl font-extrabold text-gray-900 leading-tight">Welcome, <span class="text-blue-600"><%= firstName %></span>!</h1>
-    </section>
-
-    <div class="w-full max-w-5xl mb-12">
-        <div class="bg-white rounded-xl shadow-lg p-8">
-            <% if (!address || address.length === 0) { %>
-                <div class="flex flex-col items-center justify-center py-8">
-                    <p class="text-lg text-gray-600 mb-6">It looks like you haven't added your address yet.</p>
-                    <button id="openModalBtn" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:-translate-y-1 shadow-md">
-                        Add Your Address
-                    </button>
-                </div>
-            <% } else { %>
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Your Current Address</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 text-lg">
-                    <p><strong>Address:</strong> <span id="address" class="font-medium"><%= address[0].address %></span></p>
-                    <p><strong>Pincode:</strong> <span id="pincode" class="font-medium"><%= address[0].pincode %></span></p>
-                    <p><strong>City:</strong> <span id="city" class="font-medium"><%= address[0].city %></span></p>
-                    <p><strong>Area:</strong> <span id="area" class="font-medium"><%= address[0].area %></span></p>
-                </div>
-                <div class="mt-8 flex justify-end">
-                    <button id="openUpdateBtn" class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out transform hover:-translate-y-1 shadow-md">
-                        Update Address
-                    </button>
-                </div>
-            <% } %>
-        </div>
-    </div>
-
-    <div id="addressModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 hidden p-4">
-        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-lg transform transition-all duration-300 scale-95 opacity-0" id="modalContent">
-            <h3 id="userid" class="hidden"><%= userid %></h3>
-            <h3 class="text-2xl font-bold mb-6 text-gray-800" id="modalTitle">Enter Your Address</h3>
-            <form id="addressForm">
-                <div class="mb-5">
-                    <label for="userAddress" class="block mb-2 text-md font-medium text-gray-700">Address</label>
-                    <textarea id="userAddress" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 resize-none" rows="4" placeholder="Street, Building, Apartment No..."></textarea>
-                </div>
-
-                <div class="mb-5">
-                    <label for="userPincode" class="block mb-2 text-md font-medium text-gray-700">Pincode</label>
-                    <input type="text" id="userPincode" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" maxlength="6" placeholder="Enter 6-digit pincode"/>
-                    <p id="loadingPincodeStatus" class="text-sm text-gray-500 mt-2 hidden">Fetching location...</p>
-                </div>
-
-                <div class="mb-5">
-                    <label for="userCity" class="block mb-2 text-md font-medium text-gray-700">City</label>
-                    <input type="text" id="userCity" class="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg cursor-not-allowed" readonly/>
-                </div>
-
-                <div class="mb-6">
-                    <label for="userArea" class="block mb-2 text-md font-medium text-gray-700">Area</label>
-                    <input type="text" id="userArea" class="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg cursor-not-allowed" readonly/>
-                </div>
-
-                <div class="mt-6 flex justify-end space-x-4">
-                    <button type="button" id="closeModalBtn" class="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition duration-300 ease-in-out">Cancel</button>
-                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out shadow-md">Save Address</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <h2 class="text-4xl font-bold text-gray-800 mb-10 mt-6 w-full max-w-5xl text-center sm:text-left">Your Designs</h2>
-    
-    <div class="w-full max-w-5xl mb-6 flex justify-end">
-      <a href="/cart" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:-translate-y-1 shadow-md">
-          View Cart
-      </a>
-  </div>
-    <div class="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <% for (let i = 0; i < id.length; i++) { %>
-            <section class="bg-white rounded-xl shadow-lg p-6 cursor-pointer transform hover:scale-105 transition duration-300 ease-in-out flex flex-col"
-                     onclick="GoToRedesign('<%= id[i] %>', '<%= type[i] %>', '<%= name[i] %>', '500', '<%= fcjp[i] %>')">
-                <div class="mb-4">
-                    <h3 class="text-lg font-semibold text-gray-600">Design ID: <span class="text-gray-800"><%= id[i] %></span></h3>
-                    <h3 class="text-lg font-semibold text-gray-600">Type: <span class="text-gray-800"><%= type[i] %></span></h3>
-                    <h3 class="text-lg font-semibold text-gray-600">Price: <span id="price" class="text-green-600 font-bold"><%= price[i] %></span></h3>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex-grow"><%= name[i] %></h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                    <img src="<%= fcjp[i] %>" alt="Design Image 1" class="w-full h-48 object-cover rounded-lg shadow-md" />
-                    <img src="<%= bcjp[i] %>" alt="Design Image 2" class="w-full h-48 object-cover rounded-lg shadow-md" />
-                </div>
-                <button class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out mt-auto shadow-md">Add To Cart</button>
+    <body>
+        <center>
+            <<section class="profile-section container">
+                <% const firstName=username ?
+                    username.split(' ')[0] : ''; const initial = firstName ? firstName.charAt(0).toUpperCase() : ' ?';
+                    %>
+                    <div class="avatar">
+                        <%= initial %>
+                    </div>
+                    <h1 class="welcome-msg">Welcome, <span>
+                            <%= firstName %>
+                        </span>!</h1>
             </section>
-        <% } %>
-    </div>
 
-    <script src="/JS/profile.js"></script>
-    <script>
-        // Modal Animation
-        const addressModal = document.getElementById('addressModal');
-        const modalContent = document.getElementById('modalContent');
-        const openModalBtn = document.getElementById('openModalBtn');
-        const openUpdateBtn = document.getElementById('openUpdateBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
+            <div class="container card">
+                <% if (!address || address.length===0) { %>
+                    <div class="text-center">
+                        <p class="text-lg">It looks like you haven't added your address yet.</p>
+                        <button id="openModalBtn" class="btn btn-blue">Add Your Address</button>
+                    </div>
+                    <% } else { %>
+                        <h2 class="text-lg text-bold">Your Current Address</h2>
+                        <div class="address-grid">
+                            <p><strong>Address:</strong>
+                                <%= address[0].address %>
+                            </p>
+                            <p><strong>Pincode:</strong>
+                                <%= address[0].pincode %>
+                            </p>
+                            <p><strong>City:</strong>
+                                <%= address[0].city %>
+                            </p>
+                            <p><strong>Area:</strong>
+                                <%= address[0].area %>
+                            </p>
+                        </div>
+                        <div style="text-align:right; margin-top:20px;">
+                            <button id="openUpdateBtn" class="btn btn-green">Update Address</button>
+                        </div>
+                        <% } %>
+            </div>
 
-        function openModal() {
-            addressModal.classList.remove('hidden');
-            setTimeout(() => {
-                modalContent.classList.remove('scale-95', 'opacity-0');
-                modalContent.classList.add('scale-100', 'opacity-100');
-            }, 50);
-        }
+            <div id="addressModal" class="modal-bg">
+                <div class="modal-content" id="modalContent">
+                    <h3 class="text-lg text-bold" id="modalTitle">Enter Your Address</h3>
+                    <form id="addressForm">
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea id="userAddress" rows="4"
+                                placeholder="Street, Building, Apartment No..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Pincode</label>
+                            <input type="text" id="userPincode" maxlength="6" placeholder="Enter 6-digit pincode" />
+                            <p id="loadingPincodeStatus" style="display:none; font-size: 0.9rem;">Fetching location...
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" id="userCity" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label>Area</label>
+                            <input type="text" id="userArea" readonly />
+                        </div>
+                        <div style="text-align:right;">
+                            <button type="button" id="closeModalBtn" class="btn btn-gray">Cancel</button>
+                            <button type="submit" class="btn btn-blue">Save Address</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-        function closeModal() {
-            modalContent.classList.remove('scale-100', 'opacity-100');
-            modalContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                addressModal.classList.add('hidden');
-            }, 300); // Match this duration with the transition duration
-        }
+            <div class="designs-header container"><h1>Your Designs</h1>
 
-        if (openModalBtn) {
-            openModalBtn.addEventListener('click', openModal);
-        }
-        if (openUpdateBtn) {
-            openUpdateBtn.addEventListener('click', openModal);
-        }
-        closeModalBtn.addEventListener('click', closeModal);
-        addressModal.addEventListener('click', (e) => {
-            if (e.target === addressModal) {
-                closeModal();
-            }
-        });
-    </script>
-</body>
-<%- include('partials/footer', { user: user }) %>
+            <div class="container" style="text-align:right; margin-bottom: 20px;">
+                <a href="/cart" class="btn btn-blue">View Cart</a>
+            </div>
+
+            <div class="container design-grid">
+                <% for (let i=0; i < id.length; i++) { %>
+                    <section class="design-card"
+                        onclick="GoToRedesign('<%= id[i] %>', '<%= type[i] %>', '<%= name[i] %>', '500', '<%= fcjp[i] %>')">
+                        <div class="design-images">
+                            <img src="<%= fcjp[i] %>" alt="Design Front" />
+                            <!-- <img src="<%= bcjp[i] %>" alt="Design Back" /> -->
+                        </div>
+                        <hr style="border: none; height: 2px; background-color: #163109;" />
+                        <div>
+                            <br><h3><b>Design ID :</b> <%= id[i] %>
+                                <hr style="border: none; height: 3px; background-color: #163109; width: 100px" />
+                                <h2 style="margin-top: 10px;">
+                                    <b>Name :</b><%= name[i] %>
+                                </h2>
+                            </h3>
+                            <h3><b>Type :</b> <%= type[i] %>
+                            </h3>
+                            <h3><b>Price :</b> <span class="text-green">
+                                    <%= price[i] %>
+                                </span></h3>
+                        </div>
+                        <button class="btn btn-blue" style="margin-top: 20px;">Add To Cart</button>
+                    </section>
+                    <% } %>
+            </div>
+            </div>
+
+            <script>
+                const addressModal = document.getElementById('addressModal');
+                const modalContent = document.getElementById('modalContent');
+                const openModalBtn = document.getElementById('openModalBtn');
+                const openUpdateBtn = document.getElementById('openUpdateBtn');
+                const closeModalBtn = document.getElementById('closeModalBtn');
+
+                function openModal() {
+                    addressModal.style.display = 'flex';
+                    setTimeout(() => {
+                        modalContent.classList.add('show');
+                    }, 50);
+                }
+
+                function closeModal() {
+                    modalContent.classList.remove('show');
+                    setTimeout(() => {
+                        addressModal.style.display = 'none';
+                    }, 300);
+                }
+
+                if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+                if (openUpdateBtn) openUpdateBtn.addEventListener('click', openModal);
+                closeModalBtn.addEventListener('click', closeModal);
+                addressModal.addEventListener('click', (e) => {
+                    if (e.target === addressModal) closeModal();
+                });
+            </script>
+            <script src="/JS/profile.js"></script>
+        </center>
+    </body>
+
+    <%- include('partials/footer', { user: user }) %>
+
 </html>

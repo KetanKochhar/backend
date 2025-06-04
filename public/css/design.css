@@ -776,7 +776,6 @@ body {
 
 .preview-image {
     margin-bottom: 10px;
-    /* align-self: center; */
     justify-self: center;
     height: 95%;
     border-radius: 12px;
