@@ -284,6 +284,8 @@ document.addEventListener('DOMContentLoaded', function () {
         let cloneCount = 0;
 
         if (userObjects.length === 0) {
+            canvas.setZoom(1);
+            canvas.viewportTransform = [1, 0, 0, 1, 0, 0];
             canvasStates[currentSide].json = tempCanvas.toJSON();
             canvasStates[currentSide].preview = canvas.toDataURL({ format: 'png', quality: 1 });
             objectsBySide[currentSide] = [];
@@ -293,13 +295,26 @@ document.addEventListener('DOMContentLoaded', function () {
             saveDesignToServer(); // Save to server once (even for blank)
             return;
         }
-
+        let scalex = 1;
         userObjects.forEach(obj => {
             obj.clone(cloned => {
                 tempCanvas.add(cloned);
                 clonedObjects.push(cloned);
                 cloneCount++;
                 if (cloneCount === userObjects.length) {
+                    canvas.setZoom(1);
+                    if (window.innerWidth > 1440) {
+                        scalex = 1.2;
+                    } else if (window.innerWidth <= 320) {
+                        scalex = 0.55;
+                    } else if (window.innerWidth <= 375) {
+                        scalex = 0.66;
+                    } else if (window.innerWidth <= 425) {
+                        scalex = 0.76;
+                    }
+                    canvas.setZoom(1);
+                    canvas.viewportTransform = [scalex, 0, 0, scalex, 0, 0];
+                    console.log(canvas.viewportTransform)
                     canvasStates[currentSide].json = tempCanvas.toJSON();
                     canvasStates[currentSide].preview = canvas.toDataURL({ format: 'png', quality: 1 });
                     objectsBySide[currentSide] = clonedObjects;
@@ -1149,20 +1164,20 @@ document.addEventListener('DOMContentLoaded', function () {
     function getTextBoxSize(widthInPixels, heightInPixels) {
         return {
             M: {
+                width: widthInPixels / 17.27,
+                height: heightInPixels / 18.52
+            },
+            L: {
                 width: widthInPixels / 15.63,
                 height: heightInPixels / 16.76
             },
-            L: {
+            XL: {
                 width: widthInPixels / 14.14,
                 height: heightInPixels / 15.3
             },
-            XL: {
-                width: widthInPixels / 12.91,
-                height: heightInPixels / 14.08
-            },
             XXL: {
-                width: widthInPixels / 11.88,
-                height: heightInPixels / 13
+                width: widthInPixels / 19.91,
+                height: heightInPixels / 14.08
             }
         };
     }
@@ -1620,20 +1635,20 @@ document.addEventListener('DOMContentLoaded', function () {
     function getGraphicSize(widthInPixels, heightInPixels) {
         return {
             M: {
+                width: widthInPixels / 17.27,
+                height: heightInPixels / 18.52
+            },
+            L: {
                 width: widthInPixels / 15.63,
                 height: heightInPixels / 16.76
             },
-            L: {
+            XL: {
                 width: widthInPixels / 14.14,
                 height: heightInPixels / 15.3
             },
-            XL: {
-                width: widthInPixels / 12.91,
-                height: heightInPixels / 14.08
-            },
             XXL: {
-                width: widthInPixels / 11.88,
-                height: heightInPixels / 13
+                width: widthInPixels / 19.91,
+                height: heightInPixels / 14.08
             }
         };
     }
