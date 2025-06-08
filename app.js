@@ -32,6 +32,10 @@ app.get("/", (request, response) => {
     response.render("home", { user: request.session.user });
 });
 
+app.use((req, res, next) => {
+  res.status(404).render("");
+});
+
 app.get("/privacy-policy", (request, response) => {
     console.log(request.path);
     response.render("privacyPolicy", { user: request.session.user });
