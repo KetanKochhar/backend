@@ -57,46 +57,52 @@
                         <div class="container">
                             <div class="field">
                                 <b><label class="label">First Name</label></b>
-                                <input type="text" class="input" value="<%= user.first_name || '' %>" readonly>
+                                <input type="text" class="input" value="<%= user.first_name || 'N/A' %>" readonly>
                             </div>
 
                             <div class="field">
                                 <b><label class="label">Last Name</label></b>
-                                <input type="text" class="input" value="<%= user.last_name || '' %>" readonly>
+                                <input type="text" class="input" value="<%= user.last_name || 'N/A' %>" readonly>
                             </div>
 
                             <div class="field">
                                 <b><label class="label">Date of Birth</label></b>
-                                <input type="text" class="input" value="<%= user.dob %>" readonly>
+                                <input type="text" class="input" value="<%= user.dob || 'N/A'%>" readonly>
                             </div>
 
                             <div class="field">
                                 <b><label class="label">Phone Number</label></b>
-                                <input type="text" class="input" value="<%= user.phone_number || '' %>" readonly>
+                                <input type="text" class="input" value="<%= user.phone_number || 'N/A' %>" readonly>
                             </div>
 
                             <div class="field">
                                 <b><label class="label">Email</label></b>
-                                <input type="email" class="input" value="<%= user.email || '' %>" readonly>
+                                <input type="email" class="input" value="<%= user.email || 'N/A' %>" readonly>
                             </div>
 
                             <div class="field">
                                 <b><label class="label" for="address">Address</label></b>
-                                <textarea id="address" class="input" readonly
-                                    rows="3"><%= address?.address || 'N/A' %>, <%= address?.city || '' %>, <%= address?.area || '' %>, <%= address?.state || '' %> - <%= address?.pincode || '' %></textarea>
+                                <textarea id="address" class="input" readonly rows="3" style="overflow-y: hidden;">
+                                    <% if (address && address.address) { %>
+                                    <%= [address.address, address.city, address.area, address.state].filter(Boolean).join(', ') %> - <%= address.pincode || '' %>
+                                    <% } else { %>
+                                    It seems you didn't add your address yet
+                                    <% } %>
+                                </textarea>
                             </div>
+
                         </div>
                     </form>
 
-                        <div class="flex flex-col items-center justify-center py-8">
-                            <button id="openModalBtn"
-                                class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:-translate-y-1 shadow-md"
-                                style="background-color: #143109;">
-                                Edit Profile
-                            </button>
-                        </div>
-                    
-                            <!-- <div class="mt-8 flex justify-end">
+                    <div class="flex flex-col items-center justify-center py-8">
+                        <button id="openModalBtn"
+                            class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:-translate-y-1 shadow-md"
+                            style="background-color: #143109;">
+                            Edit Profile
+                        </button>
+                    </div>
+
+                    <!-- <div class="mt-8 flex justify-end">
                                 <button id="openUpdateBtn"
                                     class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out transform hover:-translate-y-1 shadow-md">
                                     Update Address
@@ -120,38 +126,46 @@
 
                         <form id="addressForm">
                             <label><b>First Name</b>
-                                <input type="text" id="userFirstName" name="first_name" value="<%= user.first_name %>" required>
+                                <input type="text" id="userFirstName" name="first_name"
+                                    value="<%= user.first_name || 'N/A' %>" required>
                             </label>
 
                             <label><b>Last Name</b>
-                                <input type="text" name="last_name" id="userLastName" value="<%= user.last_name  %>" required>
+                                <input type="text" name="last_name" id="userLastName"
+                                    value="<%= user.last_name  || 'N/A'%>" required>
                             </label>
 
                             <label><b>Phone Number</b>
-                                <input type="text" name="userPhone" id="userPhone" value="<%= user.phone_number  %>" required>
+                                <input type="text" name="userPhone" id="userPhone"
+                                    value="<%= user.phone_number || 'N/A' %>" required>
                             </label>
 
                             <label><b>House No., Building Name, Area &colony</b>
-                                <input type="text" name="userAddress" id="userAddress" value="<%= address.address %>" required>
+                                <input type="text" name="userAddress" id="userAddress"
+                                    value="<%= address?.address || 'N/A'%>" required>
                             </label>
 
                             <label for="userPincode"><b>Pincode</b>
-                                <input type="text" maxlength="6" placeholder="Enter 6-digit pincode" value="<%= address.pincode %>" id="userPincode">
+                                <input type="text" maxlength="6" placeholder="Enter 6-digit pincode"
+                                    value="<%= address?.pincode || 'N/A'%>" id="userPincode">
                             </label>
                             <p id="loadingPincodeStatus" class="text-sm text-gray-500 mt-2 hidden">Fetching location...
                             </p>
 
                             <label for="userCity"><b>City</b>
-                                <input type="text" id="userCity"  style="cursor: not-allowed; background-color: #8c9678" value="<%= address.city %>" readonly>
+                                <input type="text" id="userCity" style="cursor: not-allowed; background-color: #8c9678"
+                                    value="<%= address?.city || 'N/A'%>" readonly>
                             </label>
 
                             <label for="userArea"><b>State</b>
-                                <input type="text" id="userArea" style="cursor: not-allowed; background-color: #8c9678" value="<%= address.area %>" readonly  >
+                                <input type="text" id="userArea" style="cursor: not-allowed; background-color: #8c9678"
+                                    value="<%= address?.area || 'N/A'%>" readonly>
                             </label>
 
 
                             <button type="submit" id="button">Save changes</button>
-                            <button type="button" id="cancelButton" style="background-color: rgb(238, 68, 68);">Cancel</button>
+                            <button type="button" id="cancelButton"
+                                style="background-color: rgb(238, 68, 68);">Cancel</button>
                         </form>
                     </div>
                     <!-- <h3 class="text-2xl font-bold mb-6 text-gray-800" id="modalTitle">Enter Your Address</h3>
