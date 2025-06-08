@@ -32,9 +32,6 @@ app.get("/", (request, response) => {
     response.render("home", { user: request.session.user });
 });
 
-app.use((req, res, next) => {
-  res.status(404).render("");
-});
 
 app.get("/privacy-policy", (request, response) => {
     console.log(request.path);
@@ -115,6 +112,11 @@ app.use("/", loginroutes);
 app.use("/", profileroutes);
 app.use("/", designroutes);
 app.use("/", adminroutes);
+
+
+app.use((req, res, next) => {
+  res.status(404).render("nf");
+});
 
 app.listen(port, () => {
     console.log(`App is running on the 127.0.0.1:${port}`);
