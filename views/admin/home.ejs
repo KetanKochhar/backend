@@ -1,13 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin</title>
-</head>
-<body>
-  <h1>Hello Admin!!</h1>
-  <a href="/admin/color"> change the colors</a>
-  <a href="/admin/promo"> add the PROMO code</a>
+  
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Panel - Custom Wear</title>
+    <link rel="stylesheet" href="/css/adminpanel.css" />
+  </head>
+  
+  <body>
+    <nav class="sidebar">
+      <h3>Admin Panel</h3>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#products">Product Management</a>
+      <a href="#orders">Order Management</a>
+      <a href="#database">Database Selector</a>
+      <a href="#reports">Reports</a>
+    </nav>
+    
+    <main class="content">
+      <h2 id="dashboard">Dashboard</h2>
+      <div class="dashboard-row">
+        <div class="dashboard-card">
+          <h5>Total Orders</h5>
+          <p><%= totalOrders %></p>
+        </div>
+        <div class="dashboard-card">
+          <h5>Users</h5>
+          <p><%= users %></p>
+        </div>
+        <div class="dashboard-card">
+          <h5>Revenue</h5>
+          <p>₹<%= revenue %></p>
+        </div>
+      </div>
+      <a href="/admin/color"> change the colors</a>
+      <a href="/admin/promo"> add the PROMO code</a>
+      <a href="/admin/order"> Orders</a>
+      
+    <h4 id="database">Database Selector</h4>
+    <select class="db-selector">
+      <option selected>Select Database</option>
+      <option value="1">Database 1</option>
+      <option value="2">Database 2</option>
+      <option value="3">Database 3</option>
+      <option value="4">Database 4</option>
+    </select>
+
+    <h4 id="products">Product Management</h4>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Basic Tee</td>
+          <td>$10</td>
+          <td>
+            <button class="btn-edit">Edit</button>
+            <button class="btn-delete">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Logo Hoodie</td>
+          <td>$25</td>
+          <td>
+            <button class="btn-edit">Edit</button>
+            <button class="btn-delete">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 id="orders">Order Management</h4>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>User</th>
+          <th>Status</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>101</td>
+          <td>Shreya</td>
+          <td>Shipped</td>
+          <td>$30</td>
+        </tr>
+        <tr>
+          <td>102</td>
+          <td>Sunil</td>
+          <td>Pending</td>
+          <td>$20</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 id="reports">Reports</h4>
+    <button class="btn-report">Download Sales Report</button>
+  </main>
 </body>
+
 </html>

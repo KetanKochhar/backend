@@ -368,13 +368,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Order Now button
-    document.getElementById('OrderNow').addEventListener('click', function () {
-        if (isDesignSaved) {
-            window.location.href = 'order.html';
-        } else {
-            showToast("Please save the design first!", "#ab3131");
-        }
-    });
+document.getElementById('OrderNow').addEventListener('click', function () {
+    const savedDesignId = sessionStorage.getItem("designID");
+    console.log(savedDesignId);
+
+    if (isDesignSaved && savedDesignId) {
+        window.location.href = `/order/${savedDesignId}`;
+    } else if (!isDesignSaved) {
+        showToast("Please save the design first!", "#ab3131");
+    } else {
+        showToast("Design ID not found!", "#ab3131");
+    }
+});
+
 
 
     document.getElementById('previewBtn').addEventListener('click', function () {
@@ -1201,6 +1207,37 @@ document.addEventListener('DOMContentLoaded', function () {
         updateSizeLabel(obj, widthInInches, heightInInches);
     }
 
+    document.addEventListener('keydown', function (e) {
+    if (e.key === 'Delete' || e.key === 'Backspace') {
+        const activeObj = canvas.getActiveObject();
+        if (activeObj && (activeObj.type === 'textbox' || activeObj.type === 'image')) {
+            removeObjectAndAdjustPrice(activeObj);
+        }
+    }
+});
+
+document.getElementById('deleteBtn').addEventListener('click', function () {
+    const activeObj = canvas.getActiveObject();
+    if (activeObj) {
+        removeObjectAndAdjustPrice(activeObj);
+    }
+});
+
+function removeObjectAndAdjustPrice(obj) {
+    if (!obj) return;
+
+    // Subtract price if it's defined
+    if (typeof obj.price === 'number') {
+        totalPrice -= obj.price;
+        updateTotalPriceDisplay();
+    }
+
+    canvas.remove(obj);
+    canvas.discardActiveObject();
+    canvas.requestRenderAll();
+}
+
+
 
     // Show label only on active textbox
     canvas.on('selection:created', handleTextboxSelection);
@@ -1706,11 +1743,44 @@ document.addEventListener('DOMContentLoaded', function () {
         userInitiatedDelete = false; // reset after deletion
     });
 
+    document.addEventListener('keydown', function (e) {
+    if (e.key === 'Delete' || e.key === 'Backspace') {
+        const activeObj = canvas.getActiveObject();
+        if (activeObj && (activeObj.type === 'textbox' || activeObj.customType === 'graphics')) {
+            removeObjectAndAdjustPrice(activeObj);
+        }
+    }
+});
+
+
+    document.getElementById('deleteBtn1').addEventListener('click', function () {
+    const activeObj = canvas.getActiveObject();
+    if (activeObj && activeObj.customType === 'graphics') {
+        removeObjectAndAdjustPrice(activeObj);
+    }
+});
+
+function removeObjectAndAdjustPrice(obj) {
+    if (!obj) return;
+
+    if (typeof obj.price === 'number') {
+        totalPrice -= obj.price;
+        updateTotalPriceDisplay();
+    }
+
+    canvas.remove(obj);
+    canvas.discardActiveObject();
+    canvas.requestRenderAll();
+
+}
+
+
 
     // Create or update size label
     function updateSizeLabel(obj, widthInches, heightInches) {
         if (!obj.sizeLabel) {
             obj.sizeLabel = new fabric.Text('', {
+                type: 'sizeLabel',
                 fontSize: 14,
                 fill: 'black',
                 backgroundColor: 'white',

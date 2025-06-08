@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+
+<%- include('partials/nav', { user: user }) %>
+
+    <body>
+        <center>
+            <<section class="profile-section container">
+                <% const firstName=username ?
+                    username.split(' ')[0] : ''; const initial = firstName ? firstName.charAt(0).toUpperCase() : ' ?';
+                    %>
+                    <div class="avatar">
+                        <%= initial %>
+                    </div>
+                    <h1 class="welcome-msg">Welcome, <span>
+                            <%= firstName %>
+                        </span>!</h1>
+                    </section>
+
+                    <div class="container card">
+                        <% if (!address || address.length===0) { %>
+                            <div class="text-center">
+                                <p class="text-lg">It looks like you haven't added your address yet.</p>
+                                <button id="openModalBtn" class="btn btn-blue">Add Your Address</button>
+                            </div>
+                            <% } else { %>
+                                <h2 class="text-lg text-bold">Your Current Address</h2>
+                                <div class="address-grid">
+                                    <p><strong>Address:</strong>
+                                        <%= address[0].address %>
+                                    </p>
+                                    <p><strong>Pincode:</strong>
+                                        <%= address[0].pincode %>
+                                    </p>
+                                    <p><strong>City:</strong>
+                                        <%= address[0].city %>
+                                    </p>
+                                    <p><strong>Area:</strong>
+                                        <%= address[0].area %>
+                                    </p>
+                                </div>
+                                <div style="text-align:right; margin-top:20px;">
+                                    <button id="openUpdateBtn" class="btn btn-green">Update Address</button>
+                                </div>
+                                <% } %>
+                    </div>
+
+                    <div id="addressModal" class="modal-bg">
+                        <div class="modal-content" id="modalContent">
+                            <h3 class="text-lg text-bold" id="modalTitle">Enter Your Address</h3>
+                            <form id="addressForm">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <textarea id="userAddress" rows="4"
+                                        placeholder="Street, Building, Apartment No..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Pincode</label>
+                                    <input type="text" id="userPincode" maxlength="6"
+                                        placeholder="Enter 6-digit pincode" />
+                                    <p id="loadingPincodeStatus" style="display:none; font-size: 0.9rem;">Fetching
+                                        location...
+                                    </p>
+                                </div>
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <input type="text" id="userCity" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label>Area</label>
+                                    <input type="text" id="userArea" readonly />
+                                </div>
+                                <div style="text-align:right;">
+                                    <button type="button" id="closeModalBtn" class="btn btn-gray">Cancel</button>
+                                    <button type="submit" class="btn btn-blue">Save Address</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="designs-header container">
+                        <h1>Your Designs</h1>
+
+                        <div class="container" style="text-align:right; margin-bottom: 20px;">
+                            <a href="/cart" class="btn btn-blue">View Cart</a>
+                        </div>
+                        <!-- Outside the loop, once per page: -->
+                        <span id="userid" hidden>
+                            <%= user._id %>
+                        </span>
+
+                        <div class="container design-grid">
+                            <% for (let i=0; i < id.length; i++) { %>
+                                <section class="design-card" data-id="<%= id[i] %>" data-type="<%= type[i] %>"
+                                    data-name="<%= name[i] %>" data-price="<%= price[i] %>"
+                                    onclick="GoToRedesign('<%= id[i] %>', '<%= type[i] %>', '<%= name[i] %>', '<%= price[i] %>', '<%= fcjp[i] %>')">
+                                    <div class="design-images">
+                                        <img src="<%= fcjp[i] %>" alt="Design Front" />
+                                    </div>
+                                    <hr style="border: none; height: 2px; background-color: #163109;" />
+                                    <div>
+                                        <h3><b>Design ID:</b> <span class="text-gray-800">
+                                                <%= id[i] %>
+                                            </span></h3>
+                                        <h3><b>Type:</b> <span class="text-gray-800">
+                                                <%= type[i] %>
+                                            </span></h3>
+                                        <h2>
+                                            <%= name[i] %>
+                                        </h2>
+                                        <h3><b>Price:</b> <span class="price">
+                                                <%= price[i] %>
+                                            </span></h3>
+                                    </div>
+                                    <button class="btn btn-blue add-to-cart-btn" style="margin-top: 20px;">Add To
+                                        Cart</button>
+                                </section>
+                                <% } %>
+                        </div>
+
+
+                        <script>
+                            const addressModal = document.getElementById('addressModal');
+                            const modalContent = document.getElementById('modalContent');
+                            const openModalBtn = document.getElementById('openModalBtn');
+                            const openUpdateBtn = document.getElementById('openUpdateBtn');
+                            const closeModalBtn = document.getElementById('closeModalBtn');
+
+                            function openModal() {
+                                addressModal.style.display = 'flex';
+                                setTimeout(() => {
+                                    modalContent.classList.add('show');
+                                }, 50);
+                            }
+
+                            function closeModal() {
+                                modalContent.classList.remove('show');
+                                setTimeout(() => {
+                                    addressModal.style.display = 'none';
+                                }, 300);
+                            }
+
+                            if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+                            if (openUpdateBtn) openUpdateBtn.addEventListener('click', openModal);
+                            closeModalBtn.addEventListener('click', closeModal);
+                            addressModal.addEventListener('click', (e) => {
+                                if (e.target === addressModal) closeModal();
+                            });
+                        </script>
+                        <script src="/JS/profile.js"></script>
+        </center>
+    </body>
+
+    <%- include('partials/footer', { user: user }) %>
+
+</html>
+

@@ -9,131 +9,178 @@
 </head>
 
 <body>
-    <%- include('partials/nav', { user: user }) %>
+  <%- include('partials/nav', { user: user }) %>
 
 
-  <div class="order-page">
-    <!-- LEFT PANEL -->
-    <div class="left-panel">
+    <div class="order-page">
+      <!-- LEFT PANEL -->
+      <div class="left-panel">
 
-      <form class="customer-info">
-        <h1 style="font-size: 25px; margin: 20px 0 5px">Shipping Info</h1>
-        <hr style="border: none; height: 2px; background-color: #163109; margin-bottom: 20px" />
-        <p style="color: red;"><i>(you can change the personal detail <a href="/profile"><u>here</u>)</a></i></p>
+        <form class="customer-info">
+          <h1 style="font-size: 25px; margin: 20px 0 5px">Shipping Info</h1>
+          <hr style="border: none; height: 2px; background-color: #163109; margin-bottom: 20px" />
+          <p style="color: red;"><i>(you can change the personal detail <a href="/profile"><u>here</u>)</a></i></p>
 
-        <input type="text" placeholder="Full Name" value="Sunil Sihag" readonly disabled style="cursor: not-allowed;" />
-        <input type="text" placeholder="Address" value="123 Custom Street" readonly disabled style="cursor: not-allowed;" />
-        <input type="text" placeholder="City" value="Rajkot" readonly disabled style="cursor: not-allowed;" />
-        <input type="text" placeholder="Pincode" value="360001" readonly disabled style="cursor: not-allowed;" />
-        <input type="tel" placeholder="Phone Number" value="9876543210" readonly disabled style="cursor: not-allowed;" />
-      </form>
+          <input type="text" placeholder="Full Name" value="<%= user.first_name %> <%= user.last_name%>" readonly
+            style="cursor: not-allowed;" />
+          <input type="tel" placeholder="Phone Number" value="<%= user.phone_number %>" readonly disabled
+            style="cursor: not-allowed;" />
+          <input type="text" placeholder="Address" value="<%= address?.address %>" readonly disabled
+            style="cursor: not-allowed;" />
+          <input type="text" placeholder="City" value="<%= address?.city %>" readonly disabled
+            style="cursor: not-allowed;" />
+          <input type="text" placeholder="Pincode" value="<%= address?.pincode %>" readonly disabled
+            style="cursor: not-allowed;" />
+        </form>
 
-      <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
-
-      <div class="payment-option">
-        <h1 style="font-size: 25px;">Payment Method</h1><br />
-        <label><input type="radio" name="payment" checked /> Cash on Delivery</label>
-      </div>
-
-      <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
-
-      <h1 style="font-size: 25px;">Your Custom T-Shirt</h1><br />
-
-      <!-- Static Sample Designs -->
-      <div class="container design-grid">
-        <section class="design-card">
-          <div class="design-images">
-            <center><img src="/images/Boy.jpg" alt="Design Front" /></center>
-          </div>
-          <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20PX" />
-          <div>
-            <h3><b>Design ID:</b> D123</h3>
-            <h3><b>Name:</b> Cool Dragon</h3>
-            <h3><b>Type:</b> Front & Back</h3>
-            <h3><b>Price:</b> ₹150</h3>
-          </div>
-        </section>
         <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+
+        <div class="payment-option">
+          <h1 style="font-size: 25px;">Payment Method</h1><br />
+          <label><input type="radio" name="payment" checked /> Cash on Delivery</label>
+        </div>
+
+        <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+
+        <h1 style="font-size: 25px;">Your Custom T-Shirt</h1><br />
+
+        <!-- Static Sample Designs -->
+        <div class="container design-grid">
+          <section class="design-card">
+            <div class="design-images">
+              <center><img src="<%= design.front_preview %>" alt="Design Front" /></center>
+            </div>
+            <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20PX" />
+            <div>
+              <h3><b>Design ID : </b>
+                <%= design.id %>
+              </h3>
+              <h3><b>Name : </b>
+                <%= design.name %>
+              </h3>
+              <h3><b>Price : ₹</b>
+                <%= design.price %>
+              </h3>
+            </div>
+          </section>
+          <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+        </div>
+
       </div>
 
+      <!-- RIGHT PANEL -->
+      <div class="right-panel">
+        <h1 style="font-size: 25px;">Order Summary</h1><br />
+
+        <div class="summary-item">
+          <span>Base Price</span>
+          <% let finalPrice=0; if (design.type==="sports" ) { finalPrice=220; } else if (design.type==="cotton" ) {
+            finalPrice=299; } else if (design.type==="polo" ) { finalPrice=349; } else { finalPrice=499; // default
+            fallback } %>
+            <span>
+              ₹<%= finalPrice %>
+            </span>
+        </div>
+        <div class="summary-item">
+          <span>Design Charges (x2)</span>
+          <span>₹<%= design.price %></span>
+        </div>
+        <div class="summary-total">
+          <span>Total</span>
+          <span>₹<%= design.price + finalPrice %></span>
+        </div>
+
+
+        <button class="pay-button">Order Now</button>
+
+        <p class="terms">
+          By placing this order, you agree to our<br />
+          <u><b><a href="/privacy-policy">Privacy Policy</a></b></u> and <u><b><a href="/Terms-And-Conditions">Terms &
+                Conditions</a></b></u>.
+        </p>
+      </div>
     </div>
 
-    <!-- RIGHT PANEL -->
-    <div class="right-panel">
-      <h1 style="font-size: 25px;">Order Summary</h1><br />
-
-      <div class="summary-item">
-        <span>Base Price</span>
-        <span>₹499</span>
-      </div>
-      <div class="summary-item">
-        <span>Design Charges (x2)</span>
-        <span>₹150</span>
-      </div>
-      <div class="summary-item">
-        <span>Shipping</span>
-        <span>₹50</span>
-      </div>
-      <div class="summary-total">
-        <span>Total</span>
-        <span>₹699</span>
-      </div>
-
-      <button class="pay-button">Order Now</button>
-
-      <p class="terms">
-        By placing this order, you agree to our<br />
-        <u><b><a href="/privacy-policy">Privacy Policy</a></b></u> and <u><b><a href="/Terms-And-Conditions">Terms & Conditions</a></b></u>.
-      </p>
-    </div>
+    <!-- Confirmation Modal -->
+<div id="confirmationModal" class="modal hidden">
+  <div class="modal-content">
+    <p>Are you sure you want to place this order?</p>
+    <button id="confirmOrderBtn">Yes, Place Order</button>
+    <button id="cancelOrderBtn">Cancel</button>
   </div>
+</div>
+
+<!-- Success Screen -->
+<div id="successScreen" class="modal hidden">
+  <div class="modal-content success">
+    <h2>🎉 Order Placed Successfully!</h2>
+    <p>Your custom T-shirt is on the way.</p>
+  </div>
+</div>
+
 
     <%- include('partials/footer', { user: user }) %>
 
 
-  <script>
-    document.querySelector('.pay-button').addEventListener('click', async () => {
-      const name = document.querySelector('input[placeholder="Full Name"]').value;
-      const address = document.querySelector('input[placeholder="Address"]').value;
-      const city = document.querySelector('input[placeholder="City"]').value;
-      const pincode = document.querySelector('input[placeholder="Pincode"]').value;
-      const phone = document.querySelector('input[placeholder="Phone Number"]').value;
+      <script>
+document.querySelector('.pay-button').addEventListener('click', () => {
+  document.getElementById('confirmationModal').classList.remove('hidden');
+});
 
-      const orderData = {
-        user_id: 1,
-        design_id: 2,
-        quantity: 1,
-        size: 'L',
-        customer_name: name,
-        shipping_address: address,
-        pincode: pincode,
-        city: city,
-        phone_number: phone,
-        email: 'user@example.com',
-        payment_method: 'COD',
-        total_price: 699
-      };
+document.getElementById('cancelOrderBtn').addEventListener('click', () => {
+  document.getElementById('confirmationModal').classList.add('hidden');
+});
 
-      try {
-        const response = await fetch('/confirm-order', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(orderData)
-        });
+document.getElementById('confirmOrderBtn').addEventListener('click', async () => {
+  document.getElementById('confirmationModal').classList.add('hidden');
 
-        const result = await response.json();
+  const name = document.querySelector('input[placeholder="Full Name"]').value;
+  const address = document.querySelector('input[placeholder="Address"]').value;
+  const city = document.querySelector('input[placeholder="City"]').value;
+  const pincode = document.querySelector('input[placeholder="Pincode"]').value;
+  const phone = document.querySelector('input[placeholder="Phone Number"]').value;
 
-        if (result.success) {
-          alert("Order placed! Order ID: " + result.orderId);
-          window.location.href = '/thank-you';
-        } else {
-          alert("Order failed.");
-        }
-      } catch (error) {
-        console.error("Error placing order:", error);
-      }
+  const orderData = {
+    user_id: <%= user.id %>,
+    design_id: <%= design.id %>,
+    quantity: 1,
+    size: 'L',
+    customer_name: name,
+    shipping_address: address,
+    pincode: pincode,
+    city: city,
+    phone_number: phone,
+    email: '<%= user.email %>',
+    payment_method: 'COD',
+    total_price: <%= design.price + finalPrice %>
+  };
+
+  try {
+    const response = await fetch('/confirm-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData)
     });
-  </script>
+
+    const result = await response.json();
+
+    if (result.success) {
+      document.getElementById('successScreen').classList.remove('hidden');
+
+      setTimeout(() => {
+        window.location.href = '/thank-you';
+      }, 3000);
+    } else {
+      alert("Order failed.");
+    }
+  } catch (error) {
+    console.error("Error placing order:", error);
+    alert("Something went wrong.");
+  }
+});
+
+      </script>
 
 </body>
+
 </html>

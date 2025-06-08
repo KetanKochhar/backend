@@ -1,7 +1,7 @@
 const sqlite3 = require('better-sqlite3');
 const bcrypt = require('bcrypt');
 
-const database = new sqlite3("database/customwear.db");
+const database = new sqlite3("C:/Users/Sunil/Desktop/GITHUB/backend/database/customwear.db");
 //saltround matabl kitni bar data encrypt karega store karne se phele jada hua tho server se load padega and kam hua tho user data risk pe hoga isliye basic 10 rahka hai change kar sakte hai 
 const saltRounds = 10;
 
@@ -29,7 +29,7 @@ async function addUser(firstName, lastName, dob, phoneNumber, email, password) {
 async function getUserByEmail(email) {
     try {
         const stmt = database.prepare(`
-            SELECT id, first_name, last_name, email, password
+            SELECT id, first_name, last_name, dob, phone_number, email, password
             FROM Users
             WHERE email = ?
         `);
@@ -182,7 +182,7 @@ async function updateDesign(designID, front_canvas_json, back_canvas_json, price
 
 async function GetDesignById(id) {
     try {
-        const smt = database.prepare("SELECT * FROM Designs WHERE id = ?");
+        const smt = database.prepare("SELECT * FROM Designs WHERE userid = ?");
         const data = smt.all(id);
         return data
     } catch (error) {
@@ -251,8 +251,8 @@ async function addAddress(userid, address, pincode, city, area) {
 
 async function GetAddress(userid) {
     try {
-        smt = database.prepare(`SELECT * FROM Addresses WHERE user_id = ?`)
-        data = smt.all(userid)
+        smt = database.prepare(`SELECT address, pincode, city, area FROM Addresses WHERE user_id = ?`)
+        data = smt.get(userid)
         return data
     } catch (error) {
         console.error(error);
@@ -270,6 +270,16 @@ async function updateAddress(userid, address, pincode, city, area) {
         throw error; // Re-throw to be caught by the API endpoint
     }
 }
+
+function updateUserProfile(user_id, first_name, last_name, phone) {
+    const stmt = database.prepare(`
+    UPDATE Users 
+    SET first_name = ?, last_name = ?, phone_number = ? 
+    WHERE id = ?
+  `);
+    return stmt.run(first_name, last_name, phone, user_id);
+}
+
 
 async function addToCart(user_id, design_id, quantity) {
     try {
@@ -334,8 +344,136 @@ async function addorder(orderData, callback) {
 
 }
 
-        // smt = database.prepare(`delete from addresses`)
-        // data = smt.run()
+function getDesignById(id) {
+    const stmt = database.prepare(`SELECT * FROM Designs WHERE id = ?`);
+    return stmt.get(id); // returns a single row
+}
+
+async function deleteDesignById(id) {
+    try {
+        // Delete dependent references first
+        database.prepare(`DELETE FROM Cart WHERE design_id = ?`).run(id);
+        database.prepare(`DELETE FROM Orders WHERE design_id = ?`).run(id);
+
+        // Now delete from Designs
+        const stmt = database.prepare(`DELETE FROM Designs WHERE id = ?`);
+        const result = stmt.run(id);
+
+        return { deletedCount: result.changes };
+    } catch (error) {
+        console.error("Error deleting design:", error);
+        return { deletedCount: 0 };
+    }
+}
+
+function insertOrder(order) {
+    const insert = database.prepare(`
+    INSERT INTO Orders (
+      user_id, design_id, quantity, size,
+      customer_name, shipping_address, pincode,
+      city, phone_number, email, payment_method,
+      total_price
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+    const result = insert.run(
+        order.user_id,
+        order.design_id,
+        order.quantity,
+        order.size,
+        order.customer_name,
+        order.shipping_address,
+        order.pincode,
+        order.city,
+        order.phone_number,
+        order.email,
+        order.payment_method,
+        order.total_price
+    );
+
+    return result;
+}
 
 
-module.exports = { addUser, getUserByEmail, getUserByPhoneNumber, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword, GetDesignById, addpromo, getpromo, getallpromo, addAddress, GetAddress, updateAddress, addToCart, updateCartQuantity, getCartItem, getCart, addorder }
+async function getTotalOrders() {
+    try {
+        const stmt = database.prepare("SELECT COUNT(*) AS total FROM Orders");
+        const result = stmt.get(); // use `get()` instead of `all()` for single row
+        return result.total;
+    } catch (error) {
+        console.error("Error getting total orders:", error);
+        return 0;
+    }
+}
+
+
+async function getTotalUsers() {
+    try {
+        const stmt = database.prepare("SELECT COUNT(*) AS total FROM Users");
+        const result = stmt.get(); // use `get()` instead of `all()` for single row
+        return result.total;
+    } catch (error) {
+        console.error("Error getting total orders:", error);
+        return 0;
+    }
+}
+
+function getTotalRevenue() {
+    try {
+        const stmt = database.prepare("SELECT SUM(total_price) AS total FROM Orders");
+        const result = stmt.get(); // returns a single row
+        return result.total || 0;
+    } catch (error) {
+        console.error("Error getting total revenue:", error);
+        return 0;
+    }
+}
+
+function getAllOrders() {
+  const stmt = database.prepare(`
+    SELECT
+      /* ---- Orders columns ---- */
+      o.id              AS order_id,
+      o.user_id,
+      o.design_id,
+      o.quantity,
+      o.size,
+      o.customer_name,
+      o.shipping_address,
+      o.pincode,
+      o.city,
+      o.phone_number,
+      o.email,
+      o.payment_method,
+      o.total_price,
+      o.status,
+      o.created_at      AS order_created_at,
+
+      /* ---- Designs columns ---- */
+      d.id              AS design_id,        -- same value as o.design_id but kept for completeness
+      d.user_id         AS design_user_id,
+      d.name            AS design_name,
+      d.type            AS design_type,
+      d.color           AS design_color,
+      d.front_canvas_json,
+      d.back_canvas_json,
+      d.price           AS design_price,
+      d.created_at      AS design_created_at
+
+    FROM Orders  o
+    LEFT JOIN Designs d ON o.design_id = d.id
+    ORDER BY o.created_at DESC
+  `);
+  return stmt.all();       // returns an array of order objects with all design details
+}
+
+
+
+
+
+
+// smt = database.prepare(`delete from addresses`)
+// data = smt.run()
+
+
+module.exports = { addUser, getUserByEmail, getUserByPhoneNumber, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword, GetDesignById, addpromo, getpromo, getallpromo, addAddress, GetAddress, updateUserProfile, updateAddress, addToCart, updateCartQuantity, getCartItem, getCart, addorder, deleteDesignById, getDesignById, insertOrder, getTotalOrders, getTotalUsers, getTotalRevenue, getAllOrders }
