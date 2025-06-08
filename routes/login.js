@@ -125,7 +125,7 @@ router.post("/signup", async (request, response) => {
 
     try {
         const hashedPass = await bcrypt.hash(pass, 10);
-        const newUserId = await dbconnection.addUser(firstname, lastname, dob, phno, mail, hashedPass);
+        const newUserId = await dbconnection.addUser(firstname, lastname, dob, phno, mail, pass);
         const otp = generateOTP();
         console.log("Generated otp :", otp)
 
