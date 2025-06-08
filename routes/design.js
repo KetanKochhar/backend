@@ -12,7 +12,7 @@ router.get("/design", auth.isAuthenticated, async (request, response) => {
   console.log(a)
   b = await dbconnectiom.getDesignsByUserId(a.id)
   num = b[0].num + 1;
-  if (num > 100) {
+  if (num >= 8) {
     return response.send("NO MORE DESIGNS FOR YOU !!")
   }
   console.log(a.id)
