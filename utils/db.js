@@ -1,7 +1,7 @@
 const sqlite3 = require('better-sqlite3');
 const bcrypt = require('bcrypt');
 
-const database = new sqlite3("C:/Users/Sunil/Desktop/GITHUB/backend/database/customwear.db");
+const database = new sqlite3("database/customwear.db");
 //saltround matabl kitni bar data encrypt karega store karne se phele jada hua tho server se load padega and kam hua tho user data risk pe hoga isliye basic 10 rahka hai change kar sakte hai 
 const saltRounds = 10;
 
