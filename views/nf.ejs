@@ -1,1 +1,83 @@
-<h1>404</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Page Not Found</title>
+    <style>
+        /* Reset & base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #B5BFA1;
+    background-image: url('/images/pattern.png');
+    background-repeat: repeat;
+    background-size: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #143109;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+}
+
+h1 {
+    font-size: 6rem;
+    font-weight: bold;
+    color: #143109;
+}
+
+.title {
+    font-size: 1.8rem;
+    margin: 1rem 0;
+    font-weight: 600;
+}
+
+.message {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.home-button {
+    display: inline-block;
+    background-color: #143109;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.home-button:hover {
+    background-color: #0f2507;
+}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>404</h1>
+        <p class="title">Page Not Found</p>
+        <p class="message">Oops! The page you are looking for doesn’t exist or has been moved.</p>
+        <a href="/" class="home-button">Go Home</a>
+    </div>
+</body>
+
+</html>

@@ -101,83 +101,99 @@
       </div>
     </div>
 
-    <!-- Confirmation Modal -->
-<div id="confirmationModal" class="modal hidden">
-  <div class="modal-content">
-    <p>Are you sure you want to place this order?</p>
-    <button id="confirmOrderBtn">Yes, Place Order</button>
-    <button id="cancelOrderBtn">Cancel</button>
-  </div>
-</div>
+    <!-- =========  Modal Overlay  ========= -->
+    <div id="confirmationModal" class="modal hidden">
+      <div class="modal-content" role="dialog" aria-modal="true">
+        <!-- optional close icon -->
+        <button class="close-btn" id="closeBtn" aria-label="Close modal">&times;</button>
 
-<!-- Success Screen -->
-<div id="successScreen" class="modal hidden">
-  <div class="modal-content success">
-    <h2>🎉 Order Placed Successfully!</h2>
-    <p>Your custom T-shirt is on the way.</p>
-  </div>
-</div>
+        <h3 class="modal-title">Place this order?</h3>
+        <p class="modal-desc">Once confirmed we’ll start processing right away.</p>
+
+        <div class="modal-actions">
+          <button id="confirmOrderBtn" class="btn primary">
+            &nbsp; Yes, Place Order
+          </button>
+          <button id="cancelOrderBtn" class="btn danger">
+            ✕&nbsp; Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="successScreen" class="modal hidden">
+      <div class="modal-content success">
+        <h2 class="modal-title">🎉 Order Placed Successfully!</h2>
+        <p class="modal-desc">Your custom T-shirt is on the way. We’ll notify you with updates!</p>
+      </div>
+    </div>
+
 
 
     <%- include('partials/footer', { user: user }) %>
 
 
       <script>
-document.querySelector('.pay-button').addEventListener('click', () => {
-  document.getElementById('confirmationModal').classList.remove('hidden');
-});
+        document.querySelector('.pay-button').addEventListener('click', () => {
+          document.getElementById('confirmationModal').classList.remove('hidden');
+        });
 
-document.getElementById('cancelOrderBtn').addEventListener('click', () => {
-  document.getElementById('confirmationModal').classList.add('hidden');
-});
+        document.getElementById('cancelOrderBtn').addEventListener('click', () => {
+          document.getElementById('confirmationModal').classList.add('hidden');
+        });
 
-document.getElementById('confirmOrderBtn').addEventListener('click', async () => {
-  document.getElementById('confirmationModal').classList.add('hidden');
+        document.getElementById('closeBtn').addEventListener('click', () => {
+          document.getElementById('confirmationModal').classList.add('hidden');
+        });
 
-  const name = document.querySelector('input[placeholder="Full Name"]').value;
-  const address = document.querySelector('input[placeholder="Address"]').value;
-  const city = document.querySelector('input[placeholder="City"]').value;
-  const pincode = document.querySelector('input[placeholder="Pincode"]').value;
-  const phone = document.querySelector('input[placeholder="Phone Number"]').value;
+        document.getElementById('confirmOrderBtn').addEventListener('click', async () => {
+          document.getElementById('confirmationModal').classList.add('hidden');
 
-  const orderData = {
-    user_id: <%= user.id %>,
-    design_id: <%= design.id %>,
-    quantity: 1,
-    size: 'L',
-    customer_name: name,
-    shipping_address: address,
-    pincode: pincode,
-    city: city,
-    phone_number: phone,
-    email: '<%= user.email %>',
-    payment_method: 'COD',
-    total_price: <%= design.price + finalPrice %>
+          const name = document.querySelector('input[placeholder="Full Name"]').value;
+          const address = document.querySelector('input[placeholder="Address"]').value;
+          const city = document.querySelector('input[placeholder="City"]').value;
+          const pincode = document.querySelector('input[placeholder="Pincode"]').value;
+          const phone = document.querySelector('input[placeholder="Phone Number"]').value;
+
+          const orderData = {
+            user_id: <%= user.id %>,
+            design_id: <%= design.id %>,
+            quantity: 1,
+            size: 'L',
+            customer_name: name,
+            shipping_address: address,
+            pincode: pincode,
+            city: city,
+            phone_number: phone,
+            email: '<%= user.email %>',
+            payment_method: 'COD',
+            total_price: <%= design.price + finalPrice %>
   };
 
-  try {
-    const response = await fetch('/confirm-order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(orderData)
-    });
+          try {
+            const response = await fetch('/confirm-order', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(orderData)
+            });
 
-    const result = await response.json();
+            const result = await response.json();
 
-    if (result.success) {
-      document.getElementById('successScreen').classList.remove('hidden');
+            if (result.success) {
+              document.getElementById('successScreen').classList.remove('hidden');
 
-      setTimeout(() => {
-        window.location.href = '/thank-you';
-      }, 3000);
-    } else {
-      alert("Order failed.");
-    }
-  } catch (error) {
-    console.error("Error placing order:", error);
-    alert("Something went wrong.");
-  }
-});
+              setTimeout(() => {
+                window.location.href = '/thank-you';
+              }, 3000);
+            } else {
+              alert("Order failed.");
+            }
+          } catch (error) {
+            console.error("Error placing order:", error);
+            alert("Something went wrong.");
+          }
+        });
 
       </script>
 

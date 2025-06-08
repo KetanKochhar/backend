@@ -121,55 +121,197 @@ body {
     color: #143109;
     text-decoration: none;
 }
-        .design-card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-        }
 
-        .design-images img {
-            width: 50%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        .text-green {
-            color: green;
-            font-weight: bold;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex; justify-content: center; align-items: center;
-  z-index: 9999;
+.design-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
 }
+
+.design-images img {
+    width: 50%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.text-green {
+    color: green;
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* ==========  Overlay / Backdrop  ========== */
+.modal {
+    position: fixed;
+    inset: 0;
+    /* shorthand for top/left/right/bottom:0 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(20, 49, 9, 0.5);
+    /* slightly lighter for “frosted” look   */
+    backdrop-filter: blur(10px);
+    /* frosted-glass effect                  */
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 9999;
+    transition: opacity .25s ease;
+}
+
+/* ==========  Modal Card  ========== */
 .modal-content {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  text-align: center;
-  animation: fadeIn 0.3s ease-in-out;
+    width: min(92vw, 420px);
+    background: rgb(181, 191, 161, 0.7);
+    /* subtle translucency               */
+    border: 2px solid #143109;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .2);
+    border-radius: 18px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 2.5rem 2rem;
+    color: #143109;
+    position: relative;
+
+    /* entrance animation */
+    animation: modalIn .45s cubic-bezier(.25, .8, .3, 1) forwards;
 }
+
+/* ==========  Headings & Text  ========== */
+.modal-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: .25rem;
+}
+
+.modal-desc {
+    font-size: .95rem;
+    margin-bottom: 2rem;
+    line-height: 1.45;
+}
+
+/* ==========  Buttons  ========== */
+.btn {
+    all: unset;
+    cursor: pointer;
+    user-select: none;
+    font-size: .93rem;
+    font-weight: 600;
+    padding: .75rem 1.5rem;
+    border-radius: 9999px;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.primary {
+    background: linear-gradient(135deg, #1d530f, #143109);
+    color: #fff;
+    box-shadow: 0 0 0 3px rgba(20, 49, 9, .2);
+}
+
+.primary:hover {
+    box-shadow: 0 8px 20px rgba(20, 49, 9, .35);
+}
+
+.danger {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: #fff;
+    margin-left: .75rem;
+    box-shadow: 0 0 0 3px rgba(244, 67, 54, .25);
+}
+
+.danger:hover {
+    box-shadow: 0 8px 20px rgba(244, 67, 54, .35);
+}
+
+/* ==========  Layout Helpers  ========== */
+.modal-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.close-btn {
+    position: absolute;
+    top: .75rem;
+    right: .75rem;
+    font-size: 1.35rem;
+    line-height: 1;
+    color: #143109;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: .25rem .5rem;
+    border-radius: 6px;
+    transition: background .15s ease;
+}
+
+.close-btn:hover {
+    background: rgba(20, 49, 9, .08);
+}
+
+/* ========= Success Modal Customization ========= */
 .modal-content.success {
-  animation: popUp 0.6s ease-in-out;
+    background: rgba(213, 255, 220, 0.85);
+    border: 1px solid rgba(34, 139, 34, 0.3);
+    color: #145d1d;
+    animation: successPop 0.5s ease-out forwards;
+    box-shadow: 0 0 20px rgba(34, 139, 34, 0.25);
 }
+
+/* Animation for success pop */
+@keyframes successPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.85) translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+
+/* ==========  Keyframes  ========== */
+@keyframes modalIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
 .hidden {
-  display: none;
+    display: none;
 }
+
 @keyframes popUp {
-  0% { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 

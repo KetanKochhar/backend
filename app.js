@@ -63,6 +63,11 @@ app.get("/order", (request, response) => {
     response.render("order", { user: request.session.user });
 });
 
+app.get("/thank-you", (request, response) => {
+    console.log(request.path);
+    response.render("thank-you", { user: request.session.user });
+});
+
 app.post('/set-session', (req, res) => {
     const { key, value } = req.body;
     req.session[key] = value;
