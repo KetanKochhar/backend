@@ -135,7 +135,40 @@ th {
             <% } %>
         </div>
         </td>
-    </tr>
+    <!-- </tr>
+      <h2>Textbox JSON ➜ Image</h2>
+  <img id="previewImg" style="border: 1px solid #ccc;" />
+
+<script src="../JS/order.js"></script>
+
+<script>
+  <% if (order.frontimages[0]?.type === 'textbox') { %>
+      const textboxJson = <%- JSON.stringify(order.frontimages[0]) %>;
+
+  // Wait for font to load before rendering
+  document.fonts.ready.then(() => {
+    const canvas = new fabric.StaticCanvas(null, {
+      width: 1000,
+      height: 1000
+    });
+
+    fabric.util.enlivenObjects([textboxJson], function(objects) {
+      const textbox = objects[0];
+      canvas.add(textbox);
+      canvas.renderAll();
+
+      const dataURL = canvas.toDataURL({
+        format: 'png',
+        multiplier: 2
+      });
+
+      document.getElementById("previewImg").src = dataURL;
+    });
+  });
+  <% } %>
+</script> -->
+
+
     <% }) %>
 </tbody>
 </table>

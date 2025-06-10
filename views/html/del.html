@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Simplify Fabric.js Textbox JSON</title>
+</head>
+
+<body>
+    <h2>Fabric.js Textbox JSON Simplifier</h2>
+
+    <textarea id="inputJson" rows="20" cols="100" placeholder="Paste full Fabric.js JSON here"></textarea>
+    <br><br>
+    <button onclick="simplifyJson()">Simplify JSON</button>
+    <br><br>
+    <h3>Output:</h3>
+    <pre id="outputJson" style="background:#f4f4f4; padding:10px;"></pre>
+
+    <script>
+        function simplifyJson() {
+            try {
+                const input = document.getElementById('inputJson').value;
+                const original = JSON.parse(input);
+
+                const simplified = {
+                    type: "textbox",
+                    version: original.version,
+                    originX: original.originX,
+                    originY: original.originY,
+                    left: 250, // new fixed position
+                    top: 150,
+                    width: original.width,
+                    height: original.height,
+                    fill: original.fill,
+                    fontFamily: original.fontFamily,
+                    fontSize: original.fontSize,
+                    text: original.text,
+                    textAlign: original.textAlign,
+                    clipPath: {
+                        type: "group",
+                        originX: original.clipPath.originX,
+                        originY: original.clipPath.originY,
+                        left: 250, // match textbox
+                        top: 150,
+                        width: original.clipPath.width,
+                        height: original.clipPath.height,
+                        objects: [
+                            {
+                                type: "rect",
+                                originX: "center",
+                                originY: "center",
+                                left: 0,
+                                top: 0,
+                                width: original.clipPath.objects[0].width,
+                                height: original.clipPath.objects[0].height,
+                                fill: original.clipPath.objects[0].fill
+                            }
+                        ],
+                        absolutePositioned: true
+                    }
+                };
+
+                document.getElementById('outputJson').textContent = JSON.stringify(simplified, null, 2);
+            } catch (e) {
+                alert("Invalid JSON input.");
+            }
+        }
+    </script>
+</body>
+
+</html>
