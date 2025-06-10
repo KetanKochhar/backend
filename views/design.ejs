@@ -18,7 +18,6 @@
       sizeButtons.forEach(button => {
         button.addEventListener('click', () => {
           const selectedSize = button.getAttribute('data-size');
-          console.log("Selected Size:", selectedSize);
 
           // You can store the selected size in localStorage or a variable
           sessionStorage.setItem('size', selectedSize);

@@ -233,7 +233,7 @@ async function getallpromo() {
     try {
         smt = database.prepare(`SELECT * FROM Promo `)
         data = smt.all()
-        console.log(data)
+        // console.log(data)
         return data
     } catch (error) {
         console.error(error)
@@ -334,7 +334,7 @@ async function addorder(orderData, callback) {
         const query = database.prepare(`INSERT INTO Orders (user_id,design_id,quantity,size,customer_name,shipping_address,pincode,city,phone_number,email,payment_method,total_price) VALUES  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
         const values = [user_id, design_id, quantity, size, customer_name, shipping_address, pincode, city, phone_number, email, payment_method, total_price];
         const data = query.run(values)
-        console.log(data)
+        // console.log(data)
         return data
     }
     catch (error) {

@@ -9,13 +9,13 @@ router.get("/design", auth.isAuthenticated, async (request, response) => {
   colors = await functionmap[request.session.type]();
   mail = request.session.email;
   a = await dbconnectiom.getUserIdByEmail(mail);
-  console.log(a)
+  // console.log(a)
   b = await dbconnectiom.getDesignsByUserId(a.id)
   num = b[0].num + 1;
   if (num >= 8) {
     return response.send("NO MORE DESIGNS FOR YOU !!")
   }
-  console.log(a.id)
+  // console.log(a.id)
   response.render("design", { type: request.session.type, colors: colors, name: request.session.user, mail: request.session.email, uid: a.id, number: num, user: request.session.user })
 })
 router.post("/save-design", async (request, response) => {

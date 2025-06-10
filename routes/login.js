@@ -127,7 +127,7 @@ router.post("/signup", async (request, response) => {
         const hashedPass = await bcrypt.hash(pass, 10);
         const newUserId = await dbconnection.addUser(firstname, lastname, dob, phno, mail, pass);
         const otp = generateOTP();
-        console.log("Generated otp :", otp)
+        // console.log("Generated otp :", otp)
 
         await dbconnection.saveOTPToDatabase(newUserId, otp);
         await sendmail(mail, otp, firstname, lastname);
@@ -193,11 +193,11 @@ router.post("/login", async (request, response) => {
     }
 
     const user = await dbconnection.getUserByEmail(username);
-    console.log(user)
+    // console.log(user)
     if (user) {
         const isPasswordMatch = await dbconnection.comparePassword(password, user.password);
-        console.log(user.password+'hii')
-        console.log(password)
+        // console.log(user.password+'hii')
+        // console.log(password)
         if (isPasswordMatch) {
             request.session.user = user.first_name + user.last_name;
             request.session.email = user.email;

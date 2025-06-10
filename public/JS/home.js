@@ -51,7 +51,7 @@ function setSession(key, value) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log('Session set:', data);
+            // console.log('Session set:', data);
         })
         .catch(error => console.error('Error:', error));
 }
@@ -83,7 +83,7 @@ function setSession(key, value) {
     sizeButtons.forEach(button => {
       button.addEventListener("click", () => {
         const selectedSize = button.getAttribute("data-size");
-        console.log("Selected size:", selectedSize);
+        // console.log("Selected size:", selectedSize);
         closeSizePopup(); // Close after selection
       });
     });

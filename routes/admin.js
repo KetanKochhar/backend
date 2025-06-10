@@ -35,7 +35,7 @@ router.get("/admin/promo", auth.isAdmin, async (request, response) => {
 
 router.post('/add-color', (req, res) => {
   const { forname, name, colorName, darkColor } = req.body;
-  console.log(forname, name, colorName, darkColor)
+  // console.log(forname, name, colorName, darkColor)
   dbconnection.addColorToDB(forname, name, colorName, darkColor);
   res.redirect('/admin');
 });

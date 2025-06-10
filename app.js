@@ -28,43 +28,43 @@ app.use(session({
 }));
 
 app.get("/", (request, response) => {
-    console.log(request.path);
+    // console.log(request.path);
     response.render("home", { user: request.session.user });
 });
 
 
 app.get("/privacy-policy", (request, response) => {
-    console.log(request.path);
+    // console.log(request.path);
     response.render("privacyPolicy", { user: request.session.user });
 });
 
 app.get("/Contact-Us", (request, response) => {
-    console.log(request.path);
+    // console.log(request.path);
     response.render("contact", { user: request.session.user });
 });
 
 app.get("/Refund-And-Cancellation-Policy", (request, response) => {
-    console.log(request.path);
+    // console.log(request.path);
     response.render("refundAndCancellationPolicy", { user: request.session.user });
 });
 
 app.get("/Shipping-And-Delivery-Policy", (request, response) => {
-    console.log(request.path);
+    // console.log(request.path);
     response.render("shippingAndDeliveryPolicy", { user: request.session.user });
 });
 
 app.get("/Terms-And-Conditions", (request, response) => {
-    console.log(request.path);
+    // console.log(request.path);
     response.render("termsAndConditions", { user: request.session.user });
 });
 
 app.get("/order", (request, response) => {
-    console.log(request.path);
+    // console.log(request.path);
     response.render("order", { user: request.session.user });
 });
 
 app.get("/thank-you", (request, response) => {
-    console.log(request.path);
+    // console.log(request.path);
     response.render("thank-you", { user: request.session.user });
 });
 
@@ -124,5 +124,5 @@ app.use((req, res, next) => {
 });
 
 app.listen(port, () => {
-    console.log(`App is running on the 127.0.0.1:${port}`);
+    // console.log(`App is running on the 127.0.0.1:${port}`);
 })

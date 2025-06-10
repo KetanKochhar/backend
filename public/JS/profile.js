@@ -76,7 +76,7 @@ document.getElementById('addressForm').addEventListener('submit', async (e) => {
 
             if (addrRes.ok) {
                 const addrResult = await addrRes.text(); // since /api/address returns redirect/html
-                console.log('Address saved successfully:', addrResult);
+                // console.log('Address saved successfully:', addrResult);
                 alert("Profile and Address saved successfully!");
                 location.reload();
             } else {

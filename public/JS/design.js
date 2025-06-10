@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             if (currentTshirtColor == "#000000") {
-                // console.log("this is s black color");
                 a = functionmap[type];
                 const [front, back] = a(currentTshirtColor, currentTshirtColor1, '#777777')
                 tshirtFrontSVG = front;
@@ -302,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 cloneCount++;
                 if (cloneCount === userObjects.length) {
                     canvas.viewportTransform = [1, 0, 0, 1, 0, 0];
-                    console.log(canvas.viewportTransform)
+                    // console.log(canvas.viewportTransform)
                     canvasStates[currentSide].json = tempCanvas.toJSON();
                     canvasStates[currentSide].preview = canvas.toDataURL({ format: 'png', quality: 1 });
                     objectsBySide[currentSide] = clonedObjects;
@@ -357,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(res => res.json())
             .then(response => {
-                console.log(designnumber ? 'Design Updated:' : 'Design Saved:', response);
+                // console.log(designnumber ? 'Design Updated:' : 'Design Saved:', response);
                 if (!designnumber && response.designId) {
                     sessionStorage.setItem("designID", response.designId);
                 }
@@ -370,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Order Now button
 document.getElementById('OrderNow').addEventListener('click', function () {
     const savedDesignId = sessionStorage.getItem("designID");
-    console.log(savedDesignId);
+    // console.log(savedDesignId);
 
     if (isDesignSaved && savedDesignId) {
         window.location.href = `/order/${savedDesignId}`;
@@ -1202,7 +1201,7 @@ document.getElementById('OrderNow').addEventListener('click', function () {
             updateTotalPriceDisplay();
         }
 
-        console.log(`Textbox Size (${selectedTshirtSize}) - Width: ${widthInInches} in, Height: ${heightInInches} in`);
+        // console.log(`Textbox Size (${selectedTshirtSize}) - Width: ${widthInInches} in, Height: ${heightInInches} in`);
 
         updateSizeLabel(obj, widthInInches, heightInInches);
     }
@@ -1617,7 +1616,7 @@ function removeObjectAndAdjustPrice(obj) {
         document.getElementById("graphicsPanel").style.display = "block";
     });
 
-    console.log(graphicsData);
+    // console.log(graphicsData);
 
 
     function addGraphicToCanvas(src) {
@@ -1718,7 +1717,7 @@ function removeObjectAndAdjustPrice(obj) {
             updateTotalPriceDisplay();
         }
 
-        console.log(`Graphic Size (${selectedTshirtSize}) - Width: ${widthInInches} in, Height: ${heightInInches} in → ₹${newPrice}`);
+        // console.log(`Graphic Size (${selectedTshirtSize}) - Width: ${widthInInches} in, Height: ${heightInInches} in → ₹${newPrice}`);
 
         updateSizeLabel(obj, widthInInches, heightInInches);
     }
@@ -1891,7 +1890,7 @@ function removeObjectAndAdjustPrice(obj) {
     document.getElementById("categoryGrid").addEventListener("click", function (e) {
         if (e.target.tagName === "IMG") {
             const src = e.target.src;
-            console.log("Clicked image in categoryGrid:", src);
+            // console.log("Clicked image in categoryGrid:", src);
             addGraphicToCanvas(src);
             closePanel('categoryPanel');
         }
