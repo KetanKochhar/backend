@@ -43,7 +43,6 @@ document.getElementById('userPincode').addEventListener('blur', async () => {
         }
     }
 });
-
 document.getElementById('addressForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -57,6 +56,7 @@ document.getElementById('addressForm').addEventListener('submit', async (e) => {
     const area = document.getElementById('userArea').value;
 
     try {
+        // Step 1: Update user profile and address
         const res = await fetch('/api/update-profile', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -64,17 +64,33 @@ document.getElementById('addressForm').addEventListener('submit', async (e) => {
         });
 
         const result = await res.json();
+
         if (res.ok) {
-            alert(result.message);
-            location.reload();
+
+            // Step 2: Add address to DB (optional fallback if profile update didn’t insert address)
+            const addrRes = await fetch('/api/address', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id, address, pincode, city, area })
+            });
+
+            if (addrRes.ok) {
+                const addrResult = await addrRes.text(); // since /api/address returns redirect/html
+                console.log('Address saved successfully:', addrResult);
+                alert("Profile and Address saved successfully!");
+                location.reload();
+            } else {
+                alert("Profile updated but failed to save address.");
+            }
         } else {
             alert(result.error || 'Failed to update profile');
         }
     } catch (error) {
-        alert('Network error while saving profile');
+        alert('Network error while saving profile and address');
         console.error(error);
     }
 });
+
 
 
 // Toast notification

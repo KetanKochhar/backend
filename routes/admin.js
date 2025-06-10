@@ -52,12 +52,16 @@ router.get('/admin/order', auth.isAdmin, async (req, res) => {
 
     const enrichedOrders = orders.map(order => {
       let frontPreview = null;
-      let backPreview = null;
-      let sizeLabels = [];
+      let frontsizeLabels = [];
       let frontimages = [];
-      let backimages = [];
-      let usedgraphics = [];
+      let usedfrontgraphics = [];
       let frontObjectCount = 0;
+
+      let backPreview = null;
+      let backsizeLabels = [];
+      let backimages = [];
+      let usedbackgraphics = [];
+      let backObjectCount = 0;
 
       
       try {
@@ -68,10 +72,10 @@ router.get('/admin/order', auth.isAdmin, async (req, res) => {
         
         frontimages.forEach(obj => {
           if (obj.type === 'image' && obj.src) {
-            usedgraphics.push(obj.src);
+            usedfrontgraphics.push(obj.src);
           }
           if (obj.type === 'sizeLabel' && obj.text) {
-            sizeLabels.push(obj.text);
+            frontsizeLabels.push(obj.text);
           }
         });
       } catch (err) {
@@ -82,18 +86,32 @@ router.get('/admin/order', auth.isAdmin, async (req, res) => {
         const back = JSON.parse(order.back_canvas_json || '{}');
         backPreview = back?.preview || null;
         backimages = back?.json?.objects || [];
+        backObjectCount = backimages.length;
+
+        backimages.forEach(obj => {
+          if (obj.type === 'image' && obj.src) {
+            usedbackgraphics.push(obj.src);
+          }
+          if (obj.type === 'sizeLabel' && obj.text) {
+            backsizeLabels.push(obj.text);
+          }
+        });
       } catch (err) {
         console.error(`Failed to parse back_canvas_json for order ${order.id}`);
       }
       return {
         ...order,
         frontPreview,
-        backPreview,
         frontimages,
-        backimages,
         frontObjectCount,
-        usedgraphics,
-        sizeLabels,
+        usedfrontgraphics,
+        frontsizeLabels,
+
+        backPreview,
+        backimages,
+        backObjectCount,
+        usedbackgraphics,
+        backsizeLabels,
       };
     });
 

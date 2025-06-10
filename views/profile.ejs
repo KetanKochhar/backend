@@ -57,38 +57,36 @@
                         <div class="container">
                             <div class="field">
                                 <b><label class="label">First Name</label></b>
-                                <input type="text" class="input" value="<%= user.first_name || 'N/A' %>" readonly>
+                                <input type="text" class="input" value="<%= user.first_name || '' %>" readonly>
                             </div>
 
                             <div class="field">
                                 <b><label class="label">Last Name</label></b>
-                                <input type="text" class="input" value="<%= user.last_name || 'N/A' %>" readonly>
+                                <input type="text" class="input" value="<%= user.last_name || '' %>" readonly>
                             </div>
 
                             <div class="field">
                                 <b><label class="label">Date of Birth</label></b>
-                                <input type="text" class="input" value="<%= user.dob || 'N/A'%>" readonly>
+                                <input type="text" class="input" value="<%= user.dob || ''%>" readonly>
                             </div>
 
                             <div class="field">
                                 <b><label class="label">Phone Number</label></b>
-                                <input type="text" class="input" value="<%= user.phone_number || 'N/A' %>" readonly>
+                                <input type="text" class="input" value="<%= user.phone_number || '' %>" readonly>
                             </div>
 
                             <div class="field">
                                 <b><label class="label">Email</label></b>
-                                <input type="email" class="input" value="<%= user.email || 'N/A' %>" readonly>
+                                <input type="email" class="input" value="<%= user.email || '' %>" readonly>
                             </div>
 
                             <div class="field">
                                 <b><label class="label" for="address">Address</label></b>
                                 <textarea id="address" class="input" readonly rows="3" style="overflow-y: hidden;">
-                                    <% if (address && address.address) { %>
-                                    <%= [address.address, address.city, address.area, address.state].filter(Boolean).join(', ') %> - <%= address.pincode || '' %>
-                                    <% } else { %>
-                                    It seems you didn't add your address yet
-                                    <% } %>
-                                </textarea>
+<%= address && address.address ? [address.address, address.city, address.area, address.state].filter(Boolean).join(', ') + ' - ' + (address.pincode || '') : "It seems you didn't add your address yet" %>
+</textarea>
+
+
                             </div>
 
                         </div>
@@ -127,39 +125,39 @@
                         <form id="addressForm">
                             <label><b>First Name</b>
                                 <input type="text" id="userFirstName" name="first_name"
-                                    value="<%= user.first_name || 'N/A' %>" required>
+                                    value="<%= user.first_name%>" required>
                             </label>
 
                             <label><b>Last Name</b>
                                 <input type="text" name="last_name" id="userLastName"
-                                    value="<%= user.last_name  || 'N/A'%>" required>
+                                    value="<%= user.last_name%>" required>
                             </label>
 
                             <label><b>Phone Number</b>
                                 <input type="text" name="userPhone" id="userPhone"
-                                    value="<%= user.phone_number || 'N/A' %>" required>
+                                    value="<%= user.phone_number%>" required>
                             </label>
 
                             <label><b>House No., Building Name, Area &colony</b>
-                                <input type="text" name="userAddress" id="userAddress"
-                                    value="<%= address?.address || 'N/A'%>" required>
+                                <input type="text" name="userAddress" id="userAddress" placeholder="house no., building, area "
+                                    value="<%= address.address%>" required>
                             </label>
 
                             <label for="userPincode"><b>Pincode</b>
                                 <input type="text" maxlength="6" placeholder="Enter 6-digit pincode"
-                                    value="<%= address?.pincode || 'N/A'%>" id="userPincode">
+                                    value="<%= address.pincode%>" id="userPincode" required>
                             </label>
                             <p id="loadingPincodeStatus" class="text-sm text-gray-500 mt-2 hidden">Fetching location...
                             </p>
 
                             <label for="userCity"><b>City</b>
                                 <input type="text" id="userCity" style="cursor: not-allowed; background-color: #8c9678"
-                                    value="<%= address?.city || 'N/A'%>" readonly>
+                                    value="<%= address.city%>" readonly>
                             </label>
 
                             <label for="userArea"><b>State</b>
                                 <input type="text" id="userArea" style="cursor: not-allowed; background-color: #8c9678"
-                                    value="<%= address?.area || 'N/A'%>" readonly>
+                                    value="<%= address.area%>" readonly>
                             </label>
 
 
@@ -245,22 +243,32 @@
                         </button>
 
                         <div class="mb-4">
-                            <img src="<%= fcjp[i] %>" alt="Design Image 1" class="w-full h-48 object-cover rounded-lg"
-                                id="images" />
+                            <img src="<%= fcjp[i] ? fcjp[i] : bcjp[i] %>" alt="Design Image"
+                                class="w-full h-48 object-cover rounded-lg" id="images" />
+
                             <h2 class="text-2xl font-bold text-gray-900 mb-6 flex-grow">
                                 <%= name[i] %>
                             </h2>
-                            <h3 class="text-lg font-semibold text-gray-600">Design ID : <span class="text-gray-800">
+
+                            <h3 class="text-lg font-semibold text-gray-600">Design ID :
+                                <span class="text-gray-800">
                                     <%= id[i] %>
-                                </span></h3>
-                            <h3 class="text-lg font-semibold text-gray-600">Type : <span class="text-gray-800">
+                                </span>
+                            </h3>
+
+                            <h3 class="text-lg font-semibold text-gray-600">Type :
+                                <span class="text-gray-800">
                                     <%= type[i] %>
-                                </span></h3>
-                            <h3 class="text-lg font-semibold text-gray-600">Price : ₹ <span id="price"
-                                    class="text-green-600 font-bold">
+                                </span>
+                            </h3>
+
+                            <h3 class="text-lg font-semibold text-gray-600">Price : ₹
+                                <span id="price" class="text-green-600 font-bold">
                                     <%= price[i] %>
-                                </span></h3>
+                                </span>
+                            </h3>
                         </div>
+
 
                         <button onclick="window.location.href = '/order/<%= id[i] %>';"
                             class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out mt-auto shadow-md">

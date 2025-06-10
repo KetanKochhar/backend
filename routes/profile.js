@@ -42,7 +42,7 @@ router.get('/profile', auth.isAuthenticated, async (request, response) => {
     // Render profile page with full user info and designs
     response.render('profile', {
       user: uid,               // user object including dob, phone_number, etc.
-      address: add,            // user address info
+      address: add || {},            // user address info
       userid: uid.id,
       username: request.session.user,
       id: id,
@@ -152,6 +152,7 @@ router.post("/remove-item", async (req, res) => {
     res.status(404).send("Item not found");
   }
 });
+
 
 
 router.post('/api/address', (req, res) => {
