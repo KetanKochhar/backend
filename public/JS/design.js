@@ -1207,7 +1207,7 @@ document.getElementById('OrderNow').addEventListener('click', function () {
     }
 
     document.addEventListener('keydown', function (e) {
-    if (e.key === 'Delete' || e.key === 'Backspace') {
+    if (e.key === 'Delete') {
         const activeObj = canvas.getActiveObject();
         if (activeObj && (activeObj.type === 'textbox' || activeObj.type === 'image')) {
             removeObjectAndAdjustPrice(activeObj);
@@ -1741,7 +1741,7 @@ function removeObjectAndAdjustPrice(obj) {
     });
 
     document.addEventListener('keydown', function (e) {
-    if (e.key === 'Delete' || e.key === 'Backspace') {
+    if (e.key === 'Delete') {
         const activeObj = canvas.getActiveObject();
         if (activeObj && (activeObj.type === 'textbox' || activeObj.customType === 'graphics')) {
             removeObjectAndAdjustPrice(activeObj);
