@@ -335,7 +335,7 @@ body {
     background-color: #ffffff;
     padding: 15px;
     width: 16%;
-    height: 90%;
+    height: 85vh;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     /* Add border here */
     border-right: 2px solid #143109;
@@ -538,7 +538,7 @@ body {
     background-color: #e0e0e0;
     border-radius: 4px;
     padding: 2px 6px;
-    font-size: 11px;
+    font-size: 9px;
     color: #333;
     margin-left: 6px;
 }
@@ -559,7 +559,7 @@ body {
 
 .grid img {
     width: 100%;
-    height: auto;
+    height: 120%;
     border-radius: 6px;
     background-color: #fafafa;
     border: 1px solid #ddd;

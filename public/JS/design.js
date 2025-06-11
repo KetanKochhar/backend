@@ -1525,7 +1525,7 @@ function removeObjectAndAdjustPrice(obj) {
 
                 const editableBadge = document.createElement('span');
                 editableBadge.classList.add('editable-badge');
-                editableBadge.textContent = 'Editable';
+                editableBadge.textContent = 'No Background';
                 sectionHeader.appendChild(editableBadge);
 
                 const showMoreLink = document.createElement('a');
@@ -1569,7 +1569,6 @@ function removeObjectAndAdjustPrice(obj) {
                 const img = document.createElement("img");
                 img.src = src;
                 img.alt = category;
-                img.style.width = '100px';
                 img.style.margin = '10px';
                 container.appendChild(img);
             });
@@ -1598,7 +1597,6 @@ function removeObjectAndAdjustPrice(obj) {
                     const img = document.createElement("img");
                     img.src = src;
                     img.alt = category;
-                    img.style.width = '100px';
                     img.style.margin = '10px';
                     categoryGrid.appendChild(img);
                 });
