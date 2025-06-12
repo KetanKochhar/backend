@@ -1157,20 +1157,20 @@ document.getElementById('OrderNow').addEventListener('click', function () {
     function getTextBoxSize(widthInPixels, heightInPixels) {
         return {
             M: {
-                width: widthInPixels / 17.27,
-                height: heightInPixels / 18.52
+                width: widthInPixels / 18.27,
+                height: heightInPixels / 20.52
             },
             L: {
-                width: widthInPixels / 15.63,
-                height: heightInPixels / 16.76
+                width: widthInPixels / 16.63,
+                height: heightInPixels / 18.76
             },
             XL: {
-                width: widthInPixels / 14.14,
-                height: heightInPixels / 15.3
+                width: widthInPixels / 15.14,
+                height: heightInPixels / 17.3
             },
             XXL: {
-                width: widthInPixels / 19.91,
-                height: heightInPixels / 14.08
+                width: widthInPixels / 10.91,
+                height: heightInPixels / 16.08
             }
         };
     }
@@ -1657,20 +1657,20 @@ function removeObjectAndAdjustPrice(obj) {
     function getGraphicSize(widthInPixels, heightInPixels) {
         return {
             M: {
-                width: widthInPixels / 17.27,
-                height: heightInPixels / 18.52
+                width: widthInPixels / 18.27,
+                height: heightInPixels / 20.52
             },
             L: {
-                width: widthInPixels / 15.63,
-                height: heightInPixels / 16.76
+                width: widthInPixels / 16.63,
+                height: heightInPixels / 18.76
             },
             XL: {
-                width: widthInPixels / 14.14,
-                height: heightInPixels / 15.3
+                width: widthInPixels / 15.14,
+                height: heightInPixels / 17.3
             },
             XXL: {
-                width: widthInPixels / 19.91,
-                height: heightInPixels / 14.08
+                width: widthInPixels / 10.91,
+                height: heightInPixels / 16.08
             }
         };
     }
