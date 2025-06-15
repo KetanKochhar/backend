@@ -11,7 +11,7 @@ function isAdmin(request , response , next){
     return next();
   }
   else{
-    return response.status(404).render("nf");;
+    return response.redirect('/login?error=Please login');
   }
 }
 module.exports = { isAuthenticated ,isAdmin};
