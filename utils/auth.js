@@ -2,7 +2,7 @@ function isAuthenticated(request, response, next) {
     if (request.session.user) {
       return next();
     } else {
-      return response.redirect('/login?error=Please login Again');
+      return response.redirect('/login?error=Please login');
     }
   }
   
@@ -11,7 +11,7 @@ function isAdmin(request , response , next){
     return next();
   }
   else{
-    return response.redirect('/login?error=Please login Again');
+    return response.status(404).render("nf");;
   }
 }
 module.exports = { isAuthenticated ,isAdmin};
