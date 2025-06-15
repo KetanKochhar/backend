@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Order Now | CustomWear</title>
   <link rel="stylesheet" href="/css/order.css" />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 
 <body>
@@ -37,7 +38,13 @@
 
         <div class="payment-option">
           <h1 style="font-size: 25px;">Payment Method</h1><br />
-          <label><input type="radio" name="payment" checked /> Cash on Delivery</label>
+          <label>
+  <input type="radio" name="payment" value="cod" checked /> Cash on Delivery
+</label><br />
+<label>
+  <input type="radio" name="payment" value="razorpay" /> Pay Online (UPI, Card)
+</label>
+
         </div>
 
         <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
@@ -135,9 +142,106 @@
 
 
       <script>
-        document.querySelector('.pay-button').addEventListener('click', () => {
-          document.getElementById('confirmationModal').classList.remove('hidden');
+        document.querySelector('.pay-button').addEventListener('click', async () => {
+  const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+
+  if (paymentMethod === 'cod') {
+    document.getElementById('confirmationModal').classList.remove('hidden');
+    return;
+  }
+
+  // Collect customer and order info
+  const name = document.querySelector('input[placeholder="Full Name"]').value;
+  const address = document.querySelector('input[placeholder="Address"]').value;
+  const city = document.querySelector('input[placeholder="City"]').value;
+  const pincode = document.querySelector('input[placeholder="Pincode"]').value;
+  const phone = document.querySelector('input[placeholder="Phone Number"]').value;
+
+  const orderData = {
+    user_id: <%= user.id %>,
+    design_id: <%= design.id %>,
+    quantity: 1,
+    size: 'L',
+    customer_name: name,
+    shipping_address: address,
+    pincode: pincode,
+    city: city,
+    phone_number: phone,
+    email: '<%= user.email %>',
+    payment_method: 'razorpay',
+    total_price: <%= design.price + finalPrice %>
+  };
+
+  try {
+    // 1. Create Razorpay order from backend
+const res = await fetch("/api/payment/create-order", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ amount: orderData.total_price })
+});
+
+
+
+
+    const data = await res.json();
+
+    if (!data.success) {
+      alert("Failed to create Razorpay order");
+      return;
+    }
+
+    const options = {
+      key: '<%= process.env.RAZORPAY_KEY_ID %>', // or hardcode your Razorpay key
+      amount: data.order.amount,
+      currency: "INR",
+      name: "CustomWear",
+      description: "Custom T-shirt Order",
+      order_id: data.order.id,
+      handler: async function (response) {
+        // 2. Payment successful → place order
+        const confirmData = {
+          ...orderData,
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_signature: response.razorpay_signature
+        };
+
+        const confirmRes = await fetch('/confirm-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(confirmData)
         });
+
+        const confirmResult = await confirmRes.json();
+
+        if (confirmResult.success) {
+          document.getElementById('successScreen').classList.remove('hidden');
+          setTimeout(() => {
+            window.location.href = '/thank-you';
+          }, 3000);
+        } else {
+          alert("Order failed.");
+        }
+      },
+      prefill: {
+        name: name,
+        email: '<%= user.email %>',
+        contact: phone
+      },
+      theme: {
+        color: "#163109"
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+
+  } catch (error) {
+    console.error("Razorpay error", error);
+    alert("Something went wrong while initiating payment.");
+  }
+});
+
 
         document.getElementById('cancelOrderBtn').addEventListener('click', () => {
           document.getElementById('confirmationModal').classList.add('hidden');

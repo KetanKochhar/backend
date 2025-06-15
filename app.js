@@ -74,6 +74,12 @@ app.post('/set-session', (req, res) => {
     res.json({ message: 'Session set', session: req.session });
 });
 
+
+const paymentRoutes = require('./routes/payment');
+app.use('/api/payment', paymentRoutes);
+
+
+
 // api for graphics
 app.get('/api/categories', (req, res) => {
     const dirPath = path.join(__dirname, '/public/images/cloths');
