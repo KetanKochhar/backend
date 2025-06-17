@@ -69,6 +69,10 @@ app.get("/thank-you", (request, response) => {
     response.render("thank-you", { user: request.session.user });
 });
 
+app.get("/design-your-tshirt", (request, response) => {
+    response.render("qr");
+})
+
 app.post('/set-session', (req, res) => {
     const { key, value } = req.body;
     req.session[key] = value;
@@ -117,7 +121,8 @@ app.get('/api/graphics/:category', (req, res) => {
 const loginroutes = require("./routes/login");
 const profileroutes = require("./routes/profile")
 const designroutes = require("./routes/design")
-const adminroutes = require("./routes/admin")
+const adminroutes = require("./routes/admin");
+const { request } = require('http');
 
 //sare routes ko call kar raha hoon phele import kia tha 
 app.use("/", loginroutes);
