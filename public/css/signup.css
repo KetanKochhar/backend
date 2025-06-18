@@ -17,14 +17,15 @@ body {
 }
 
 .signup-container {
-    margin-top: 50px;
+    margin-top: 150px;
+    margin-bottom: 150px;
+    width: 54vw;
     display: flex;
     align-items: center;
     background: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transform: scale(0.8);
 }
 
 .signup-box {
@@ -83,7 +84,7 @@ body {
 .branding img {
     width: 180px;
     margin-bottom: 10px;
-    margin-left: 50px;
+    margin-left: 16px;
 }
 
 a {
