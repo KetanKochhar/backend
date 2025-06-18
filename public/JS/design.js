@@ -19,11 +19,18 @@ function getsports(color = "white", color1 = "white", stroke = "black") {
 currentTshirtColor = "white";
 currentTshirtColor1 = "white";
 document.addEventListener('DOMContentLoaded', function () {
+    fabric.Object.prototype.toObject = (function(toObject) {
+    return function(propertiesToInclude) {
+        return toObject.call(this, (propertiesToInclude || []).concat(['price', 'customType']));
+    };
+})(fabric.Object.prototype.toObject);
+
     // Initialize the canvas using Fabric.js
     const canvas = new fabric.Canvas('tshirtCanvas', {
         backgroundColor: 'rgba(181, 191, 161, 0.4)', // 0.5 is 50% opacity  
         preserveObjectStacking: true,
     });
+
 
     function checktype() {
         const type = sessionStorage.getItem("type")
@@ -222,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 originX: 'center',
                 originY: 'center',
                 left: canvas.getWidth() / 2,
-                top: canvas.getHeight() / 2
+                top: canvas.getHeight() / 2,
             });
 
             canvas.add(clothingGroup);
@@ -251,15 +258,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     hasControls: true,
                     lockUniScaling: false,
                     selectable: true,
-                    customType: obj.customType || 'graphics'
+                    price: obj.price,
+                    customType: obj.customType
                 });
                 canvas.add(obj);
             });
-
             currentSide = type;
             drawTshirtBorder(type);
             canvas.renderAll();
         });
+
     }
 
 
@@ -273,7 +281,12 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        const userObjects = canvas.getObjects().filter(obj => obj !== currentClothing && obj !== tshirtBorder);
+const userObjects = canvas.getObjects().filter(obj =>
+    obj !== currentClothing &&
+    obj !== tshirtBorder &&
+    obj.type !== 'sizeLabel'
+);
+
         const existingToast = document.querySelector('.toast');
         if (existingToast) existingToast.remove();
         isToastVisible = false;
@@ -296,25 +309,25 @@ document.addEventListener('DOMContentLoaded', function () {
         let scalex = 1;
         userObjects.forEach(obj => {
             obj.clone(cloned => {
+                cloned.price = obj.price;
+                cloned.customType = obj.customType;
                 tempCanvas.add(cloned);
                 clonedObjects.push(cloned);
                 cloneCount++;
                 if (cloneCount === userObjects.length) {
                     canvas.viewportTransform = [1, 0, 0, 1, 0, 0];
-                    // console.log(canvas.viewportTransform)
                     canvasStates[currentSide].json = tempCanvas.toJSON();
                     canvasStates[currentSide].preview = canvas.toDataURL({ format: 'png', quality: 1 });
                     objectsBySide[currentSide] = clonedObjects;
                     isDesignSaved = true;
                     document.getElementById('previewBtn').disabled = false;
                     showToast("Design saved successfully!");
-
                     saveDesignToServer(); // Save only once
                 }
             });
         });
     });
-
+    
     function saveDesignToServer() {
         const designnumber = sessionStorage.getItem("designID");
         const uid = sessionStorage.getItem("uid");
@@ -965,14 +978,20 @@ document.getElementById('OrderNow').addEventListener('click', function () {
 
 
 
-    // Clothing type selection
-    document.querySelectorAll('.view-button').forEach(btn => {
-        btn.addEventListener('click', function () {
-            document.querySelector('.view-button.active').classList.remove('active');
-            this.classList.add('active');
-            loadClothing(this.dataset.type);
-        });
+document.querySelectorAll('.view-button').forEach(btn => {
+    btn.addEventListener('click', function () {
+        if (!isDesignSaved) {
+            showToast("Please save the design first!", "#ab3131");
+            return;
+        }
+
+        const activeBtn = document.querySelector('.view-button.active');
+        if (activeBtn) activeBtn.classList.remove('active');
+        this.classList.add('active');
+        loadClothing(this.dataset.type);
     });
+});
+
 
 
     // Get references to toolbar icons and panels
@@ -1139,6 +1158,7 @@ document.getElementById('OrderNow').addEventListener('click', function () {
             transparentCorners: true,
             hoverCursor: 'pointer',
             opacity: 1,
+            customType: 'text',
             price: 190
         });
 
@@ -1649,10 +1669,11 @@ function removeObjectAndAdjustPrice(obj) {
             canvas.renderAll();
             totalPrice += 250; // 💰 Add default price to total
             updateTotalPriceDisplay();
-
+            
             updateGraphicSizeDisplay(img); // 👈 Optional: to show size label and recalculate category
         }, { crossOrigin: 'anonymous' });
     }
+    
     // Convert pixel dimensions to inches for different t-shirt sizes
     function getGraphicSize(widthInPixels, heightInPixels) {
         return {
