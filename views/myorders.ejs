@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Orders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+
+<%- include('partials/nav', { user: user }) %>
+
+    <body>
+        <center>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8"
+                style="background-color: white; border-radius: 15px; padding: 30px; width: 90vw; margin-bottom: 50px; margin-top: 130px">
+                <h2 class="text-4xl font-bold text-gray-800 mb-10 mt-6 text-center sm:text-left col-span-full">My Orders
+                </h2>
+
+                <% for (let i=0; i < orderIds.length; i++) { %>
+                    <section class="group relative bg-white rounded-xl shadow-lg cursor-pointer flex flex-col"
+                        style="background-color: #b5bfa1;">
+                        <div class="mb-4">
+                            <img src="<%= frontPreviews[i] ? frontPreviews[i] : backPreviews[i] %>" alt="Design Image"
+                                class="w-full h-48 object-cover rounded-lg"/>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-2">
+                                <%= designNames[i] %>
+                            </h2>
+
+                            <h3 class="text-lg font-semibold text-gray-600">Order ID:
+                                <span class="text-gray-800">
+                                    <%= orderIds[i] %>
+                                </span>
+                            </h3>
+
+                            <h3 class="text-lg font-semibold text-gray-600">Type:
+                                <span class="text-gray-800">
+                                    <%= types[i] %>
+                                </span>
+                            </h3>
+
+                            <h3 class="text-lg font-semibold text-gray-600">Size:
+                                <span class="text-gray-800">
+                                    <%= sizes[i] %>
+                                </span>
+                            </h3>
+
+                            <h3 class="text-lg font-semibold text-gray-600">Quantity:
+                                <span class="text-gray-800">
+                                    <%= quantities[i] %>
+                                </span>
+                            </h3>
+
+                            <h3 class="text-lg font-semibold text-gray-600">Price:
+                                <span class="text-green-700 font-bold">₹<%= prices[i] %></span>
+                            </h3>
+
+                            <h3 class="text-sm text-gray-500 mt-2">Ordered on: <%= new
+                                    Date(orderDates[i]).toLocaleDateString() %>
+                            </h3>
+                        </div>
+
+                        <button
+                            class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out mt-auto shadow-md">
+                            Ordered
+                        </button>
+                    </section>
+                    <% } %>
+            </div>
+        </center>
+
+        <%- include('partials/footer', { user: user }) %>
+    </body>
+
+</html>

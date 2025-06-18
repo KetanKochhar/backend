@@ -70,10 +70,9 @@ section.bg-white .grid {
 /* Style for individual images */
 section.bg-white img {
     width: 100%;
-    height: 200px;
+    height: 300px;
     object-fit: cover;
     border-radius: 12px;
-    background-color: white;
 }
 
 /* Price tag green */

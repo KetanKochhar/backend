@@ -60,6 +60,8 @@ router.get('/profile', auth.isAuthenticated, async (request, response) => {
 });
 
 
+
+
 router.get('/order/:designId', auth.isAuthenticated, async (req, res) => {
   try {
     const designId = req.params.designId;
@@ -95,13 +97,49 @@ router.get('/order/:designId', auth.isAuthenticated, async (req, res) => {
 
 router.post('/confirm-order', async (req, res) => {
   try {
-    const result = dbconnection.insertOrder(req.body);
+    const {
+      user_id, design_id, quantity, size,
+      customer_name, shipping_address, pincode,
+      city, phone_number, email, payment_method, total_price
+    } = req.body;
+
+    // Fetch design snapshot
+    const design = await dbconnection.getDesignById(design_id);
+
+    if (!design) {
+      return res.status(404).json({ success: false, error: "Design not found" });
+    }
+
+    // Insert full snapshot into Orders table
+    const orderData = {
+      user_id,
+      design_name: design.name,
+      design_type: design.type,
+      design_color: design.color,
+      front_canvas_json: design.front_canvas_json,
+      back_canvas_json: design.back_canvas_json,
+      design_price: design.price,
+      quantity,
+      size,
+      customer_name,
+      shipping_address,
+      pincode,
+      city,
+      phone_number,
+      email,
+      payment_method,
+      total_price
+    };
+
+    const result = dbconnection.insertOrder(orderData);
     res.json({ success: true, orderId: result.lastInsertRowid });
+
   } catch (error) {
     console.error("Insert Order Error:", error);
-    res.json({ success: false });
+    res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 });
+
 
 
 

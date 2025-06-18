@@ -38,7 +38,12 @@ db.exec(`
     CREATE TABLE IF NOT EXISTS Orders (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
-        design_id INTEGER NOT NULL,
+        design_name TEXT NOT NULL,
+        design_type TEXT NOT NULL,
+        design_color TEXT NOT NULL,
+        front_canvas_json TEXT,
+        back_canvas_json TEXT,
+        design_price INTEGER,
         quantity INTEGER NOT NULL,
         size TEXT NOT NULL,
         customer_name TEXT NOT NULL,
@@ -51,8 +56,7 @@ db.exec(`
         total_price REAL NOT NULL,
         status TEXT NOT NULL DEFAULT 'Pending',
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES Users(id),
-        FOREIGN KEY (design_id) REFERENCES Designs(id)
+        FOREIGN KEY (user_id) REFERENCES Users(id)
     );
     CREATE TABLE IF NOT EXISTS OTPs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

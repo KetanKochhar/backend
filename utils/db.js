@@ -152,6 +152,15 @@ async function getDesignsByUserIdnumber(userId) {
     const stmt = database.prepare(`SELECT * from Designs WHERE user_id = ? `);
     return stmt.all(userId);
 }
+function getOrdersByUserId(userid) {
+  const stmt = database.prepare(`
+    SELECT *
+    FROM Orders
+    WHERE user_id = ?
+  `);
+  return stmt.all(userid);
+}
+
 
 async function addDesign(userId, name, type, color, frontCanvasJson, backCanvasJson, price) {
     try {
@@ -328,20 +337,44 @@ async function getCart(user_id) {
     }
 }
 
-async function addorder(orderData, callback) {
+async function addorder(orderData) {
     try {
-        const { user_id, design_id, quantity, size, customer_name, shipping_address, pincode, city, phone_number, email, payment_method, total_price } = orderData;
-        const query = database.prepare(`INSERT INTO Orders (user_id,design_id,quantity,size,customer_name,shipping_address,pincode,city,phone_number,email,payment_method,total_price) VALUES  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
-        const values = [user_id, design_id, quantity, size, customer_name, shipping_address, pincode, city, phone_number, email, payment_method, total_price];
-        const data = query.run(values)
-        // console.log(data)
-        return data
-    }
-    catch (error) {
-        console.error("error while adding the order ", error)
+        const {
+            user_id, design_id, quantity, size,
+            customer_name, shipping_address, pincode,
+            city, phone_number, email, payment_method, total_price
+        } = orderData;
+
+        // Fetch design snapshot
+        const design = database.prepare('SELECT * FROM Designs WHERE id = ?').get(design_id);
+
+        if (!design) throw new Error("Design not found");
+
+        const insertQuery = database.prepare(`
+            INSERT INTO Orders (
+                user_id, design_name, design_type, design_color,
+                front_canvas_json, back_canvas_json, design_price,
+                quantity, size, customer_name, shipping_address,
+                pincode, city, phone_number, email,
+                payment_method, total_price
+            ) VALUES (
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+            )
+        `);
+
+        const result = insertQuery.run(
+            user_id, design.name, design.type, design.color,
+            design.front_canvas_json, design.back_canvas_json, design.price,
+            quantity, size, customer_name, shipping_address,
+            pincode, city, phone_number, email,
+            payment_method, total_price
+        );
+
+        return result;
+    } catch (error) {
+        console.error("Error while adding the order:", error);
         throw error;
     }
-
 }
 
 function getDesignById(id) {
@@ -352,8 +385,8 @@ function getDesignById(id) {
 async function deleteDesignById(id) {
     try {
         // Delete dependent references first
-        database.prepare(`DELETE FROM Cart WHERE design_id = ?`).run(id);
-        database.prepare(`DELETE FROM Orders WHERE design_id = ?`).run(id);
+        // database.prepare(`DELETE FROM Cart WHERE design_id = ?`).run(id);
+        // database.prepare(`DELETE FROM Orders WHERE design_id = ?`).run(id);
 
         // Now delete from Designs
         const stmt = database.prepare(`DELETE FROM Designs WHERE id = ?`);
@@ -367,32 +400,39 @@ async function deleteDesignById(id) {
 }
 
 function insertOrder(order) {
-    const insert = database.prepare(`
+  const insert = database.prepare(`
     INSERT INTO Orders (
-      user_id, design_id, quantity, size,
-      customer_name, shipping_address, pincode,
-      city, phone_number, email, payment_method,
-      total_price
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      user_id, design_name, design_type, design_color,
+      front_canvas_json, back_canvas_json, design_price,
+      quantity, size, customer_name, shipping_address,
+      pincode, city, phone_number, email,
+      payment_method, total_price
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
 
-    const result = insert.run(
-        order.user_id,
-        order.design_id,
-        order.quantity,
-        order.size,
-        order.customer_name,
-        order.shipping_address,
-        order.pincode,
-        order.city,
-        order.phone_number,
-        order.email,
-        order.payment_method,
-        order.total_price
-    );
+  const result = insert.run(
+    order.user_id,
+    order.design_name,
+    order.design_type,
+    order.design_color,
+    order.front_canvas_json,
+    order.back_canvas_json,
+    order.design_price,
+    order.quantity,
+    order.size,
+    order.customer_name,
+    order.shipping_address,
+    order.pincode,
+    order.city,
+    order.phone_number,
+    order.email,
+    order.payment_method,
+    order.total_price
+  );
 
-    return result;
+  return result;
 }
+
 
 
 async function getTotalOrders() {
@@ -432,39 +472,30 @@ function getTotalRevenue() {
 function getAllOrders() {
   const stmt = database.prepare(`
     SELECT
-      /* ---- Orders columns ---- */
-      o.id              AS order_id,
-      o.user_id,
-      o.design_id,
-      o.quantity,
-      o.size,
-      o.customer_name,
-      o.shipping_address,
-      o.pincode,
-      o.city,
-      o.phone_number,
-      o.email,
-      o.payment_method,
-      o.total_price,
-      o.status,
-      o.created_at      AS order_created_at,
-
-      /* ---- Designs columns ---- */
-      d.id              AS design_id,        -- same value as o.design_id but kept for completeness
-      d.user_id         AS design_user_id,
-      d.name            AS design_name,
-      d.type            AS design_type,
-      d.color           AS design_color,
-      d.front_canvas_json,
-      d.back_canvas_json,
-      d.price           AS design_price,
-      d.created_at      AS design_created_at
-
-    FROM Orders  o
-    LEFT JOIN Designs d ON o.design_id = d.id
-    ORDER BY o.created_at DESC
+      id AS order_id,
+      user_id,
+      design_name,
+      design_type,
+      design_color,
+      front_canvas_json,
+      back_canvas_json,
+      design_price,
+      quantity,
+      size,
+      customer_name,
+      shipping_address,
+      city,
+      pincode,
+      phone_number,
+      email,
+      payment_method,
+      total_price,
+      status,
+      created_at AS order_created_at
+    FROM Orders
+    ORDER BY created_at DESC
   `);
-  return stmt.all();       // returns an array of order objects with all design details
+  return stmt.all();
 }
 
 
@@ -476,4 +507,4 @@ function getAllOrders() {
 // data = smt.run()
 
 
-module.exports = { addUser, getUserByEmail, getUserByPhoneNumber, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword, GetDesignById, addpromo, getpromo, getallpromo, addAddress, GetAddress, updateUserProfile, updateAddress, addToCart, updateCartQuantity, getCartItem, getCart, addorder, deleteDesignById, getDesignById, insertOrder, getTotalOrders, getTotalUsers, getTotalRevenue, getAllOrders }
+module.exports = { addUser, getUserByEmail, getUserByPhoneNumber, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword, GetDesignById, addpromo, getpromo, getallpromo, addAddress, GetAddress, updateUserProfile, updateAddress, addToCart, updateCartQuantity, getCartItem, getCart, addorder, deleteDesignById, getDesignById, insertOrder, getTotalOrders, getTotalUsers, getTotalRevenue, getAllOrders, getOrdersByUserId }

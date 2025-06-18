@@ -1,176 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>All Orders</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
-<style>
-body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-}
-h1 {
-    margin-bottom: 20px;
-}
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 40px;
-}
-th, td {
-    border: 1px solid #ccc;
-    padding: 12px;
-    text-align: left;
-}
-th {
-    background-color: #f4f4f4;
-}
-.design-table {
-    margin-top: 10px;
-    margin-left: 20px;
-    width: 95%;
-    background-color: #f9f9f9;
-}
-.design-heading {
-    font-size: 1.1em;
-    margin: 10px 0 5px 0;
-    color: #444;
-}
-.design-table th {
-    background-color: #e9f0ff;
-}
-.design-preview img {
-    max-width: 100px;
-    margin: 5px 10px 5px 0;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>All Orders</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    .design-table {
+      margin-top: 10px;
+      margin-left: 20px;
+      width: 95%;
+      background-color: #f9f9f9;
+    }
+    .design-heading {
+      font-size: 1.1em;
+      margin: 10px 0 5px 0;
+      color: #444;
+    }
+    .design-table th {
+      background-color: #e9f0ff;
+    }
+    .design-preview img {
+      max-width: 100px;
+      margin: 5px 10px 5px 0;
+    }
+  </style>
 </head>
 <body>
 <h1>Order Management</h1>
 
 <table>
-<thead>
+  <thead>
     <tr>
-    <th>Order ID</th>
-    <th>User ID</th>
-    <th>Design</th>
-    <th>Quantity</th>
-    <th>Size</th>
-    <th>Customer Name</th>
-    <th>Address</th>
-    <th>Phone</th>
-    <th>Email</th>
-    <th>Payment</th>
-    <th>Total</th>
-    <th>Status</th>
-    <th>Created At</th>
+      <th>Order ID</th>
+      <th>User ID</th>
+      <th>Design</th>
+      <th>Quantity</th>
+      <th>Size</th>
+      <th>Customer Name</th>
+      <th>Address</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Payment</th>
+      <th>Total</th>
+      <th>Status</th>
+      <th>Created At</th>
     </tr>
-</thead>
-<tbody>
+  </thead>
+  <tbody>
     <% orders.forEach(order => { %>
     <tr>
-        <td><%= order.order_id %></td>
-        <td><%= order.user_id %></td>
-        <td><%= order.design_name || 'N/A' %> (<%= order.design_type || 'N/A' %>)</td>
-        <td><%= order.quantity %></td>
-        <td><%= order.size %></td>
-        <td><%= order.customer_name %></td>
-        <td><%= order.shipping_address %>, <%= order.city %> - <%= order.pincode %></td>
-        <td><%= order.phone_number %></td>
-        <td><%= order.email %></td>
-        <td><%= order.payment_method %></td>
-        <td>₹<%= order.total_price.toFixed(2) %></td>
-        <td><%= order.status %></td>
-        <td><%= new Date(order.order_created_at).toLocaleString() %></td>
+      <td><%= order.order_id %></td>
+      <td><%= order.user_id %></td>
+      <td><%= order.design_name || 'N/A' %> (<%= order.design_type || 'N/A' %>)</td>
+      <td><%= order.quantity %></td>
+      <td><%= order.size %></td>
+      <td><%= order.customer_name %></td>
+      <td><%= order.shipping_address %>, <%= order.city %> - <%= order.pincode %></td>
+      <td><%= order.phone_number %></td>
+      <td><%= order.email %></td>
+      <td><%= order.payment_method %></td>
+      <td>₹<%= order.total_price.toFixed(2) %></td>
+      <td><%= order.status %></td>
+      <td><%= new Date(order.order_created_at).toLocaleString() %></td>
     </tr>
 
-    <!-- Design Details Row -->
     <tr>
-        <td colspan="13">
-        <div class="design-heading">Design Details for "<%= order.design_name %>"</div>
+      <td colspan="13">
+        <div class="design-heading">🧾 Design Details: "<%= order.design_name %>"</div>
         <table class="design-table">
-            <thead>
+          <thead>
             <tr>
-                <th>Design ID</th>
-                <th>Type</th>
-                <th>Color</th>
-                <th>Front JSON</th>
-                <th>Back JSON</th>
-                <th>Price</th>
-                <th>Created At</th>
+              <th>Design ID</th>
+              <th>Type</th>
+              <th>Color</th>
+              <th>Price</th>
+              <th>Front JSON</th>
+              <th>Back JSON</th>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             <tr>
-                <td><%= order.design_id %></td>
-                <td><%= order.design_type %></td>
-                <td><%= order.design_color %></td>
-                <td><%= order.front_canvas_json ? 'Available' : 'N/A' %></td>
-                <td><%= order.back_canvas_json ? 'Available' : 'N/A' %></td>
-                <td>₹<%= order.design_price %></td>
-                <td><%= new Date(order.design_created_at).toLocaleString() %></td>
+              <td><%= order.design_id %></td>
+              <td><%= order.design_type %></td>
+              <td><%= order.design_color %></td>
+              <td>₹<%= order.design_price %></td>
+              <td><%= order.front_canvas_json ? 'Available' : 'N/A' %></td>
+              <td><%= order.back_canvas_json ? 'Available' : 'N/A' %></td>
             </tr>
-            </tbody>
+          </tbody>
         </table>
 
-        <!-- Canvas Preview and Graphics -->
         <div class="design-preview">
-            <p>🖼️ Front Canvas Object Count: <%= order.frontObjectCount %></p>
-            <% if (order.frontPreview) { %>
+          <p>🖼️ Front Objects: <%= order.frontObjectCount %></p>
+          <% if (order.frontPreview) { %>
             <img src="<%= order.frontPreview %>" style="width: 520px;" />
-            <% } %>
-
-            <% (order.usedfrontgraphics || []).forEach(src => { %>
+          <% } %>
+          <% (order.usedfrontgraphics || []).forEach(src => { %>
             <img src="<%= src %>" />
-            <% }) %>
+          <% }) %>
+          <p>🧵 Front Size Labels: <%= ((order.frontsizeLabels || []).join(', ') || 'None') %></p>
 
-            <p>🧵 Front Size Labels: <%= ((order.frontsizeLabels || []).join(', ') || 'None') %></p>
-
-            <% if (order.backPreview) { %>
+          <% if (order.backPreview) { %>
+            <br />
+            <p>🖼️ Back Objects: <%= order.backObjectCount %></p>
             <img src="<%= order.backPreview %>" style="width: 520px;" />
             <% (order.usedbackgraphics || []).forEach(src => { %>
-                <img src="<%= src %>" />
+              <img src="<%= src %>" />
             <% }) %>
             <p>🧵 Back Size Labels: <%= ((order.backsizeLabels || []).join(', ') || 'None') %></p>
-            <% } %>
+          <% } %>
         </div>
-        </td>
-    <!-- </tr>
-      <h2>Textbox JSON ➜ Image</h2>
-  <img id="previewImg" style="border: 1px solid #ccc;" />
-
-<script src="../JS/order.js"></script>
-
-<script>
-  <% if (order.frontimages[0]?.type === 'textbox') { %>
-      const textboxJson = <%- JSON.stringify(order.frontimages[0]) %>;
-
-  // Wait for font to load before rendering
-  document.fonts.ready.then(() => {
-    const canvas = new fabric.StaticCanvas(null, {
-      width: 1000,
-      height: 1000
-    });
-
-    fabric.util.enlivenObjects([textboxJson], function(objects) {
-      const textbox = objects[0];
-      canvas.add(textbox);
-      canvas.renderAll();
-
-      const dataURL = canvas.toDataURL({
-        format: 'png',
-        multiplier: 2
-      });
-
-      document.getElementById("previewImg").src = dataURL;
-    });
-  });
-  <% } %>
-</script> -->
-
-
+      </td>
+    </tr>
     <% }) %>
-</tbody>
+  </tbody>
 </table>
 </body>
 </html>

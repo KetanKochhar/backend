@@ -48,7 +48,7 @@ router.post("/add-promo", (request, response) => {
 
 router.get('/admin/order', auth.isAdmin, async (req, res) => {
   try {
-    const orders = await dbconnection.getAllOrders();
+    const orders = await dbconnection.getAllOrders(); // Should directly return orders with design details from Orders table
 
     const enrichedOrders = orders.map(order => {
       let frontPreview = null;
@@ -63,13 +63,12 @@ router.get('/admin/order', auth.isAdmin, async (req, res) => {
       let usedbackgraphics = [];
       let backObjectCount = 0;
 
-      
       try {
         const front = JSON.parse(order.front_canvas_json || '{}');
         frontPreview = front?.preview || null;
         frontimages = front?.json?.objects || [];
         frontObjectCount = frontimages.length;
-        
+
         frontimages.forEach(obj => {
           if (obj.type === 'image' && obj.src) {
             usedfrontgraphics.push(obj.src);
@@ -81,7 +80,7 @@ router.get('/admin/order', auth.isAdmin, async (req, res) => {
       } catch (err) {
         console.error(`Failed to parse front_canvas_json for order ${order.id}`);
       }
-      
+
       try {
         const back = JSON.parse(order.back_canvas_json || '{}');
         backPreview = back?.preview || null;
@@ -99,6 +98,7 @@ router.get('/admin/order', auth.isAdmin, async (req, res) => {
       } catch (err) {
         console.error(`Failed to parse back_canvas_json for order ${order.id}`);
       }
+
       return {
         ...order,
         frontPreview,
