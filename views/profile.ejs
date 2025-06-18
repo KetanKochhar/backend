@@ -24,9 +24,21 @@
             background-color: #fff;
             margin-bottom: 20px;
             justify-content: center;">
-                <% const firstName=username ?
-                    username.split(' ')[0] : ''; const initial = firstName ? firstName.charAt(0).toUpperCase() : ' ?';
-                    %>
+<% 
+    let displayName = '';
+
+    if (user && user.first_name && user.last_name) {
+        displayName = `${user.first_name} ${user.last_name}`;
+    } else if (user && user.email) {
+        displayName = user.email;
+    } else {
+        displayName = 'Guest';
+    }
+
+    const firstName = displayName.split(' ')[0];
+    const initial = firstName ? firstName.charAt(0).toUpperCase() : '?';
+%>
+
                     <div class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-xl select-none flex-shrink-0"
                         style="            width: 128px;
             height: 128px;
@@ -57,12 +69,12 @@
                         <div class="container">
                             <div class="field">
                                 <b><label class="label">First Name</label></b>
-                                <input type="text" class="input" value="<%= user.first_name || '' %>" readonly>
+                                <input type="text" class="input" value="<%= user.first_name || 'N/A' %>" readonly>
                             </div>
 
                             <div class="field">
                                 <b><label class="label">Last Name</label></b>
-                                <input type="text" class="input" value="<%= user.last_name || '' %>" readonly>
+                                <input type="text" class="input" value="<%= user.last_name || 'N/A' %>" readonly>
                             </div>
 
                             <div class="field">
@@ -72,7 +84,7 @@
 
                             <div class="field">
                                 <b><label class="label">Phone Number</label></b>
-                                <input type="text" class="input" value="<%= user.phone_number || '' %>" readonly>
+                                <input type="text" class="input" value="<%= user.phone_number || 'N/A' %>" readonly>
                             </div>
 
                             <div class="field">

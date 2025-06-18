@@ -11,7 +11,7 @@ function generateOTP() {
     return Math.floor(1000 + Math.random() * 9000).toString();
 }
 
-async function sendmail(Email, otp, firstname, lastname) {
+async function sendmail(Email, otp) {
     const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
@@ -93,14 +93,14 @@ async function sendmail(Email, otp, firstname, lastname) {
               <img src="https://customwear.co.in/public/images/logo1.svg" alt="Custom Wear Logo">
           </div>
           <h2>Your OTP Code</h2>
-          <p>Hi ${firstname} ${lastname},</p>
+          <p>Hi ${Email},</p>
           <p>Use the OTP below to complete your verification. This code is valid for the next 10 minutes.</p>
           <div class="otp-box">${otp}</div>
           <p>If you didn’t request this, please ignore this email or contact us immediately.</p>
           <p>Thank you,<br>Team Custom Wear</p>
           <div class="footer">
               📧 team@customwear.com<br>
-              📍 <a href="https://customwear.co.in" style="color: #888; cusrsor: pointer">customwear.co.in</a><br>
+              📍 <a href="https://customwear.co.in" style="color: #888; cursor: pointer">customwear.co.in</a><br>
               📷 <a href="https://instagram.com/customwear_official_" target="_blank" style="color: #888; cursor: pointer">@customwear_official_</a>
           </div>
       </div>
@@ -108,8 +108,8 @@ async function sendmail(Email, otp, firstname, lastname) {
   </html>
   `
     });
-
 }
+
 
 // ---------------- SIGNUP ----------------
 router.get("/signup", (request, response) => {
@@ -121,60 +121,75 @@ router.get("/signup", (request, response) => {
 });
 
 router.post("/signup", async (request, response) => {
-    const { firstname, lastname, dob, phno, mail, pass } = request.body;
+    const { mail, pass, dob } = request.body;
 
     try {
-        const hashedPass = await bcrypt.hash(pass, 10);
-        const newUserId = await dbconnection.addUser(firstname, lastname, dob, phno, mail, pass);
+        // const hashedPass = await bcrypt.hash(pass, 10);
         const otp = generateOTP();
-        // console.log("Generated otp :", otp)
 
-        await dbconnection.saveOTPToDatabase(newUserId, otp);
-        await sendmail(mail, otp, firstname, lastname);
+        // Save temporarily in session
+        request.session.pendingUser = {
+            email: mail,
+            password: pass,
+            dob: dob
+        };
 
-        request.session.tempUserId = newUserId;
-        request.session.tempUserEmail = mail;
-        request.session.tempUserName = firstname;
+        // Save OTP to session instead of DB
+        request.session.otp = otp;
 
-        response.redirect("/otp");
+        await sendmail(mail, otp);
+
+        return response.redirect("/otp");
 
     } catch (error) {
         console.error("Signup Error:", error.message);
         return response.render("signup", {
             error: error.message,
             user: request.session.user,
-            formData: { firstname, lastname, dob, phno, mail }
+            formData: { mail, dob }
         });
     }
 });
 
 // ---------------- OTP ----------------
 router.get("/otp", (request, response) => {
-    if (request.session.tempUserId) {
-        return response.render("otp", { error: null, mail: request.session.tempUserEmail, user: request.session.user });
+    if (request.session.pendingUser && request.session.otp) {
+        return response.render("otp", {
+            error: null,
+            mail: request.session.pendingUser.email,
+            user: request.session.user
+        });
     }
-    response.redirect("/login");
+    return response.redirect("/signup");
 });
+
 
 router.post("/otp", async (request, response) => {
     const { otp } = request.body;
     const enteredOTP = Array.isArray(otp) ? otp.join("") : otp;
-    const userId = request.session.tempUserId;
 
-    try {
-        const saved = await dbconnection.getOTPFromDatabase(userId);
+    if (request.session.otp === enteredOTP && request.session.pendingUser) {
+        try {
+            const { email, password, dob } = request.session.pendingUser;
 
-        if (saved.otp_code === enteredOTP) {
-            delete request.session.tempUserId;
-            delete request.session.tempUserEmail;
-            delete request.session.tempUserName;
-            return response.redirect("/login"); // Not logged in yet
+            // Insert only after OTP is correct
+            const newUserId = await dbconnection.addUser(email, dob, password);
+
+            // Clear session temp data
+            delete request.session.pendingUser;
+            delete request.session.otp;
+
+            return response.redirect("/login");
+        } catch (err) {
+            console.error("DB insert error after OTP:", err);
+            return response.render("otp", { error: true, user: null, mail: null });
         }
-
-        response.render("otp", { error: true, user: request.session.user, mail: request.session.tempUserEmail });
-    } catch (err) {
-        console.error("OTP Error:", err);
-        response.render("otp", { error: true, user: request.session.user, mail: request.session.tempUserEmail });
+    } else {
+        return response.render("otp", {
+            error: true,
+            user: null,
+            mail: request.session.pendingUser?.email || ""
+        });
     }
 });
 
@@ -199,7 +214,7 @@ router.post("/login", async (request, response) => {
         // console.log(user.password+'hii')
         // console.log(password)
         if (isPasswordMatch) {
-            request.session.user = user.first_name + user.last_name;
+            request.session.user = user.email;
             request.session.email = user.email;
             return response.redirect("/");
         } else {

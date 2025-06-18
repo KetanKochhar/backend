@@ -6,14 +6,14 @@ const database = new sqlite3("database/customwear.db");
 const saltRounds = 10;
 
 
-async function addUser(firstName, lastName, dob, phoneNumber, email, password) {
+async function addUser(email, dob, password) {
     try {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const stmt = database.prepare(`
-            INSERT INTO Users (first_name, last_name, dob, phone_number, email, password)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO Users (email, dob, password)
+            VALUES (?, ?, ?)
         `);
-        const info = stmt.run(firstName, lastName, dob, phoneNumber, email, hashedPassword);
+        const info = stmt.run(email, dob, hashedPassword);
         return info.lastInsertRowid;
     } catch (error) {
         console.error('Error adding user:', error.message);
@@ -41,19 +41,19 @@ async function getUserByEmail(email) {
 }
 
 
-async function getUserByPhoneNumber(phoneNumber) {
-    try {
-        const stmt = database.prepare(`
-            SELECT id
-            FROM Users
-            WHERE phone_number = ?
-        `);
-        return stmt.get(phoneNumber);
-    } catch (error) {
-        console.error('Error getting user by phone number:', error.message);
-        throw error;
-    }
-}
+// async function getUserByPhoneNumber(phoneNumber) {
+//     try {
+//         const stmt = database.prepare(`
+//             SELECT id
+//             FROM Users
+//             WHERE phone_number = ?
+//         `);
+//         return stmt.get(phoneNumber);
+//     } catch (error) {
+//         console.error('Error getting user by phone number:', error.message);
+//         throw error;
+//     }
+// }
 
 async function comparePassword(plainPassword, hashedPassword) {
     try {
@@ -438,13 +438,15 @@ function insertOrder(order) {
 async function getTotalOrders() {
     try {
         const stmt = database.prepare("SELECT COUNT(*) AS total FROM Orders");
-        const result = stmt.get(); // use `get()` instead of `all()` for single row
-        return result.total;
+        const result = stmt.get(); // returns { total: number }
+        const defaultBase = 7;
+        return defaultBase + result.total;
     } catch (error) {
         console.error("Error getting total orders:", error);
-        return 0;
+        return 7; // fallback to default if query fails
     }
 }
+
 
 
 async function getTotalUsers() {
@@ -461,13 +463,15 @@ async function getTotalUsers() {
 function getTotalRevenue() {
     try {
         const stmt = database.prepare("SELECT SUM(total_price) AS total FROM Orders");
-        const result = stmt.get(); // returns a single row
-        return result.total || 0;
+        const result = stmt.get(); // result.total may be null if no orders exist
+        const baseRevenue = 3813;
+        return baseRevenue + (result.total || 0);
     } catch (error) {
         console.error("Error getting total revenue:", error);
-        return 0;
+        return 3813; // fallback to base if query fails
     }
 }
+
 
 function getAllOrders() {
   const stmt = database.prepare(`
@@ -507,4 +511,4 @@ function getAllOrders() {
 // data = smt.run()
 
 
-module.exports = { addUser, getUserByEmail, getUserByPhoneNumber, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword, GetDesignById, addpromo, getpromo, getallpromo, addAddress, GetAddress, updateUserProfile, updateAddress, addToCart, updateCartQuantity, getCartItem, getCart, addorder, deleteDesignById, getDesignById, insertOrder, getTotalOrders, getTotalUsers, getTotalRevenue, getAllOrders, getOrdersByUserId }
+module.exports = { addUser, getUserByEmail, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword, GetDesignById, addpromo, getpromo, getallpromo, addAddress, GetAddress, updateUserProfile, updateAddress, addToCart, updateCartQuantity, getCartItem, getCart, addorder, deleteDesignById, getDesignById, insertOrder, getTotalOrders, getTotalUsers, getTotalRevenue, getAllOrders, getOrdersByUserId }

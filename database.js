@@ -6,10 +6,10 @@ const db = new sqlite3('database/customwear.db', { verbose: console.log });
 db.exec(`
     CREATE TABLE IF NOT EXISTS Users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        first_name TEXT NOT NULL,
-        last_name TEXT NOT NULL,
+        first_name TEXT ,
+        last_name TEXT ,
         dob DATE,
-        phone_number TEXT NOT NULL UNIQUE,
+        phone_number TEXT,
         email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
