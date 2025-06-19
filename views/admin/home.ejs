@@ -9,45 +9,45 @@
   </head>
   
   <body>
-    <nav class="sidebar">
-      <h3>Admin Panel</h3>
-      <a href="#dashboard">Dashboard</a>
-      <a href="#products">Product Management</a>
-      <a href="#orders">Order Management</a>
-      <a href="#database">Database Selector</a>
-      <a href="#reports">Reports</a>
-    </nav>
-    
-    <main class="content">
-      <h2 id="dashboard">Dashboard</h2>
-      <div class="dashboard-row">
-        <div class="dashboard-card">
-          <h5>Total Orders</h5>
-          <p><%= totalOrders %></p>
-        </div>
-        <div class="dashboard-card">
-          <h5>Users</h5>
-          <p><%= users %></p>
-        </div>
-        <div class="dashboard-card">
-          <h5>Revenue</h5>
-          <p>₹<%= revenue %></p>
-        </div>
-      </div>
-      <a href="/admin/color"> change the colors</a>
-      <a href="/admin/promo"> add the PROMO code</a>
-      <a href="/admin/order"> Orders</a>
-      
-    <h4 id="database">Database Selector</h4>
-    <select class="db-selector">
-      <option selected>Select Database</option>
-      <option value="1">Database 1</option>
-      <option value="2">Database 2</option>
-      <option value="3">Database 3</option>
-      <option value="4">Database 4</option>
-    </select>
 
-    <h4 id="products">Product Management</h4>
+<body>
+  <nav class="sidebar">
+    <h3>Admin Panel</h3>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#products">Product Management</a>
+    <a href="#orders">Order Management</a>
+    <a href="#database">Database Selector</a>
+    <a href="#reports">Reports</a>
+  </nav>
+
+  <main class="content">
+    <h2 id="dashboard">Dashboard</h2>
+    <div class="dashboard-row">
+      <div class="dashboard-card">
+        <h5>Total Orders</h5>
+        <p><%= totalOrders %></p>
+      </div>
+      <div class="dashboard-card">
+        <h5>Users</h5>
+        <p><%= users %></p>
+      </div>
+      <div class="dashboard-card">
+        <h5>Revenue</h5>
+        <p>₹<%= revenue %></p>
+      </div>
+    </div>
+
+    <a href="/admin/color">Change the Colors</a><br />
+    <a href="/admin/promo">Add PROMO Code</a><br />
+    <a href="/admin/order">Orders</a><br />
+
+    <h4 id="database">Database Selector</h4>
+    <select class="db-selector" id="tableSelector">
+      <option selected disabled>Select Table</option>
+    </select>
+    <div id="tableData"></div>
+
+    <!-- <h4 id="products">Product Management</h4>
     <table class="data-table">
       <thead>
         <tr>
@@ -103,11 +103,88 @@
           <td>$20</td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
 
     <h4 id="reports">Reports</h4>
     <button class="btn-report">Download Sales Report</button>
   </main>
-</body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const tableSelector = document.getElementById("tableSelector");
+      const tableData = document.getElementById("tableData");
+
+      // Fetch and populate table names
+      fetch("/admin/api/tables")
+        .then(res => res.json())
+        .then(tables => {
+          tables.forEach(name => {
+            const opt = document.createElement("option");
+            opt.value = name;
+            opt.textContent = name;
+            tableSelector.appendChild(opt);
+          });
+        });
+
+      // On table select, fetch and display data
+      tableSelector.addEventListener("change", () => {
+        const selected = tableSelector.value;
+        fetch(`/admin/api/table/${selected}`)
+          .then(res => res.json())
+          .then(data => renderTable(selected, data));
+      });
+
+function renderTable(name, data) {
+  if (!data.length) {
+    tableData.innerHTML = "<p>No data found in this table.</p>";
+    return;
+  }
+
+  const columns = Object.keys(data[0]);
+  let html = `<div class="table-wrapper"><table class="data-table"><thead><tr>`;
+  columns.forEach(col => html += `<th>${col}</th>`);
+  html += `<th>Actions</th></tr></thead><tbody>`;
+
+  data.forEach(row => {
+    html += `<tr data-id="${row.id}">`;
+    columns.forEach(col => {
+      const cellValue = row[col] == null ? "" : String(row[col]);
+      const isTooLong = cellValue.length > 100;
+      const displayValue = isTooLong ? cellValue.slice(0, 100) + "..." : cellValue;
+      html += `
+        <td contenteditable="true" 
+            data-column="${col}" 
+            data-full="${cellValue.replace(/"/g, '&quot;')}">
+          ${displayValue}
+        </td>`;
+    });
+    html += `<td><button onclick="updateRow('${name}', ${row.id}, this)">Save</button></td></tr>`;
+  });
+
+  html += `</tbody></table></div>`;
+  tableData.innerHTML = html;
+}
+
+      window.updateRow = (table, id, btn) => {
+        const row = btn.closest("tr");
+        const updates = {};
+        row.querySelectorAll("td[data-column]").forEach(td => {
+          const col = td.dataset.column;
+          if (col !== 'id') updates[col] = td.textContent.trim();
+        });
+
+        fetch(`/admin/api/table/${table}/update`, {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, updates })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) alert("Row updated successfully!");
+          else alert("Failed to update row.");
+        });
+      };
+    });
+  </script>
 
 </html>

@@ -1,14 +1,18 @@
-/* Reset and base styling */
-body,
-html {
+/* Base Reset */
+* {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f8f9fa;
+  box-sizing: border-box;
 }
 
-/* Sidebar styles */
+body,
+html {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
+  overflow-x: hidden;
+}
+
+/* Sidebar */
 .sidebar {
   position: fixed;
   top: 0;
@@ -17,39 +21,37 @@ html {
   height: 100vh;
   background-color: #143109;
   color: #fff;
-  overflow-y: auto;
   padding-top: 1rem;
-  box-sizing: border-box;
+  overflow-y: auto;
 }
 
 .sidebar h3 {
-  padding: 1rem;
   text-align: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 0;
 }
 
 .sidebar a {
-  color: #fff;
-  text-decoration: none;
   display: block;
   padding: 0.75rem 1rem;
+  color: #fff;
+  text-decoration: none;
   transition: background-color 0.3s;
 }
 
 .sidebar a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Main content styles */
+/* Main content */
 .content {
   margin-left: 220px;
   padding: 2rem;
   width: calc(100% - 220px);
-  box-sizing: border-box;
 }
 
-/* Dashboard card layout */
+/* Dashboard cards */
 .dashboard-row {
   display: flex;
   flex-wrap: wrap;
@@ -58,62 +60,79 @@ html {
 }
 
 .dashboard-card {
-  background-color: #fff;
-  flex: 1 1 calc(25% - 1rem);
+  background: #fff;
   padding: 1rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  min-width: 150px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  flex: 1 1 200px;
+  min-width: 180px;
 }
 
 .dashboard-card h5 {
-  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .dashboard-card p {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   font-weight: bold;
   color: #143109;
 }
 
-/* Dropdown */
+/* Dropdown selector */
 .db-selector {
   width: 250px;
   padding: 0.5rem;
   font-size: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-/* Tables */
+/* Table Wrapper (for scroll) */
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 20px;
+  max-width: 100%;
+}
+
+/* Data Tables */
 .data-table {
   width: 100%;
+  min-width: 1000px;
   border-collapse: collapse;
-  margin-bottom: 2rem;
   background-color: #fff;
-}
-
-.data-table th,
-.data-table td {
-  border: 1px solid #dee2e6;
-  padding: 0.75rem;
-  text-align: left;
-  vertical-align: middle;
+  margin-bottom: 2rem;
 }
 
 .data-table thead {
   background-color: #d1e7dd;
 }
 
-/* Buttons */
+.data-table th,
+.data-table td {
+  border: 1px solid #dee2e6;
+  padding: 0.75rem;
+  white-space: nowrap;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.data-table td[contenteditable="true"] {
+  background-color: #fdfdfd;
+  cursor: text;
+}
+
+/* Button Styles */
 .btn-edit,
 .btn-delete,
 .btn-report {
+  font-weight: bold;
   padding: 0.4rem 0.8rem;
-  margin-right: 0.5rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-weight: bold;
+  transition: 0.2s ease;
 }
 
 .btn-edit {
@@ -132,11 +151,28 @@ html {
   color: #198754;
   padding: 0.5rem 1rem;
   border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s ease;
 }
 
 .btn-report:hover {
   background-color: #198754;
   color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .content {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .dashboard-row {
+    flex-direction: column;
+  }
 }
