@@ -153,12 +153,12 @@ async function getDesignsByUserIdnumber(userId) {
     return stmt.all(userId);
 }
 function getOrdersByUserId(userid) {
-  const stmt = database.prepare(`
+    const stmt = database.prepare(`
     SELECT *
     FROM Orders
     WHERE user_id = ?
   `);
-  return stmt.all(userid);
+    return stmt.all(userid);
 }
 
 
@@ -400,7 +400,7 @@ async function deleteDesignById(id) {
 }
 
 function insertOrder(order) {
-  const insert = database.prepare(`
+    const insert = database.prepare(`
     INSERT INTO Orders (
       user_id, design_name, design_type, design_color,
       front_canvas_json, back_canvas_json, design_price,
@@ -410,27 +410,27 @@ function insertOrder(order) {
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
 
-  const result = insert.run(
-    order.user_id,
-    order.design_name,
-    order.design_type,
-    order.design_color,
-    order.front_canvas_json,
-    order.back_canvas_json,
-    order.design_price,
-    order.quantity,
-    order.size,
-    order.customer_name,
-    order.shipping_address,
-    order.pincode,
-    order.city,
-    order.phone_number,
-    order.email,
-    order.payment_method,
-    order.total_price
-  );
+    const result = insert.run(
+        order.user_id,
+        order.design_name,
+        order.design_type,
+        order.design_color,
+        order.front_canvas_json,
+        order.back_canvas_json,
+        order.design_price,
+        order.quantity,
+        order.size,
+        order.customer_name,
+        order.shipping_address,
+        order.pincode,
+        order.city,
+        order.phone_number,
+        order.email,
+        order.payment_method,
+        order.total_price
+    );
 
-  return result;
+    return result;
 }
 
 
@@ -474,7 +474,7 @@ function getTotalRevenue() {
 
 
 function getAllOrders() {
-  const stmt = database.prepare(`
+    const stmt = database.prepare(`
     SELECT
       id AS order_id,
       user_id,
@@ -499,8 +499,29 @@ function getAllOrders() {
     FROM Orders
     ORDER BY created_at DESC
   `);
-  return stmt.all();
+    return stmt.all();
 }
+
+function getAllProducts() {
+    try {
+        const stmt = database.prepare("SELECT * FROM ShopProducts ORDER BY created_at DESC");
+        return stmt.all(); // returns an array
+    } catch (error) {
+        console.error("Error fetching products:", error.message);
+        throw error;
+    }
+}
+
+function getProductById(id) {
+  try {
+    const stmt = database.prepare("SELECT * FROM ShopProducts WHERE id = ?");
+    return stmt.get(id); // returns single product
+  } catch (error) {
+    console.error("Error fetching product:", error.message);
+    throw error;
+  }
+}
+
 
 
 
@@ -511,4 +532,4 @@ function getAllOrders() {
 // data = smt.run()
 
 
-module.exports = { addUser, getUserByEmail, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword, GetDesignById, addpromo, getpromo, getallpromo, addAddress, GetAddress, updateUserProfile, updateAddress, addToCart, updateCartQuantity, getCartItem, getCart, addorder, deleteDesignById, getDesignById, insertOrder, getTotalOrders, getTotalUsers, getTotalRevenue, getAllOrders, getOrdersByUserId }
+module.exports = { addUser, getUserByEmail, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword, GetDesignById, addpromo, getpromo, getallpromo, addAddress, GetAddress, updateUserProfile, updateAddress, addToCart, updateCartQuantity, getCartItem, getCart, addorder, deleteDesignById, getDesignById, insertOrder, getTotalOrders, getTotalUsers, getTotalRevenue, getAllOrders, getOrdersByUserId, getAllProducts, getProductById}

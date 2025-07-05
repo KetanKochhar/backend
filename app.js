@@ -71,8 +71,11 @@ app.get("/thank-you", (request, response) => {
 
 app.get("/design-your-tshirt", (request, response) => {
     response.render("qr");
-})
+});
 
+// app.get("/product-order", (request, response) => {
+//     response.render("productorder", { user: request.session.user});
+// });
 
 app.post('/set-session', (req, res) => {
     const { key, value } = req.body;
@@ -118,9 +121,14 @@ app.get('/api/graphics/:category', (req, res) => {
     });
 });
 
+app.use('/admin', require('./routes/admin'));
+
+
 //routes ka use kar raha hoon from dirrent files 
 const loginroutes = require("./routes/login");
 const profileroutes = require("./routes/profile")
+const addproductroutes = require("./routes/addproduct")
+const productorderroutes = require("./routes/productorder")
 const myordersroutes = require("./routes/myorders")
 const designroutes = require("./routes/design")
 const adminroutes = require("./routes/admin");
@@ -129,6 +137,8 @@ const { request } = require('http');
 //sare routes ko call kar raha hoon phele import kia tha 
 app.use("/", loginroutes);
 app.use("/", profileroutes);
+app.use("/", addproductroutes);
+app.use("/", productorderroutes);
 app.use("/", myordersroutes);
 app.use("/", designroutes);
 app.use("/", adminroutes);

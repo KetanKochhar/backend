@@ -4,6 +4,8 @@ const dbconnection = require('../utils/db');
 const auth = require('../utils/auth');
 const sqlite3 = require('better-sqlite3');
 const db = new sqlite3('database/customwear.db');
+const path = require('path');
+const multer = require('multer');
 
 // Admin Dashboard
 router.get("/admin", auth.isAdmin, async (req, res) => {
@@ -160,6 +162,35 @@ router.post('/admin/api/table/:name/update', auth.isAdmin, (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+
+// Configure multer
+const storage = multer.diskStorage({
+  destination: './public/images/products/',
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage });
+
+// GET form
+router.get('/addproduct', (req, res) => {
+  res.render('admin/addproduct'); // renders EJS form
+});
+
+// POST form
+router.post('/addproduct', upload.single('image'), (req, res) => {
+  const { name, price, actual_price, discount, material, gender } = req.body;
+  const image = req.file ? 'images/products/' + req.file.filename : null;
+
+  db.prepare(`
+    INSERT INTO ShopProducts (name, image, price, actual_price, discount, material, gender)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `).run(name, image, price, actual_price, discount, material, gender);
+
+  res.redirect('/admin/addproduct'); // or redirect to list page
+});
+
 
 
 module.exports = router;

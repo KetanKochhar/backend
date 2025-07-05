@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Add New Product</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f1f5f2;
+            margin: 0;
+            padding: 40px;
+            color: #143109;
+        }
+
+        .add-product-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px 40px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #143109;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        form input[type="text"],
+        form input[type="number"],
+        form select,
+        form textarea,
+        form input[type="file"] {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        form textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #143109;
+            color: white;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1f4713;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="add-product-container">
+        <h2>Add New Product</h2>
+        <form action="/admin/addproduct" method="POST" enctype="multipart/form-data">
+            <label>Product Name:
+                <input type="text" name="name" required>
+            </label>
+
+            <label>Price (₹):
+                <input type="number" name="price" required>
+            </label>
+
+            <label>Actual Price (₹):
+                <input type="number" name="actual_price">
+            </label>
+
+            <label>Discount (%):
+                <input type="number" name="discount">
+            </label>
+
+            <label>Material:
+                <input type="text" name="material">
+            </label>
+
+            <label>Gender:
+                <select name="gender">
+                    <option value="Men">Men</option>
+                    <option value="Women">Women</option>
+                    <option value="Unisex">Unisex</option>
+                </select>
+            </label>
+
+            <label>Image:
+                <input type="file" name="image" accept="image/*" required>
+            </label>
+
+            <button type="submit">Add Product</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

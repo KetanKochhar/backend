@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Now | CustomWear</title>
+    <link rel="stylesheet" href="/css/order.css" />
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+    <%- include('partials/nav', { user: user }) %>
+
+        <div class="order-page">
+            <!-- LEFT PANEL -->
+            <div class="left-panel">
+
+                <div class="container design-grid">
+
+                    <h1 style="font-size: 25px; margin: 20px 0 5px"><b>Your T-Shirt</b></h1><br />
+                    <hr style="border: none; height: 2px; background-color: #163109; margin-bottom: 20px" />
+                    <section class="design-card">
+                        <div class="design-images">
+                            <center>
+                                <img src="/<%= product.image %>" alt="<%= product.name %>" />
+                            </center>
+                            <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+                        </div>
+                        <div>
+                            <h3><b>Product ID:</b>
+                                <%= product.id %>
+                            </h3>
+                            <h3><b>Name:</b>
+                                CustomWear X <%= product.name %>
+                            </h3>
+                            <h3><b>Material:</b>
+                                <%= product.material %>
+                            </h3>
+                            <h3><b>Price:</b> ₹<%= product.price %>
+                            </h3>
+                        </div>
+                        <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+                    </section>
+                </div>
+                <form class="customer-info">
+                    <h1 style="font-size: 25px; margin: 20px 0 5px">Shipping Info</h1>
+                    <hr style="border: none; height: 2px; background-color: #163109; margin-bottom: 20px" />
+                    <p style="color: red;"><i>(you can change personal details <a href="/profile"><u>here</u></a>)</i>
+                    </p>
+
+                    <input type="text" placeholder="Full Name" value="<%= user.first_name + ' ' + user.last_name %>"
+                        readonly />
+                    <input type="tel" placeholder="Phone Number" value="<%= user.phone_number %>" readonly />
+                    <input type="text" placeholder="Address" value="<%= address?.address || '' %>" readonly />
+                    <input type="text" placeholder="City" value="<%= address?.city || '' %>" readonly />
+                    <input type="text" placeholder="Pincode" value="<%= address?.pincode || '' %>" readonly />
+                </form>
+
+                <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+
+                <div class="payment-option">
+                    <h1 style="font-size: 25px;">Payment Method</h1><br />
+                    <label><input type="radio" name="payment" value="cod" checked /> Cash on Delivery</label><br />
+                    <label><input type="radio" name="payment" value="razorpay" /> Pay Online (UPI, Card)</label>
+                </div>
+                <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+
+            </div>
+
+            <!-- RIGHT PANEL -->
+            <div class="right-panel">
+                <h1 style="font-size: 25px;"><b>Price Summary</b></h1><br />
+                <hr style="border: none; height: 2px; background-color: #163109; margin-bottom: 20px" />
+
+
+                <div class="summary-item">
+                    <span>Product</span>
+                    <span>
+                        CustomWear X <%= product.name %>
+                    </span>
+                </div>
+                <div class="summary-item">
+                    <span>Total MRP</span>
+                    <span>₹<%= product.actual_price %></span>
+                </div>
+                <div class="summary-item">
+                    <span>Discount</span>
+                    <span style="color: green;">- ₹<%= product.actual_price - product.price %></span>
+                </div>
+                <div class="summary-item">
+                    <span>Delivery</span>
+                    <span style="color: green;">FREE</span>
+                </div>
+                <div class="summary-total">
+                    <span>Subtotal</span>
+                    <span>₹<%= product.price %></span>
+                </div>
+
+                <button class="pay-button"
+                    onclick="document.getElementById('confirmationModal').classList.remove('hidden')">Order Now</button>
+
+                <p class="terms">
+                    By placing this order, you agree to our<br />
+                    <u><b><a href="/privacy-policy">Privacy Policy</a></b></u> and <u><b><a
+                                href="/Terms-And-Conditions">Terms & Conditions</a></b></u>.
+                </p>
+            </div>
+        </div>
+
+        <!-- MODAL: Confirm -->
+        <div id="confirmationModal" class="modal hidden">
+            <div class="modal-content" role="dialog" aria-modal="true">
+                <button class="close-btn" id="closeBtn" aria-label="Close modal"
+                    onclick="document.getElementById('confirmationModal').classList.add('hidden')">&times;</button>
+                <h3 class="modal-title">Place this order?</h3>
+                <p class="modal-desc">Once confirmed, we’ll start processing right away.</p>
+                <div class="modal-actions">
+                    <button id="confirmOrderBtn" class="btn primary">
+                        &nbsp; Yes, Place Order
+                    </button>
+                    <button id="cancelOrderBtn" class="btn danger"
+                        onclick="document.getElementById('confirmationModal').classList.add('hidden')">
+                        ✕&nbsp; Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: Success -->
+        <div id="successScreen" class="modal hidden">
+            <div class="modal-content success">
+                <h2 class="modal-title">🎉 Order Placed Successfully!</h2>
+                <p class="modal-desc">Your custom T-shirt is on the way. We’ll notify you with updates!</p>
+            </div>
+        </div>
+
+        <%- include('partials/footer', { user: user }) %>
+
+            <script>
+                function validateInputs() {
+                    const inputs = document.querySelectorAll('.customer-info input');
+                    for (const input of inputs) {
+                        if (!input.value.trim()) {
+                            alert("Please fill in all the details before placing your order.");
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                document.querySelector('.pay-button').addEventListener('click', async () => {
+                    const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+                    if (!validateInputs()) return;
+                    if (paymentMethod === 'cod') {
+                        document.getElementById('confirmationModal').classList.remove('hidden');
+                        return;
+                    }
+
+                    // Collect customer and order info
+                    const name = document.querySelector('input[placeholder="Full Name"]').value;
+                    const address = document.querySelector('input[placeholder="Address"]').value;
+                    const city = document.querySelector('input[placeholder="City"]').value;
+                    const pincode = document.querySelector('input[placeholder="Pincode"]').value;
+                    const phone = document.querySelector('input[placeholder="Phone Number"]').value;
+
+                    const orderData = {
+                        user_id: <%= user.id %>,
+                        design_id: <%= product.id %>,
+                        quantity: 1,
+                        size: 'L',
+                        customer_name: name,
+                        shipping_address: address,
+                        pincode: pincode,
+                        city: city,
+                        phone_number: phone,
+                        email: '<%= user.email %>',
+                        payment_method: 'razorpay',
+                        total_price: <%= product.price %>
+  };
+
+                    try {
+                        // 1. Create Razorpay order from backend
+                        const res = await fetch("/api/payment/create-order", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ amount: orderData.total_price })
+                        });
+
+
+
+
+                        const data = await res.json();
+
+                        if (!data.success) {
+                            alert("Failed to create Razorpay order");
+                            return;
+                        }
+
+                        const options = {
+                            key: '<%= process.env.RAZORPAY_KEY_ID %>', // or hardcode your Razorpay key
+                            amount: data.order.amount,
+                            currency: "INR",
+                            name: "CustomWear",
+                            description: "Custom T-shirt Order",
+                            order_id: data.order.id,
+                            handler: async function (response) {
+                                // 2. Payment successful → place order
+                                const confirmData = {
+                                    ...orderData,
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_signature: response.razorpay_signature
+                                };
+
+                                const confirmRes = await fetch('/confirm-order', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(confirmData)
+                                });
+
+                                const confirmResult = await confirmRes.json();
+
+                                if (confirmResult.success) {
+                                    document.getElementById('successScreen').classList.remove('hidden');
+                                    setTimeout(() => {
+                                        window.location.href = '/thank-you';
+                                    }, 3000);
+                                } else {
+                                    alert("Order failed.");
+                                }
+                            },
+                            prefill: {
+                                name: name,
+                                email: '<%= user.email %>',
+                                contact: phone
+                            },
+                            theme: {
+                                color: "#163109"
+                            }
+                        };
+
+                        const rzp = new Razorpay(options);
+                        rzp.open();
+
+                    } catch (error) {
+                        console.error("Razorpay error", error);
+                        alert("Something went wrong while initiating payment.");
+                    }
+                });
+
+
+                document.getElementById('cancelOrderBtn').addEventListener('click', () => {
+                    document.getElementById('confirmationModal').classList.add('hidden');
+                });
+
+                document.getElementById('closeBtn').addEventListener('click', () => {
+                    document.getElementById('confirmationModal').classList.add('hidden');
+                });
+
+                document.getElementById('confirmOrderBtn').addEventListener('click', async () => {
+                    if (!validateInputs()) return;
+                    document.getElementById('confirmationModal').classList.add('hidden');
+
+                    const name = document.querySelector('input[placeholder="Full Name"]').value;
+                    const address = document.querySelector('input[placeholder="Address"]').value;
+                    const city = document.querySelector('input[placeholder="City"]').value;
+                    const pincode = document.querySelector('input[placeholder="Pincode"]').value;
+                    const phone = document.querySelector('input[placeholder="Phone Number"]').value;
+
+                    const orderData = {
+                        user_id: <%= user.id %>,
+                        design_id: <%= product.id %>,
+                        quantity: 1,
+                        size: 'L',
+                        customer_name: name,
+                        shipping_address: address,
+                        pincode: pincode,
+                        city: city,
+                        phone_number: phone,
+                        email: '<%= user.email %>',
+                        payment_method: 'COD',
+                        total_price: <%= product.price %>
+  };
+
+                    try {
+                        const response = await fetch('/confirm-order', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(orderData)
+                        });
+
+                        const result = await response.json();
+
+                        if (result.success) {
+                            document.getElementById('successScreen').classList.remove('hidden');
+
+                            setTimeout(() => {
+                                window.location.href = '/thank-you';
+                            }, 3000);
+                        } else {
+                            alert("Order failed.");
+                        }
+                    } catch (error) {
+                        console.error("Error placing order:", error);
+                        alert("Something went wrong.");
+                    }
+                });
+
+            </script>
+
+</body>
+
+</html>

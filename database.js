@@ -74,22 +74,32 @@ db.exec(`
         dark_color TEXT NOT NULL
     );
     CREATE TABLE IF NOT EXISTS Promo(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    code TEXT NOT NULL,
-    discount INTEGER NOT NULL,
-    uses INTEGER NOT NULL
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        code TEXT NOT NULL,
+        discount INTEGER NOT NULL,
+        uses INTEGER NOT NULL
     );
     CREATE TABLE IF NOT EXISTS Addresses (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    address TEXT NOT NULL,
-    pincode TEXT NOT NULL,
-    city TEXT NOT NULL,
-    area TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        address TEXT NOT NULL,
+        pincode TEXT NOT NULL,
+        city TEXT NOT NULL,
+        area TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE
     );
-
+    CREATE TABLE IF NOT EXISTS ShopProducts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        image TEXT,
+        price INTEGER NOT NULL,
+        actual_price INTEGER,
+        discount INTEGER,
+        material TEXT,
+        gender TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
 `);
 
 module.exports = db;
