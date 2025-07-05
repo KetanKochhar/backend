@@ -1703,9 +1703,9 @@ function removeObjectAndAdjustPrice(obj) {
         const maxLargeWidth = 11, maxLargeHeight = 16;
 
         if ((width <= maxLogoWidth && height <= maxLogoHeight) || (width <= maxLogoHeight && height <= maxLogoWidth)) {
-            return 150;
+            return 100;
         } else if ((width <= maxMediumWidth && height <= maxMediumHeight) || (width <= maxMediumHeight && height <= maxMediumWidth)) {
-            return 190;
+            return 150;
         } else if ((width <= maxLargeWidth && height <= maxLargeHeight) || (width <= maxLargeHeight && height <= maxLargeWidth)) {
             return 250;
         } else {
