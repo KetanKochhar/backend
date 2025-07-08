@@ -523,6 +523,108 @@ function getProductById(id) {
 }
 
 
+function insertShopOrder(order) {
+  const stmt = database.prepare(`
+    INSERT INTO ShopOrders (
+      product_id, product_name, product_image, material, gender,
+      user_id, customer_name, phone_number, email,
+      shipping_address, pincode, city, quantity, size,
+      price, actual_price, discount, total_price, payment_method
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  const result = stmt.run(
+    order.product_id,
+    order.product_name,
+    order.product_image,
+    order.material,
+    order.gender,
+    order.user_id,
+    order.customer_name,
+    order.phone_number,
+    order.email,
+    order.shipping_address,
+    order.pincode,
+    order.city,
+    order.quantity,
+    order.size,
+    order.price,
+    order.actual_price,
+    order.discount,
+    order.total_price,
+    order.payment_method
+  );
+
+  return result;
+}
+
+
+async function addShopOrder(orderData) {
+  try {
+    const {
+      user_id, product_id, quantity, size,
+      customer_name, shipping_address, pincode,
+      city, phone_number, email, payment_method, total_price
+    } = orderData;
+
+    // Fetch product info
+    const product = database.prepare(`SELECT * FROM ShopProducts WHERE id = ?`).get(product_id);
+
+    if (!product) throw new Error("Product not found");
+
+    const insertQuery = database.prepare(`
+      INSERT INTO ShopOrders (
+        product_id,
+        product_name,
+        product_image,
+        material,
+        gender,
+        user_id,
+        customer_name,
+        phone_number,
+        email,
+        shipping_address,
+        pincode,
+        city,
+        quantity,
+        size,
+        price,
+        actual_price,
+        discount,
+        total_price,
+        payment_method
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    const result = insertQuery.run(
+      product_id,
+      product.name,
+      product.image,
+      product.material,
+      product.gender,
+      user_id,
+      customer_name,
+      phone_number,
+      email,
+      shipping_address,
+      pincode,
+      city,
+      quantity,
+      size,
+      product.price,
+      product.actual_price,
+      product.discount,
+      total_price,
+      payment_method
+    );
+
+    return result;
+  } catch (error) {
+    console.error("Error while adding shop order:", error);
+    throw error;
+  }
+}
+
 
 
 
@@ -532,4 +634,4 @@ function getProductById(id) {
 // data = smt.run()
 
 
-module.exports = { addUser, getUserByEmail, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword, GetDesignById, addpromo, getpromo, getallpromo, addAddress, GetAddress, updateUserProfile, updateAddress, addToCart, updateCartQuantity, getCartItem, getCart, addorder, deleteDesignById, getDesignById, insertOrder, getTotalOrders, getTotalUsers, getTotalRevenue, getAllOrders, getOrdersByUserId, getAllProducts, getProductById}
+module.exports = { addUser, getUserByEmail, comparePassword, saveOTPToDatabase, getOTPFromDatabase, addColorToDB, getpolocolors, getcottoncolors, getsportscolors, getUserIdByEmail, getDesignsByUserId, addDesign, updateDesign, getDesignsByUserIdnumber, updateUserPassword, GetDesignById, addpromo, getpromo, getallpromo, addAddress, GetAddress, updateUserProfile, updateAddress, addToCart, updateCartQuantity, getCartItem, getCart, addorder, deleteDesignById, getDesignById, insertOrder, getTotalOrders, getTotalUsers, getTotalRevenue, getAllOrders, getOrdersByUserId, getAllProducts, getProductById, insertShopOrder, addShopOrder, getProductById}

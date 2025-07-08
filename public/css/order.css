@@ -57,10 +57,6 @@ body {
     font-size: 15px;
 }
 
-.payment-option {
-    margin-top: 10px;
-    font-size: 15px;
-}
 
 /* RIGHT PANEL */
 .right-panel {
@@ -146,6 +142,53 @@ body {
 .text-center {
     text-align: center;
 }
+
+.payment-method {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.payment-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 15px;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+    background: #fff;
+}
+
+.payment-card:hover {
+    border-color: #163109;
+    background-color: #f4f9f4;
+}
+
+.payment-card input[type="radio"] {
+    accent-color: #163109;
+    transform: scale(1.3);
+    margin-right: 10px;
+}
+
+.method-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.method-icon {
+    font-size: 32px;
+    width: 40px;
+    text-align: center;
+}
+
+.method-content span {
+    font-size: 14px;
+    color: #555;
+}
+
 
 /* ==========  Overlay / Backdrop  ========== */
 .modal {
@@ -338,3 +381,321 @@ body {
         width: 100%;
     }
 }
+
+
+.product-image-gallery {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.thumbnail-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.thumbnail-strip img.thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.thumbnail-strip img.thumb.active,
+.thumbnail-strip img.thumb:hover {
+    border-color: #163109;
+}
+
+.main-image-container {
+    flex-grow: 1;
+}
+
+.main-image-container .main-image {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 8px;
+}
+
+.collapsible-section {
+    margin-top: 30px;
+    border: 2px solid #143109;
+    border-radius: 10px;
+    padding: 15px;
+    background: rgb(181, 191, 161, 0.1);
+}
+
+.collapsible-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.collapsible-header h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #163109;
+}
+
+.arrow {
+    font-size: 22px;
+    transition: transform 0.3s ease;
+}
+
+.arrow.rotate {
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+    margin-top: 20px;
+    display: none;
+    transition: max-height 0.3s ease;
+}
+
+.collapsible-content input {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #143109;
+    border-radius: 6px;
+    font-size: 16px;
+    background: #fff;
+}
+
+.info-note {
+    color: red;
+    font-style: italic;
+    margin-bottom: 12px;
+}
+
+.shipping-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 25px;
+    color: #163109;
+    margin: 0;
+}
+
+.shipping-heading .icon {
+    display: flex;
+    align-items: center;
+}
+
+.shipping-heading .label {
+    display: inline-block;
+}
+
+.price-summary {
+    border-radius: 12px;
+    padding: 10px;
+    font-family: 'Segoe UI', sans-serif;
+    margin: auto;
+}
+
+.summary-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #163109;
+    margin-bottom: 10px;
+}
+
+.summary-divider {
+    border: none;
+    height: 2px;
+    background-color: #163109;
+    margin: 10px 0 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.summary-item .label {
+    color: #333;
+}
+
+.summary-item .value {
+    font-weight: 500;
+}
+
+.summary-item .discount {
+    color: green;
+}
+
+.summary-item .delivery {
+    color: green;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.summary-total .total {
+    color: #163109;
+}
+
+.pay-button {
+    width: 100%;
+    background-color: #163109;
+    color: white;
+    border: none;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.pay-button:hover {
+    background-color: #115c0d;
+}
+
+.summary-terms {
+    font-size: 12px;
+    color: #555;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.summary-terms a {
+    color: #163109;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.size-selector {
+    padding: 15px 20px;
+    border-radius: 12px;
+    max-width: 450px;
+}
+
+.size-selector h3 {
+    margin-bottom: 12px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #163109;
+}
+
+.size-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.size-option {
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+}
+
+.size-option input[type="radio"] {
+    display: none;
+}
+
+.size-option span {
+    display: block;
+    padding: 12px 0;
+    text-align: center;
+    border: 2px solid #c8dac1;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #163109;
+    background-color: #f5fdf5;
+    transition: all 0.3s ease;
+}
+
+.size-option input[type="radio"]:checked+span {
+    background-color: #163109;
+    color: white;
+    border-color: #163109;
+    box-shadow: 0 0 10px rgba(22, 49, 9, 0.3);
+}
+
+.quantity-selector {
+    margin-top: 30px;
+    padding: 15px 20px;
+    max-width: 450px;
+    text-align: center;
+}
+
+.quantity-selector h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #163109;
+    margin-bottom: 15px;
+}
+
+.quantity-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.quantity-controls button {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background-color: #163109;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.quantity-controls input {
+    width: 60px;
+    text-align: center;
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid #c8dac1;
+    border-radius: 6px;
+}
+
+.discount-info {
+    font-size: 14px;
+    color: #3c763d;
+    margin-top: 5px;
+}
+
+.final-price {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #163109;
+}
+
+.you-saved {
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 6px;
+    color: #2e7d32;
+}
+
+.highlight-savings {
+    font-size: 18px;
+    color: #198754;
+    text-align: center;
+    background-color: #e6f4ea;
+    padding: 10px;
+    border-radius: 8px;
+}
+

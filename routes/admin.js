@@ -173,23 +173,36 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+// Accept 3 file fields
+const multiUpload = upload.fields([
+  { name: 'front_image', maxCount: 1 },
+  { name: 'back_image', maxCount: 1 },
+]);
+
+
 // GET form
 router.get('/addproduct', (req, res) => {
   res.render('admin/addproduct'); // renders EJS form
 });
 
-// POST form
-router.post('/addproduct', upload.single('image'), (req, res) => {
+
+
+router.post('/addproduct', multiUpload, (req, res) => {
   const { name, price, actual_price, discount, material, gender } = req.body;
-  const image = req.file ? 'images/products/' + req.file.filename : null;
+
+  const front_image = req.files['front_image'] ? 'images/products/' + req.files['front_image'][0].filename : null;
+  const back_image = req.files['back_image'] ? 'images/products/' + req.files['back_image'][0].filename : null;
+  const graphics = req.files['graphics'] ? 'images/products/' + req.files['graphics'][0].filename : null;
 
   db.prepare(`
-    INSERT INTO ShopProducts (name, image, price, actual_price, discount, material, gender)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-  `).run(name, image, price, actual_price, discount, material, gender);
+    INSERT INTO ShopProducts (name, front_image, back_images, graphics, price, actual_price, discount, material, gender)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(name, front_image, back_image, graphics, price, actual_price, discount, material, gender);
 
-  res.redirect('/admin/addproduct'); // or redirect to list page
+  res.redirect('/admin/addproduct');
 });
+
+
 
 
 

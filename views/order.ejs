@@ -16,95 +16,239 @@
     <div class="order-page">
       <!-- LEFT PANEL -->
       <div class="left-panel">
-
-        <form class="customer-info">
-          <h1 style="font-size: 25px; margin: 20px 0 5px">Shipping Info</h1>
-          <hr style="border: none; height: 2px; background-color: #163109; margin-bottom: 20px" />
-          <p style="color: red;"><i>(you can change the personal detail <a href="/profile"><u>here</u>)</a></i></p>
-
-          <input type="text" placeholder="Full Name" value="<%= user.first_name %> <%= user.last_name%>" readonly
-            style="cursor: not-allowed;" />
-          <input type="tel" placeholder="Phone Number" value="<%= user.phone_number %>" readonly disabled
-            style="cursor: not-allowed;" />
-          <input type="text" placeholder="Address" value="<%= address?.address %>" readonly disabled
-            style="cursor: not-allowed;" />
-          <input type="text" placeholder="City" value="<%= address?.city %>" readonly disabled
-            style="cursor: not-allowed;" />
-          <input type="text" placeholder="Pincode" value="<%= address?.pincode %>" readonly disabled
-            style="cursor: not-allowed;" />
-        </form>
-
-        <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
-
-        <div class="payment-option">
-          <h1 style="font-size: 25px;">Payment Method</h1><br />
-          <label>
-            <input type="radio" name="payment" value="cod" checked /> Cash on Delivery
-          </label><br />
-          <label>
-            <input type="radio" name="payment" value="razorpay" /> Pay Online (UPI, Card)
-          </label>
-
-        </div>
-
-        <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
-
-        <h1 style="font-size: 25px;">Your Custom T-Shirt</h1><br />
+        <h1 style="font-size: 25px; margin: 20px 0 5px"><b>Your T-Shirt</b></h1><br />
+        <hr style="border: none; height: 2px; background-color: #163109; margin-bottom: 20px" />
 
         <!-- Static Sample Designs -->
         <div class="container design-grid">
           <section class="design-card">
-            <div class="design-images">
-              <center><img src="<%= design.front_preview %>" alt="Design Front" /></center>
-            </div>
-            <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20PX" />
-            <div>
-              <h3><b>Design ID : </b>
-                <%= design.id %>
-              </h3>
-              <h3><b>Name : </b>
-                <%= design.name %>
-              </h3>
-              <h3><b>Price : ₹</b>
-                <%= design.price %>
-              </h3>
-            </div>
-          </section>
-          <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+            <section class="design-card">
+              <div class="product-image-gallery">
+                <!-- Thumbnails -->
+                <div class="thumbnail-strip">
+                  <% if (design.front_preview) { %>
+                    <img src="<%= design.front_preview %>" class="thumb active"
+                      onclick="showImage('<%= design.front_preview %>')" />
+                    <% } %>
+                      <% if (design.back_preview) { %>
+                        <img src="<%= design.back_preview %>" class="thumb"
+                          onclick="showImage('<%= design.back_preview %>')" />
+                        <% } %>
+                </div>
+
+                <!-- Main Image -->
+                <div class="main-image-container">
+                  <div class="main-image-container">
+                    <img id="mainDisplayImage" src="<%= design.front_preview %>" alt="<%= design.name %> "
+                      class="main-image"
+                      style="width: 100%; height:650px; object-fit: cover; object-position: center top; border-radius: 10px;" />
+                  </div>
+                </div>
+              </div>
+              <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20PX" />
+            </section>
         </div>
 
       </div>
 
       <!-- RIGHT PANEL -->
       <div class="right-panel">
-        <h1 style="font-size: 25px;">Order Summary</h1><br />
 
-        <div class="summary-item">
-          <span>Base Price</span>
-          <% let finalPrice=0; if (design.type==="sports" ) { finalPrice=220; } else if (design.type==="cotton" ) {
-            finalPrice=299; } else if (design.type==="polo" ) { finalPrice=349; } else { finalPrice=499; // default
-            fallback } %>
-            <span>
-              ₹<%= finalPrice %>
-            </span>
-        </div>
-        <div class="summary-item">
-          <span>Design Charges (x2)</span>
-          <span>₹<%= design.price %></span>
-        </div>
-        <div class="summary-total">
-          <span>Total</span>
-          <span>₹<%= design.price + finalPrice %></span>
-        </div>
+        <% let finalPrice=0; if (design.type==="sports" ) { finalPrice=220; } else if (design.type==="cotton" ) {
+          finalPrice=299; } else if (design.type==="polo" ) { finalPrice=349; } else { finalPrice=499; // default
+          fallback } %>
+
+          <!-- Collapsible Shipping Info -->
+          <div class="collapsible-section">
+            <div class="collapsible-header" onclick="toggleSection('shippingInfo')">
+              <h2 class="shipping-heading">
+                <span class="icon">
+                  <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 16 16" class=" " stroke="none" style="font-size: 32px;" width="35" height="35">
+                    <path stroke="#292D35" stroke-linecap="round" stroke-linejoin="round"
+                      d="M10.357 5.287h2.092a.388.388 0 0 1 .364.246L13.5 7.25M2.5 8.43h7.857" fill="none"></path>
+                    <path stroke="#292D35" stroke-miterlimit="10"
+                      d="M10.946 11.965a1.179 1.179 0 1 0 0-2.357 1.179 1.179 0 0 0 0 2.357ZM5.054 11.965a1.179 1.179 0 1 0 0-2.358 1.179 1.179 0 0 0 0 2.358Z"
+                      fill="none"></path>
+                    <path stroke="#292D35" stroke-linecap="round" stroke-linejoin="round"
+                      d="M9.768 10.787H6.232M3.875 10.786h-.982a.393.393 0 0 1-.393-.393v-5.5a.393.393 0 0 1 .393-.393h7.464v5.264M10.357 7.25H13.5v3.143a.393.393 0 0 1-.393.393h-.982"
+                      fill="none"></path>
+                  </svg>
+                </span>
+                <span class="label">Shipping Info</span>
+              </h2>
+
+              <span id="shippingToggle" class="arrow rotate">&#9660;</span>
+            </div>
 
 
-        <button class="pay-button">Order Now</button>
+            <div class="collapsible-content" id="shippingInfo">
+              <p class="info-note">(you can change personal details <a href="/profile"><u>here</u></a>)</p>
 
-        <p class="terms">
-          By placing this order, you agree to our<br />
-          <u><b><a href="/privacy-policy">Privacy Policy</a></b></u> and <u><b><a href="/Terms-And-Conditions">Terms &
-                Conditions</a></b></u>.
-        </p>
+              <input type="text" placeholder="Full Name" value="<%= user.first_name + ' ' + user.last_name %>"
+                readonly />
+              <input type="tel" placeholder="Phone Number" value="<%= user.phone_number %>" readonly />
+              <input type="text" placeholder="Address" value="<%= address?.address || '' %>" readonly />
+              <input type="text" placeholder="City" value="<%= address?.city || '' %>" readonly />
+              <input type="text" placeholder="Pincode" value="<%= address?.pincode || '' %>" readonly />
+            </div>
+          </div>
+
+
+          <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+
+
+          <div class="payment-option">
+            <h1 style="font-size: 24px; margin-bottom: 15px; font-weight: bold">Payment Method</h1>
+
+            <div class="payment-method">
+              <label class="payment-card">
+                <input type="radio" name="payment" value="razorpay" checked />
+                <div class="method-content">
+                  <div class="method-icon"><svg xmlns:xlink="http://www.w3.org/1999/xlink"
+                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 40 24" class=" " stroke="none"
+                      style="font-size: 24px;" width="35" height="21">
+                      <path fill="#949494"
+                        d="M37.094 0H2.906A2.898 2.898 0 0 0 0 2.89v18.22A2.898 2.898 0 0 0 2.906 24h34.188A2.898 2.898 0 0 0 40 21.11V2.89A2.898 2.898 0 0 0 37.094 0Z">
+                      </path>
+                      <path fill="#000" d="M40 3.803H0v2.902h40V3.803Z"></path>
+                      <path fill="#D6D6D6" d="M21.102 13.528H3.105v4.637h17.997v-4.637Z"></path>
+                      <path fill="#FFFFFF" stroke="#CE6464" stroke-miterlimit="10"
+                        d="M36.895 13.528H26.648v4.637h10.247v-4.637Z"></path>
+                      <path fill="#000"
+                        d="M29.026 16.597a.75.75 0 0 0 .752-.747.75.75 0 0 0-.752-.747.75.75 0 0 0-.751.747.75.75 0 0 0 .752.747Zm2.745 0a.75.75 0 0 0 .752-.747.75.75 0 0 0-.752-.747.75.75 0 0 0-.751.747.75.75 0 0 0 .751.747Zm2.745 0a.75.75 0 0 0 .752-.747.75.75 0 0 0-.752-.747.75.75 0 0 0-.751.747.75.75 0 0 0 .751.747Z">
+                      </path>
+                    </svg></div>
+                  <div>
+                    <strong>Pay Online</strong><br />
+                    <span>UPI, Card, Netbanking via Razorpay</span>
+                  </div>
+                </div>
+              </label>
+
+              <label class="payment-card"
+                style="cursor: not-allowed; opacity: 0.5; background-color: #ddd; border-radius: 8px; padding: 10px; display: flex; align-items: center; gap: 10px;">
+                <input type="radio" name="payment" value="cod" disabled style="pointer-events: none;" />
+                <div class="method-content" style="display: flex; align-items: center; gap: 12px;">
+                  <div class="method-icon">
+                    <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" fill="none"
+                      viewBox="0 0 24 24" stroke="none" style="font-size: 32px;" width="35" height="35">
+                      <circle cx="12" cy="12" r="12" fill="#292D35"></circle>
+                      <path fill="#F7F7F7"
+                        d="M14.707 8.276c.255.247.456.542.593.869h1.66v1.316h-1.317v.21a3.405 3.405 0 0 1-.633 2.066 3.622 3.622 0 0 1-1.778 1.316L15.867 18h-2.74l-2.359-3.618H7.646v-2.053h2.95a2.85 2.85 0 0 0 1.858-.513 1.842 1.842 0 0 0 .62-1.316H7V9.184h5.705a2.49 2.49 0 0 0-2.214-.868H7V7h10v1.316l-2.293-.04Z">
+                      </path>
+                    </svg>
+                  </div>
+                  <div>
+                    <strong>Cash on Delivery</strong><br />
+                    <span>Pay at your doorstep when product arrives</span><br>
+                    <span style="color: red;">Cash on delivery is unavailable in customized T-shirt</span>
+                  </div>
+                </div>
+              </label>
+
+            </div>
+          </div>
+          <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+
+          <div class="quantity-selector">
+            <h3>Quantity</h3>
+            <div class="quantity-controls">
+              <button type="button" id="decreaseQty">−</button>
+              <input type="number" id="quantityInput" value="1" min="1" />
+              <button type="button" id="increaseQty">+</button>
+            </div>
+            <p class="discount-info" id="discountInfo">No discount applied</p>
+            <p class="you-saved" id="youSavedText">You saved ₹0
+            </p>
+            <p class="final-price">Subtotal: <span id="finalPrice1">
+                ₹<%= design.price + finalPrice %>
+              </span></p>
+          </div>
+          <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+          <div class="size-selector">
+            <h3>Select Size</h3>
+            <div class="size-options">
+              <label class="size-option">
+                <input type="radio" name="size" value="M" checked />
+                <span>M</span>
+              </label>
+              <label class="size-option">
+                <input type="radio" name="size" value="L" />
+                <span>L</span>
+              </label>
+              <label class="size-option">
+                <input type="radio" name="size" value="XL" />
+                <span>XL</span>
+              </label>
+              <label class="size-option">
+                <input type="radio" name="size" value="XXL" />
+                <span>XXL</span>
+              </label>
+            </div>
+          </div>
+
+
+
+          <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+          <div class="price-summary">
+            <h1 class="summary-title">Price Summary</h1>
+            <hr class="summary-divider" />
+
+            <div class="summary-item">
+              <span class="label">Product</span>
+              <span class="value">
+                <%= design.name %>
+              </span>
+            </div>
+
+            <div class="summary-item">
+              <span class="label">Base Price</span>
+              <span class="value" id="tshirtPrices">₹<%= finalPrice %></span>
+            </div>
+
+            <div class="summary-item">
+              <span class="label">Design Charges</span>
+              <span class="value" id="designPrice">
+                + ₹<%= design.price %>
+              </span>
+            </div>
+
+            <div class="summary-item">
+              <span class="label">Quantity</span>
+              <span class="value" id="quantityText">1</span>
+            </div>
+
+            <div class="summary-item" id="bulkDiscountRow" style="display: none">
+              <span class="label">Bulk Discount</span>
+              <span class="value discount" id="bulkDiscountAmount">- ₹0</span>
+            </div>
+
+            <div class="summary-item">
+              <span class="label">Delivery</span>
+              <span class="value delivery">FREE</span>
+            </div>
+
+            <hr class="summary-divider" />
+
+            <div class="summary-total">
+              <span class="label">Subtotal</span>
+              <span class="value total" id="finalPrice">₹<%= design.price + finalPrice %></span>
+            </div>
+
+            <p class="highlight-savings" id="youSavedText1"
+              style="color: #198754; font-weight: bold; margin: 10px 0 20px;">
+              <!-- Will be updated by JS -->
+            </p>
+
+            <button class="pay-button">Order Now</button>
+
+            <p class="summary-terms">
+              By placing this order, you agree to our<br />
+              <a href="/privacy-policy">Privacy Policy</a> and
+              <a href="/Terms-And-Conditions">Terms & Conditions</a>.
+            </p>
+          </div>
       </div>
     </div>
 
@@ -142,16 +286,119 @@
 
 
       <script>
+
+        const qtyInput = document.getElementById("quantityInput");
+        const increaseBtn = document.getElementById("increaseQty");
+        const decreaseBtn = document.getElementById("decreaseQty");
+        const finalPriceDisplay1 = document.getElementById("finalPrice1");
+        const finalPriceDisplay = document.getElementById("finalPrice");
+        const tshirtPricetext = document.getElementById("tshirtPrices")
+        const designPricetext = document.getElementById("designPrice")
+        const discountInfo = document.getElementById("discountInfo");
+        const youSavedText = document.getElementById("youSavedText");
+        const youSavedText1 = document.getElementById("youSavedText1");
+        const bulkDiscountAmount = document.getElementById("bulkDiscountAmount");
+        const bulkDiscountRow = document.getElementById("bulkDiscountRow");
+        const quantityText = document.getElementById("quantityText");
+        let total_price = 0;
+        let quantity = 0
+        let basePrice1 = 0;
+
+        if (<%= design.type === "sports" %>) {
+          basePrice1 = 220;
+        }
+
+        else if (<%= design.type === "polo" %>) {
+          basePrice1 = 349;
+        }
+
+        else {
+          basePrice1 = 299;
+        }
+
+        const designPrice = <%= design.price %>; // After normal discount
+        const basePrice = basePrice1;
+
+        function updatePricing() {
+          const qty = parseInt(qtyInput.value);
+          let bulkDiscountPercent = 0;
+
+          if (qty >= 20) bulkDiscountPercent = 20;
+          else if (qty >= 10) bulkDiscountPercent = 10;
+
+          const bulkDiscountPerItem = basePrice * bulkDiscountPercent / 100;
+
+          const finalPerItemPrice = (basePrice + designPrice) - bulkDiscountPerItem;
+          const totalPrice = Math.round(finalPerItemPrice * qty);
+
+          const totalBulkDiscount = bulkDiscountPerItem * qty;
+          const totalSaved = totalBulkDiscount;
+
+          const tshirtPrice = basePrice * qty;
+
+          total_price = totalPrice;
+          quantity = qty;
+          if (totalBulkDiscount > 0) {
+            bulkDiscountRow.style.display = 'flex';
+          }
+          else {
+            bulkDiscountRow.style.display = 'none';
+          }
+
+          finalPriceDisplay1.textContent = `₹${totalPrice}`;
+          finalPriceDisplay.textContent = `₹${totalPrice}`;
+          tshirtPricetext.textContent = `₹${tshirtPrice}`;
+          designPricetext.textContent = `₹${designPrice * qty}`;
+          discountInfo.textContent = bulkDiscountPercent > 0
+            ? `🎉 ${bulkDiscountPercent}% bulk discount applied`
+            : "";
+
+          youSavedText.textContent =
+            `You saved ₹${Math.round(totalSaved)}`;
+          youSavedText1.textContent =
+            `You saved ₹${Math.round(totalSaved)}`;
+          bulkDiscountAmount.textContent =
+            `- ₹${Math.round(totalBulkDiscount)}`;
+          quantityText.textContent =
+            qty;
+        }
+
+        increaseBtn.addEventListener("click", () => {
+          qtyInput.value = parseInt(qtyInput.value) + 1;
+          updatePricing();
+        });
+
+        decreaseBtn.addEventListener("click", () => {
+          const currentQty = parseInt(qtyInput.value);
+          if (currentQty > 1) {
+            qtyInput.value = currentQty - 1;
+            updatePricing();
+          }
+        });
+
+        qtyInput.addEventListener("input", () => {
+          let value = parseInt(qtyInput.value);
+          if (isNaN(value) || value < 1) {
+            qtyInput.value = 1;
+          }
+
+          updatePricing();
+        });
+
+        // Call once on page load
+        updatePricing();
+
+
         function validateInputs() {
-  const inputs = document.querySelectorAll('.customer-info input');
-  for (const input of inputs) {
-    if (!input.value.trim()) {
-      alert("Please fill in all the details before placing your order.");
-      return false;
-    }
-  }
-  return true;
-}
+          const inputs = document.querySelectorAll('.customer-info input');
+          for (const input of inputs) {
+            if (!input.value.trim()) {
+              alert("Please fill in all the details before placing your order.");
+              return false;
+            }
+          }
+          return true;
+        }
         document.querySelector('.pay-button').addEventListener('click', async () => {
           const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
           if (!validateInputs()) return;
@@ -166,12 +413,13 @@
           const city = document.querySelector('input[placeholder="City"]').value;
           const pincode = document.querySelector('input[placeholder="Pincode"]').value;
           const phone = document.querySelector('input[placeholder="Phone Number"]').value;
+          const selectedSize = document.querySelector('input[name="size"]:checked').value;
 
           const orderData = {
             user_id: <%= user.id %>,
             design_id: <%= design.id %>,
-            quantity: 1,
-            size: 'L',
+            quantity: quantity,
+            size: selectedSize,
             customer_name: name,
             shipping_address: address,
             pincode: pincode,
@@ -179,15 +427,15 @@
             phone_number: phone,
             email: '<%= user.email %>',
             payment_method: 'razorpay',
-            total_price: <%= design.price + finalPrice %>
-  };
+            total_price: total_price
+          };
 
           try {
             // 1. Create Razorpay order from backend
             const res = await fetch("/api/payment/create-order", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ amount: orderData.total_price })
+              body: JSON.stringify({ amount: total_price })
             });
 
 
@@ -270,12 +518,13 @@
           const city = document.querySelector('input[placeholder="City"]').value;
           const pincode = document.querySelector('input[placeholder="Pincode"]').value;
           const phone = document.querySelector('input[placeholder="Phone Number"]').value;
+          const selectedSize = document.querySelector('input[name="size"]:checked').value;
 
           const orderData = {
             user_id: <%= user.id %>,
             design_id: <%= design.id %>,
-            quantity: 1,
-            size: 'L',
+            quantity: quantity,
+            size: selectedSize,
             customer_name: name,
             shipping_address: address,
             pincode: pincode,
@@ -283,8 +532,8 @@
             phone_number: phone,
             email: '<%= user.email %>',
             payment_method: 'COD',
-            total_price: <%= design.price + finalPrice %>
-  };
+            total_price: total_price
+          };
 
           try {
             const response = await fetch('/confirm-order', {
@@ -309,6 +558,60 @@
             alert("Something went wrong.");
           }
         });
+
+        function showImage(src) {
+          document.getElementById('mainDisplayImage').src = src;
+
+          // Update active thumbnail
+          document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+          document.querySelector(`.thumb[src='${src}']`)?.classList.add('active');
+        }
+
+        function toggleSection(id) {
+          const content = document.getElementById(id);
+          const arrow = document.getElementById('shippingToggle');
+
+          if (content.style.display === 'block' || content.classList.contains('hidden')) {
+            content.style.display = 'none';
+            arrow.classList.add('rotate');
+          } else {
+            content.style.display = 'block';
+            arrow.classList.remove('rotate');
+          }
+        }
+
+        // Optional: collapse on load
+        document.getElementById('shippingInfo').style.display = 'none';
+        document.getElementById('shippingToggle').classList.add('rotate');
+
+        function applyResponsiveImageHeight() {
+          const img = document.getElementById("mainDisplayImage");
+          if (window.innerWidth >= 1440) {
+            img.style.height = "621px"
+            img.style.objectPosition = "center center";
+          }
+          else if (window.innerWidth >= 1024) {
+            img.style.height = "500px";
+          }
+          else if (window.innerWidth >= 768) {
+            img.style.height = "764px";
+          }
+          else if (window.innerWidth >= 425) {
+            img.style.height = "300px";
+          }
+          else if (window.innerWidth >= 375) {
+            img.style.height = "228px";
+          }
+          else if (window.innerWidth >= 320) {
+            img.style.height = "156px";
+          }
+          else {
+            img.style.height = "650px";
+            img.style.objectPosition = "center top";
+          }
+        }
+        applyResponsiveImageHeight();
+        window.addEventListener("resize", applyResponsiveImageHeight);
 
       </script>
 

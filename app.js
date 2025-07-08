@@ -12,6 +12,11 @@ const port = process.env.PORT;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+
+
+
+
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json({ limit: "1024mb" }));
 app.use(express.urlencoded({ extended: true }));
@@ -27,6 +32,14 @@ app.use(session({
         secure: process.env.Secure === "true"
     }
 }));
+
+// app.get('/maintenance', (req, res) => {
+//   res.render('maintenance');
+// });
+
+// app.use((req, res, next) => {
+//     return res.redirect('/maintenance');
+// });
 
 app.get("/", (request, response) => {
     // console.log(request.path);
@@ -59,10 +72,10 @@ app.get("/Terms-And-Conditions", (request, response) => {
     response.render("termsAndConditions", { user: request.session.user });
 });
 
-app.get("/order", (request, response) => {
-    // console.log(request.path);
-    response.render("order", { user: request.session.user });
-});
+// app.get("/order", (request, response) => {
+//     // console.log(request.path);
+//     response.render("order", { user: request.session.user });
+// });
 
 app.get("/thank-you", (request, response) => {
     // console.log(request.path);
@@ -121,13 +134,19 @@ app.get('/api/graphics/:category', (req, res) => {
     });
 });
 
+
+
 app.use('/admin', require('./routes/admin'));
+
+const productorderroutes = require("./routes/productorder");
+app.use("/", productorderroutes);
+
 
 
 //routes ka use kar raha hoon from dirrent files 
 const loginroutes = require("./routes/login");
 const profileroutes = require("./routes/profile")
-// const addproductroutes = require("./routes/addproduct")
+const addproductroutes = require("./routes/addproduct")
 // const productorderroutes = require("./routes/productorder")
 const myordersroutes = require("./routes/myorders")
 const designroutes = require("./routes/design")
@@ -137,7 +156,7 @@ const { request } = require('http');
 //sare routes ko call kar raha hoon phele import kia tha 
 app.use("/", loginroutes);
 app.use("/", profileroutes);
-// app.use("/", addproductroutes);
+app.use("/", addproductroutes);
 // app.use("/", productorderroutes);
 app.use("/", myordersroutes);
 app.use("/", designroutes);

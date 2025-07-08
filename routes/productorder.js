@@ -31,4 +31,64 @@ router.get('/porder-now/:id', async (req, res) => {
     }
 });
 
+
+// POST: Confirm Shop Product Order
+router.post('/pconfirm-order', async (req, res) => {
+    try {
+        const {
+            user_id,
+            product_id,
+            quantity,
+            size,
+            customer_name,
+            phone_number,
+            email,
+            shipping_address,
+            city,
+            pincode,
+            payment_method,
+            total_price
+        } = req.body;
+
+        // Fetch product snapshot
+        const product = await dbconnection.getProductById(product_id);
+        if (!product) {
+            return res.status(404).json({ success: false, error: "Product not found" });
+        }
+
+        // Prepare data to insert into ShopOrders
+        const orderData = {
+            product_id,
+            product_name: product.name,
+            product_image: product.image,
+            material: product.material,
+            gender: product.gender,
+            user_id,
+            customer_name,
+            phone_number,
+            email,
+            shipping_address,
+            pincode,
+            city,
+            quantity,
+            size,
+            price: product.price,
+            actual_price: product.actual_price,
+            discount: product.discount,
+            total_price,
+            payment_method
+        };
+
+        // Insert order
+        const result = dbconnection.insertShopOrder(orderData);
+
+        res.json({ success: true, orderId: result.lastInsertRowid });
+    } catch (error) {
+        console.error("Insert Shop Order Error:", error);
+        res.status(500).json({ success: false, error: "Internal Server Error" });
+    }
+});
+
+
+
 module.exports = router;

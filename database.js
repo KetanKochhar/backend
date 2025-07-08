@@ -88,11 +88,13 @@ db.exec(`
         area TEXT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE
-    );
+    ); 
     CREATE TABLE IF NOT EXISTS ShopProducts (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        image TEXT,
+        front_image TEXT,
+        back_images TEXT,
+        graphics TEXT,
         price INTEGER NOT NULL,
         actual_price INTEGER,
         discount INTEGER,
@@ -100,6 +102,34 @@ db.exec(`
         gender TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+    CREATE TABLE IF NOT EXISTS ShopOrders (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        product_id INTEGER NOT NULL,
+        product_name TEXT NOT NULL,
+        product_image TEXT,
+        material TEXT,
+        gender TEXT,
+        user_id INTEGER NOT NULL,
+        customer_name TEXT NOT NULL,
+        phone_number TEXT NOT NULL,
+        email TEXT NOT NULL,
+        shipping_address TEXT NOT NULL,
+        pincode TEXT NOT NULL,
+        city TEXT NOT NULL,
+        quantity INTEGER NOT NULL DEFAULT 1,
+        size TEXT NOT NULL,
+        price INTEGER NOT NULL,
+        actual_price INTEGER,
+        discount INTEGER,
+        total_price INTEGER NOT NULL,
+        payment_method TEXT NOT NULL,
+        status TEXT DEFAULT 'Pending',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
 `);
+
+
+// db.prepare(`DROP TABLE IF EXISTS ShopProducts`).run();
+
 
 module.exports = db;

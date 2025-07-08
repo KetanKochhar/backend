@@ -4,8 +4,8 @@ function addToCart(productId) {
 
 function applyFilters() {
     const selectedGenders = Array.from(document.querySelectorAll('input[name="gender"]:checked')).map(i => i.value);
-    const selectedPrice = document.querySelector('input[name="price"]:checked')?.value;
-    const selectedOffers = Array.from(document.querySelectorAll('input[name="offer"]:checked')).map(i => parseInt(i.value));
+    const selectedPrices = Array.from(document.querySelectorAll('input[name="price"]:checked')).map(i => parseInt(i.value));
+    const selectedDiscounts = Array.from(document.querySelectorAll('input[name="discount"]:checked')).map(i => parseInt(i.value));
 
     const cards = document.querySelectorAll('.product-card');
 
@@ -22,18 +22,19 @@ function applyFilters() {
         }
 
         // Price filter
-        if (selectedPrice === 'below500' && price >= 500) visible = false;
-        if (selectedPrice === '500to1000' && (price < 500 || price > 1000)) visible = false;
-        if (selectedPrice === 'above1000' && price <= 1000) visible = false;
+        if (selectedPrices.length && !selectedPrices.some(p => price >= p)) {
+            visible = false;
+        }
 
-        // Offer filter
-        if (selectedOffers.length && !selectedOffers.some(o => discount >= o)) {
+        // Discount filter
+        if (selectedDiscounts.length && !selectedDiscounts.some(d => discount >= d)) {
             visible = false;
         }
 
         card.style.display = visible ? 'block' : 'none';
     });
 }
+
 function updateFilterBarHeight() {
     if (window.innerWidth > 768) {
         const container = document.querySelector('.filter-bar-container');
@@ -60,4 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
             toggleArrow.classList.toggle("rotate");
         });
     }
+});
+
+
+document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', applyFilters);
 });

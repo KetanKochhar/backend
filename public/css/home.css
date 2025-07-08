@@ -29,13 +29,6 @@ body {
 }
 
 
-html,
-body {
-    width: 100%;
-    overflow-x: hidden;
-}
-
-
 
 .buttons {
     display: flex;
@@ -267,7 +260,73 @@ body {
     transition: transform 0.3s ease-in-out;
 }
 
+.special-offer-section {
+    background-color: #143109;
+    /* equivalent to Tailwind's yellow-100 */
+    padding: 60px 24px;
+}
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+}
+
+
+.special-offer-text {
+    flex: 1;
+    text-align: center;
+}
+
+
+.special-offer-text h2 {
+    font-size: 2rem;
+    color: white;
+    /* yellow-900 */
+    margin-bottom: 16px;
+    font-weight: bold;
+}
+
+.special-offer-text p {
+    font-size: 1.125rem;
+    color: white;
+    /* yellow-800 */
+    margin-bottom: 20px;
+}
+
+.shop-btn {
+    background-color: #b5bfa1;
+    /* yellow-600 */
+    color: #143109;
+    font-weight: 600;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+.shop-btn:hover {
+    background-color: #9ebb63;
+    /* yellow-700 */
+}
+
+.special-offer-image {
+    flex: 1;
+    text-align: center;
+}
+
+.special-offer-image img {
+    max-width: 100%;
+    justify-self: center;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
 
 
 @media (max-width: 768px) {
@@ -416,6 +475,16 @@ body {
         transform: scale(1.05);
         transition: transform 0.3s ease-in-out;
     }
+
+    .special-offer-text {
+        text-align: left;
+    }
+
+    .special-offer-container {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
 
 @media (max-width: 426px) {
@@ -516,5 +585,15 @@ body {
     .style-box1 p {
         font-size: 10px;
     }
+    .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+.shop-btn {
+    width: 100%;
+}
 
 }
