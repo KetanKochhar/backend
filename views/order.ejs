@@ -323,8 +323,9 @@
           const qty = parseInt(qtyInput.value);
           let bulkDiscountPercent = 0;
 
-          if (qty >= 20) bulkDiscountPercent = 20;
+          if (qty >= 50) bulkDiscountPercent = 20;
           else if (qty >= 10) bulkDiscountPercent = 10;
+          else if (qty >= 100) bulkDiscountPercent = 30;
 
           const bulkDiscountPerItem = basePrice * bulkDiscountPercent / 100;
 
