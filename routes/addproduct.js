@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/shop", async (req, res) => {
   try {
     const products = await dbconnection.getAllProducts(); // fixed
-    res.render("shop", { user: req.session.user, products });
+    res.render("Shop", { user: req.session.user, products });
   } catch (err) {
     console.error("Error fetching products:", err);
     res.status(500).send("Something went wrong.");
