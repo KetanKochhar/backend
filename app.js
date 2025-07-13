@@ -1,94 +1,108 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
-const fs = require('fs');
-const session = require('express-session');
+const fs = require("fs")
+const session = require("express-session");
+
+const app = express();
 
 dotenv.config();
-const app = express();
-const port = process.env.PORT || 3000;
-const MAINTENANCE_MODE = process.env.MAINTENANCE_MODE === 'true';
+const port = process.env.PORT;
+app.get('/maintenance', (req, res) => {
+  res.render('maintenance');
+});
 
-// Set view engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.use((req, res, next) => {
+    return res.redirect('/maintenance');
+});
 
-// Middleware
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json({ limit: '1024mb' }));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+
+
+
+
+
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json({ limit: "1024mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-// Session setup
+
+//creating the sessiona and haldling the sesion for 1day jab tak login rahega user ke pc mein uska account
 app.use(session({
     secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true,
     cookie: {
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        maxAge: 7 * 24 * 60 * 60 * 1000,
         secure: process.env.Secure === "true"
     }
 }));
 
-// Maintenance page
-app.get('/maintenance', (req, res) => {
-    res.render('maintenance');
+app.get("/", (request, response) => {
+    // console.log(request.path);
+    response.render("home", { user: request.session.user });
 });
 
-// Maintenance mode middleware
-app.use((req, res, next) => {
-    if (!MAINTENANCE_MODE) return next();
 
-    const allowedPaths = ['/maintenance'];
-    const isStaticAsset = req.path.startsWith('/css') || req.path.startsWith('/js') || req.path.startsWith('/images') || req.path.startsWith('/fonts');
-
-    if (allowedPaths.includes(req.path) || isStaticAsset) {
-        return next();
-    }
-
-    return res.redirect('/maintenance');
+app.get("/privacy-policy", (request, response) => {
+    // console.log(request.path);
+    response.render("privacyPolicy", { user: request.session.user });
 });
 
-// Core pages
-app.get("/", (req, res) => {
-    res.render("home", { user: req.session.user });
+app.get("/Contact-Us", (request, response) => {
+    // console.log(request.path);
+    response.render("contact", { user: request.session.user });
 });
 
-app.get("/privacy-policy", (req, res) => {
-    res.render("privacyPolicy", { user: req.session.user });
+app.get("/Refund-And-Cancellation-Policy", (request, response) => {
+    // console.log(request.path);
+    response.render("refundAndCancellationPolicy", { user: request.session.user });
 });
 
-app.get("/Contact-Us", (req, res) => {
-    res.render("contact", { user: req.session.user });
+app.get("/Shipping-And-Delivery-Policy", (request, response) => {
+    // console.log(request.path);
+    response.render("shippingAndDeliveryPolicy", { user: request.session.user });
 });
 
-app.get("/Refund-And-Cancellation-Policy", (req, res) => {
-    res.render("refundAndCancellationPolicy", { user: req.session.user });
+app.get("/Terms-And-Conditions", (request, response) => {
+    // console.log(request.path);
+    response.render("termsAndConditions", { user: request.session.user });
 });
 
-app.get("/Shipping-And-Delivery-Policy", (req, res) => {
-    res.render("shippingAndDeliveryPolicy", { user: req.session.user });
+// app.get("/order", (request, response) => {
+//     // console.log(request.path);
+//     response.render("order", { user: request.session.user });
+// });
+
+app.get("/thank-you", (request, response) => {
+    // console.log(request.path);
+    response.render("thank-you", { user: request.session.user });
 });
 
-app.get("/Terms-And-Conditions", (req, res) => {
-    res.render("termsAndConditions", { user: req.session.user });
+app.get("/design-your-tshirt", (request, response) => {
+    response.render("qr");
 });
 
-app.get("/thank-you", (req, res) => {
-    res.render("thank-you", { user: req.session.user });
-});
+// app.get("/product-order", (request, response) => {
+//     response.render("productorder", { user: request.session.user});
+// });
 
-app.get("/design-your-tshirt", (req, res) => {
-    res.render("qr");
-});
-
-// Session setter for dynamic use
 app.post('/set-session', (req, res) => {
     const { key, value } = req.body;
     req.session[key] = value;
     res.json({ message: 'Session set', session: req.session });
 });
 
-// API: Graphics categories
+
+const paymentRoutes = require('./routes/payment');
+app.use('/api/payment', paymentRoutes);
+
+
+
+// api for graphics
 app.get('/api/categories', (req, res) => {
     const dirPath = path.join(__dirname, '/public/images/cloths');
     fs.readdir(dirPath, (err, folders) => {
@@ -96,16 +110,17 @@ app.get('/api/categories', (req, res) => {
             return res.status(500).json({ error: 'Unable to scan directory' });
         }
 
+        // Filter out non-directory items
         const categories = folders.filter(folder => {
             const fullPath = path.join(dirPath, folder);
             return fs.statSync(fullPath).isDirectory();
         });
-
+        // console.log(categories)
         res.json(categories);
     });
 });
 
-// API: SVGs per category
+// Endpoint to get SVG files for a specific category
 app.get('/api/graphics/:category', (req, res) => {
     const category = req.params.category;
     const dirPath = path.join(__dirname, '/public/images/cloths', category);
@@ -119,33 +134,39 @@ app.get('/api/graphics/:category', (req, res) => {
     });
 });
 
-// API: Payment route
-const paymentRoutes = require('./routes/payment');
-app.use('/api/payment', paymentRoutes);
 
-// Feature routes
-const loginroutes = require("./routes/login");
-const profileroutes = require("./routes/profile");
-const addproductroutes = require("./routes/addproduct");
+
+app.use('/admin', require('./routes/admin'));
+
 const productorderroutes = require("./routes/productorder");
-const myordersroutes = require("./routes/myorders");
-const designroutes = require("./routes/design");
-const adminroutes = require("./routes/admin");
+app.use("/", productorderroutes);
 
+
+
+//routes ka use kar raha hoon from dirrent files 
+const loginroutes = require("./routes/login");
+const profileroutes = require("./routes/profile")
+const addproductroutes = require("./routes/addproduct")
+// const productorderroutes = require("./routes/productorder")
+const myordersroutes = require("./routes/myorders")
+const designroutes = require("./routes/design")
+const adminroutes = require("./routes/admin");
+const { request } = require('http');
+
+//sare routes ko call kar raha hoon phele import kia tha 
 app.use("/", loginroutes);
 app.use("/", profileroutes);
 app.use("/", addproductroutes);
-app.use("/", productorderroutes);
+// app.use("/", productorderroutes);
 app.use("/", myordersroutes);
 app.use("/", designroutes);
-app.use("/admin", adminroutes);
+app.use("/", adminroutes);
 
-// 404 page
-app.use((req, res) => {
-    res.status(404).render("nf");
+
+app.use((req, res, next) => {
+  res.status(404).render("nf");
 });
 
-// Start server
 app.listen(port, () => {
-    console.log(`✅ Server running on http://localhost:${port}`);
-});
+    // console.log(`App is running on the 127.0.0.1:${port}`);
+})
