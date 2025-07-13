@@ -34,12 +34,16 @@ app.use(session({
 }));
 
 app.get('/maintenance', (req, res) => {
-  res.render('maintenance');
+    res.render('maintenance');
 });
 
+// This should come **before all other routes**
+// And must skip redirecting /maintenance to itself
 app.use((req, res, next) => {
+    if (req.path === '/maintenance') return next(); // Don't redirect if already on /maintenance
     return res.redirect('/maintenance');
 });
+
 
 app.get("/", (request, response) => {
     // console.log(request.path);
