@@ -273,16 +273,16 @@ body {
     }
 
     .product-card h3 {
-        font-size: 7px;
+        font-size: 9px;
     }
 
     .product-card p {
-        font-size: 5px;
+        font-size: 7px;
     }
 
     .promo-badge {
-        font-size: 10px;
-    margin-left: 25%;
+        font-size: 9px;
+        margin-left: 25%;
 }
 }
 
