@@ -277,12 +277,14 @@ body {
     }
 
     .product-card p {
-        font-size: 7px;
+        font-size: 10px;
     }
 
     .promo-badge {
         font-size: 9px;
+        padding: 3px 7px;
         margin-left: 25%;
+        letter-spacing: 0;
 }
 }
 
