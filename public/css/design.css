@@ -714,6 +714,8 @@ body {
 
 
 .toast {
+    position: fixed;
+    left: 40vw;
     width: 300px;
     background-color: #143109;
     color: #fff;
@@ -722,9 +724,10 @@ body {
     top: 85px;
     font-weight: bold;
     text-align: center;
-    animation: slideDown 3s ease, fadeOut 2s ease 3s;
+    animation: slideDown 0.5s ease, fadeOut 1s ease 20s;
     opacity: 1;
 }
+
 
 @keyframes slideDown {
     from {
@@ -734,7 +737,7 @@ body {
     }
 
     to {
-        transform: translate(0, 85px);
+        transform: translate(0, 0px);
         /* End at normal position */
         opacity: 1;
     }
@@ -933,10 +936,13 @@ body {
     .transparency-panel {
         transform: scale(0.7);
     }
+    .toast {
+    left: 30vw;
 }
 
 @media (max-width: 520px) {
     .toast {
+        left: 10px;
         padding: 10px 19px;
         width: 250px;
         font-size: 12px;
@@ -951,7 +957,7 @@ body {
         }
 
         to {
-            transform: translate(0, 85px);
+            transform: translate(0, 0px);
             /* End at normal position */
             opacity: 1;
         }

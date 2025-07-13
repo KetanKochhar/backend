@@ -389,7 +389,7 @@ document.getElementById('OrderNow').addEventListener('click', function () {
     } else if (!isDesignSaved) {
         showToast("Please save the design first!", "#ab3131");
     } else {
-        showToast("Design ID not found!", "#ab3131");
+        showToast("Save the design again...", "#ab3131");
     }
 });
 
@@ -495,34 +495,36 @@ document.getElementById('OrderNow').addEventListener('click', function () {
     });
 
 
-    let isToastVisible = false; // Track if a toast is already visible
+ let isToastVisible = false;
 
-    function showToast(message, bgColor = '#143109', callback = null) {
-        // If a toast is already visible, remove it immediately and show the new one
-        if (isToastVisible) {
-            const existingToast = document.querySelector('.toast');
-            if (existingToast) {
-                existingToast.remove();
-            }
+function showToast(message, bgColor = '#143109', callback = null) {
+    if (isToastVisible) {
+        const existingToast = document.querySelector('.toast');
+        if (existingToast) {
+            existingToast.remove();
         }
-
-        isToastVisible = true; // Mark the toast as visible
-
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.style.backgroundColor = bgColor;
-        toast.textContent = message;
-
-        const container = document.getElementById('toastContainer');
-        container.appendChild(toast);
-
-        // Hide the toast after 3 seconds
-        setTimeout(() => {
-            toast.remove();
-            isToastVisible = false; // Allow new toasts after the current one is removed
-            if (callback) callback();  // Execute callback (next toast) after the current one is removed
-        }, 2000); // Hide after 3s
     }
+
+    isToastVisible = true;
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.style.backgroundColor = bgColor;
+    toast.textContent = message;
+
+    const container = document.getElementById('toastContainer');
+    container.appendChild(toast);
+
+    // Listen for animationend (when fadeOut completes)
+    toast.addEventListener('animationend', (e) => {
+        if (e.animationName === 'fadeOut') {
+            toast.remove();
+            isToastVisible = false;
+            if (callback) callback();
+        }
+    });
+}
+
 
 
     function drawTshirtBorder(type) {
