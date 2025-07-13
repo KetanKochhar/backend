@@ -33,13 +33,13 @@ app.use(session({
     }
 }));
 
-// app.get('/maintenance', (req, res) => {
-//   res.render('maintenance');
-// });
+app.get('/maintenance', (req, res) => {
+  res.render('maintenance');
+});
 
-// app.use((req, res, next) => {
-//     return res.redirect('/maintenance');
-// });
+app.use((req, res, next) => {
+    return res.redirect('/maintenance');
+});
 
 app.get("/", (request, response) => {
     // console.log(request.path);
