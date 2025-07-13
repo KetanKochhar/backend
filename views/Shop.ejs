@@ -77,7 +77,7 @@
                     <% products.forEach(product=> { %>
                         <div class="product-card" data-gender="<%= product.gender %>" data-price="<%= product.price %>"
                             data-discount="<%= product.discount %>">
-                            <img src="<%= product.front_image %>" alt="<%= product.name %>" />
+                            <img loading="lazy" src="<%= product.front_image %>" alt="<%= product.name %>" />
                             
                             <div class="promo-badge"><%= product.material %></div>
                             <h3><b>CustomWear X <%= product.name %></b></h3>
