@@ -19,11 +19,11 @@ function getsports(color = "white", color1 = "white", stroke = "black") {
 currentTshirtColor = "white";
 currentTshirtColor1 = "white";
 document.addEventListener('DOMContentLoaded', function () {
-    fabric.Object.prototype.toObject = (function(toObject) {
-    return function(propertiesToInclude) {
-        return toObject.call(this, (propertiesToInclude || []).concat(['price', 'customType']));
-    };
-})(fabric.Object.prototype.toObject);
+    fabric.Object.prototype.toObject = (function (toObject) {
+        return function (propertiesToInclude) {
+            return toObject.call(this, (propertiesToInclude || []).concat(['price', 'customType']));
+        };
+    })(fabric.Object.prototype.toObject);
 
     // Initialize the canvas using Fabric.js
     const canvas = new fabric.Canvas('tshirtCanvas', {
@@ -281,11 +281,11 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-const userObjects = canvas.getObjects().filter(obj =>
-    obj !== currentClothing &&
-    obj !== tshirtBorder &&
-    obj.type !== 'sizeLabel'
-);
+        const userObjects = canvas.getObjects().filter(obj =>
+            obj !== currentClothing &&
+            obj !== tshirtBorder &&
+            obj.type !== 'sizeLabel'
+        );
 
         const existingToast = document.querySelector('.toast');
         if (existingToast) existingToast.remove();
@@ -327,7 +327,7 @@ const userObjects = canvas.getObjects().filter(obj =>
             });
         });
     });
-    
+
     function saveDesignToServer() {
         const designnumber = sessionStorage.getItem("designID");
         const uid = sessionStorage.getItem("uid");
@@ -380,18 +380,18 @@ const userObjects = canvas.getObjects().filter(obj =>
     }
 
     // Order Now button
-document.getElementById('OrderNow').addEventListener('click', function () {
-    const savedDesignId = sessionStorage.getItem("designID");
-    // console.log(savedDesignId);
+    document.getElementById('OrderNow').addEventListener('click', function () {
+        const savedDesignId = sessionStorage.getItem("designID");
+        // console.log(savedDesignId);
 
-    if (isDesignSaved && savedDesignId) {
-        window.location.href = `/order/${savedDesignId}`;
-    } else if (!isDesignSaved) {
-        showToast("Please save the design first!", "#ab3131");
-    } else {
-        showToast("Save the design again...", "#ab3131");
-    }
-});
+        if (isDesignSaved && savedDesignId) {
+            window.location.href = `/order/${savedDesignId}`;
+        } else if (!isDesignSaved) {
+            showToast("Please save the design first!", "#ab3131");
+        } else {
+            showToast("Save the design again...", "#ab3131");
+        }
+    });
 
 
 
@@ -495,35 +495,34 @@ document.getElementById('OrderNow').addEventListener('click', function () {
     });
 
 
- let isToastVisible = false;
+    let isToastVisible = false;
 
-function showToast(message, bgColor = '#143109', callback = null) {
-    if (isToastVisible) {
-        const existingToast = document.querySelector('.toast');
-        if (existingToast) {
-            existingToast.remove();
+    function showToast(message, bgColor = '#143109', callback = null) {
+
+        if (isToastVisible) {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
         }
-    }
 
-    isToastVisible = true;
+        isToastVisible = true;
 
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.style.backgroundColor = bgColor;
-    toast.textContent = message;
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.style.backgroundColor = bgColor;
+        toast.textContent = message;
 
-    const container = document.getElementById('toastContainer');
-    container.appendChild(toast);
+        const container = document.getElementById('toastContainer');
+        container.appendChild(toast);
 
-    // Listen for animationend (when fadeOut completes)
-    toast.addEventListener('animationend', (e) => {
-        if (e.animationName === 'fadeOut') {
+        setTimeout(() => {
             toast.remove();
             isToastVisible = false;
             if (callback) callback();
-        }
-    });
-}
+        }, 4000);
+    }
+
 
 
 
@@ -980,19 +979,19 @@ function showToast(message, bgColor = '#143109', callback = null) {
 
 
 
-document.querySelectorAll('.view-button').forEach(btn => {
-    btn.addEventListener('click', function () {
-        if (!isDesignSaved) {
-            showToast("Please save the design first!", "#ab3131");
-            return;
-        }
+    document.querySelectorAll('.view-button').forEach(btn => {
+        btn.addEventListener('click', function () {
+            if (!isDesignSaved) {
+                showToast("Please save the design first!", "#ab3131");
+                return;
+            }
 
-        const activeBtn = document.querySelector('.view-button.active');
-        if (activeBtn) activeBtn.classList.remove('active');
-        this.classList.add('active');
-        loadClothing(this.dataset.type);
+            const activeBtn = document.querySelector('.view-button.active');
+            if (activeBtn) activeBtn.classList.remove('active');
+            this.classList.add('active');
+            loadClothing(this.dataset.type);
+        });
     });
-});
 
 
 
@@ -1229,34 +1228,34 @@ document.querySelectorAll('.view-button').forEach(btn => {
     }
 
     document.addEventListener('keydown', function (e) {
-    if (e.key === 'Delete') {
+        if (e.key === 'Delete') {
+            const activeObj = canvas.getActiveObject();
+            if (activeObj && (activeObj.type === 'textbox' || activeObj.type === 'image')) {
+                removeObjectAndAdjustPrice(activeObj);
+            }
+        }
+    });
+
+    document.getElementById('deleteBtn').addEventListener('click', function () {
         const activeObj = canvas.getActiveObject();
-        if (activeObj && (activeObj.type === 'textbox' || activeObj.type === 'image')) {
+        if (activeObj) {
             removeObjectAndAdjustPrice(activeObj);
         }
+    });
+
+    function removeObjectAndAdjustPrice(obj) {
+        if (!obj) return;
+
+        // Subtract price if it's defined
+        if (typeof obj.price === 'number') {
+            totalPrice -= obj.price;
+            updateTotalPriceDisplay();
+        }
+
+        canvas.remove(obj);
+        canvas.discardActiveObject();
+        canvas.requestRenderAll();
     }
-});
-
-document.getElementById('deleteBtn').addEventListener('click', function () {
-    const activeObj = canvas.getActiveObject();
-    if (activeObj) {
-        removeObjectAndAdjustPrice(activeObj);
-    }
-});
-
-function removeObjectAndAdjustPrice(obj) {
-    if (!obj) return;
-
-    // Subtract price if it's defined
-    if (typeof obj.price === 'number') {
-        totalPrice -= obj.price;
-        updateTotalPriceDisplay();
-    }
-
-    canvas.remove(obj);
-    canvas.discardActiveObject();
-    canvas.requestRenderAll();
-}
 
 
 
@@ -1671,11 +1670,11 @@ function removeObjectAndAdjustPrice(obj) {
             canvas.renderAll();
             totalPrice += 250; // 💰 Add default price to total
             updateTotalPriceDisplay();
-            
+
             updateGraphicSizeDisplay(img); // 👈 Optional: to show size label and recalculate category
         }, { crossOrigin: 'anonymous' });
     }
-    
+
     // Convert pixel dimensions to inches for different t-shirt sizes
     function getGraphicSize(widthInPixels, heightInPixels) {
         return {
@@ -1764,35 +1763,35 @@ function removeObjectAndAdjustPrice(obj) {
     });
 
     document.addEventListener('keydown', function (e) {
-    if (e.key === 'Delete') {
-        const activeObj = canvas.getActiveObject();
-        if (activeObj && (activeObj.type === 'textbox' || activeObj.customType === 'graphics')) {
-            removeObjectAndAdjustPrice(activeObj);
+        if (e.key === 'Delete') {
+            const activeObj = canvas.getActiveObject();
+            if (activeObj && (activeObj.type === 'textbox' || activeObj.customType === 'graphics')) {
+                removeObjectAndAdjustPrice(activeObj);
+            }
         }
-    }
-});
+    });
 
 
     document.getElementById('deleteBtn1').addEventListener('click', function () {
-    const activeObj = canvas.getActiveObject();
-    if (activeObj && activeObj.customType === 'graphics') {
-        removeObjectAndAdjustPrice(activeObj);
+        const activeObj = canvas.getActiveObject();
+        if (activeObj && activeObj.customType === 'graphics') {
+            removeObjectAndAdjustPrice(activeObj);
+        }
+    });
+
+    function removeObjectAndAdjustPrice(obj) {
+        if (!obj) return;
+
+        if (typeof obj.price === 'number') {
+            totalPrice -= obj.price;
+            updateTotalPriceDisplay();
+        }
+
+        canvas.remove(obj);
+        canvas.discardActiveObject();
+        canvas.requestRenderAll();
+
     }
-});
-
-function removeObjectAndAdjustPrice(obj) {
-    if (!obj) return;
-
-    if (typeof obj.price === 'number') {
-        totalPrice -= obj.price;
-        updateTotalPriceDisplay();
-    }
-
-    canvas.remove(obj);
-    canvas.discardActiveObject();
-    canvas.requestRenderAll();
-
-}
 
 
 

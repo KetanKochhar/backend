@@ -724,7 +724,7 @@ body {
     top: 85px;
     font-weight: bold;
     text-align: center;
-    animation: slideDown 0.5s ease, fadeOut 1s ease 20s;
+    animation: slideDown 0.5s ease, fadeOut 1s ease 2s;
     opacity: 1;
 }
 
