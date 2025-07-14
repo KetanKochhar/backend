@@ -8,13 +8,6 @@ const app = express();
 
 dotenv.config();
 const port = process.env.PORT;
-app.get('/maintenance', (req, res) => {
-  res.render('maintenance');
-});
-
-app.use((req, res, next) => {
-    return res.redirect('/maintenance');
-});
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -29,6 +22,13 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json({ limit: "1024mb" }));
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/maintenance', (req, res) => {
+  res.render('maintenance');
+});
+
+app.use((req, res, next) => {
+    return res.redirect('/maintenance');
+});
 
 //creating the sessiona and haldling the sesion for 1day jab tak login rahega user ke pc mein uska account
 app.use(session({
