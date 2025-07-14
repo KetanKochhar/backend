@@ -22,21 +22,18 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json({ limit: "1024mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/maintenance', (req, res) => {
-  res.render('maintenance');
-});
 
 // app.use((req, res, next) => {
-//     return res.redirect('/maintenance');
-// });
-
-//creating the sessiona and haldling the sesion for 1day jab tak login rahega user ke pc mein uska account
-app.use(session({
-    secret: process.env.SECRET_KEY,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+    //     return res.redirect('/maintenance');
+    // });
+    
+    //creating the sessiona and haldling the sesion for 1day jab tak login rahega user ke pc mein uska account
+    app.use(session({
+        secret: process.env.SECRET_KEY,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            maxAge: 7 * 24 * 60 * 60 * 1000,
         secure: process.env.Secure === "true"
     }
 }));
@@ -46,6 +43,9 @@ app.get("/", (request, response) => {
     response.render("home", { user: request.session.user });
 });
 
+app.get('/maintenance', (req, res) => {
+  res.render('maintenance');
+});
 
 app.get("/privacy-policy", (request, response) => {
     // console.log(request.path);
