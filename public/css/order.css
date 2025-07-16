@@ -357,8 +357,6 @@ body {
     }
 }
 
-
-
 @media (max-width: 768px) {
     .order-page {
         flex-direction: column;

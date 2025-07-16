@@ -153,7 +153,8 @@
                     <p class="you-saved" id="youSavedText">You saved ₹<%= product.actual_price - product.price %>
                     </p>
                     <p class="final-price">Subtotal: <span id="finalPrice1">
-                            <%= product.price %> </span>
+                            <%= product.price %>
+                        </span>
                     </p>
                 </div>
                 <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
@@ -222,6 +223,8 @@
                         <span class="label">Subtotal</span>
                         <span class="value total" id="finalPrice">₹<%= product.price %></span>
                     </div>
+
+
 
                     <p class="highlight-savings" id="youSavedText1"
                         style="color: #198754; font-weight: bold; margin: 10px 0 20px;">
@@ -521,7 +524,7 @@
                         });
 
                         const result = await response.json();
-                        console.log(result,"hii")
+                        console.log(result)
 
                         if (result.success) {
                             document.getElementById('successScreen').classList.remove('hidden');
