@@ -20,9 +20,9 @@ app.get('/maintenance', (req, res) => {
   res.render('maintenance');
 });
 
-app.use((req, res, next) => {
-    return res.redirect('/maintenance');
-});
+// app.use((req, res, next) => {
+//     return res.redirect('/maintenance');
+// });
 
 //creating the sessiona and haldling the sesion for 1day jab tak login rahega user ke pc mein uska account
 app.use(session({
