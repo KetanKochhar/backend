@@ -152,11 +152,17 @@ try {
         SELECT id, first_name, last_name, dob, phone_number, email, password, created_at FROM Users;
     `);
 
-    // Step 2: Drop old Users table
-    db.exec(`DROP TABLE Users;`);
+    // Temporarily disable foreign key checks
+    db.pragma('foreign_keys = OFF');
 
-    // Step 3: Rename Users_temp to Users
+    // Drop the original Users table
+    db.exec(`DROP TABLE IF EXISTS Users;`);
+
+    // Rename Users_temp to Users
     db.exec(`ALTER TABLE Users_temp RENAME TO Users;`);
+
+    // Re-enable foreign key checks
+    db.pragma('foreign_keys = ON');
 
     console.log("✅ Users table updated. 'password' is now nullable and 'google_id' added.");
 
