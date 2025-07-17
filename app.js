@@ -18,6 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
+// app.get("/maintenance", (request, response) => {
+//   response.render("maintenance");
+// });
+
 // app.use((req, res, next) => {
 //     return res.redirect('/maintenance');
 // });
@@ -28,7 +32,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: 14 * 24 * 60 * 60 * 1000,
         secure: process.env.Secure === "true"
     }
 }));
@@ -76,11 +80,6 @@ app.get("/thank-you", (request, response) => {
 
 app.get("/design-your-tshirt", (request, response) => {
     response.render("qr");
-});
-
-
-app.get("/maintenance", (request, response) => {
-  response.render("maintenance");
 });
 
 // app.get("/product-order", (request, response) => {
