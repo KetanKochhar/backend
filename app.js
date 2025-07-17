@@ -78,10 +78,6 @@ app.get("/design-your-tshirt", (request, response) => {
     response.render("qr");
 });
 
-app.get("/test", (req, res) => {
-    res.send("Test route is working");
-});
-
 
 app.get("/maintenance", (request, response) => {
   response.render("maintenance");
