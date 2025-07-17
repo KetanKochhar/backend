@@ -120,32 +120,40 @@ router.get("/signup", (request, response) => {
     });
 });
 
-router.post("/signup", async (request, response) => {
-    const { mail, pass, dob } = request.body;
+router.post("/signup", async (req, res) => {
+    const { mail, pass, dob } = req.body;
 
     try {
-        // const hashedPass = await bcrypt.hash(pass, 10);
+        const exists = await dbconnection.checkMailId(mail);
+
+        if (exists) {
+            // Show error if email already registered
+            return res.render("signup", {
+                error: "Email already exists",
+                user: req.session.user,
+                formData: { mail, dob }
+            });
+        }
+
+        // Else continue to OTP flow
         const otp = generateOTP();
 
-        // Save temporarily in session
-        request.session.pendingUser = {
+        req.session.pendingUser = {
             email: mail,
             password: pass,
             dob: dob
         };
 
-        // Save OTP to session instead of DB
-        request.session.otp = otp;
+        req.session.otp = otp;
 
         await sendmail(mail, otp);
 
-        return response.redirect("/otp");
-
+        return res.redirect("/otp");
     } catch (error) {
-        console.error("Signup Error:", error.message);
-        return response.render("signup", {
-            error: error.message,
-            user: request.session.user,
+        console.error("Signup error:", error.message);
+        return res.status(500).render("signup", {
+            error: "Server error. Try again.",
+            user: req.session.user,
             formData: { mail, dob }
         });
     }
@@ -168,30 +176,39 @@ router.post("/otp", async (request, response) => {
     const { otp } = request.body;
     const enteredOTP = Array.isArray(otp) ? otp.join("") : otp;
 
-    if (request.session.otp === enteredOTP && request.session.pendingUser) {
+    const sessionOtp = request.session.otp;
+    const pendingUser = request.session.pendingUser;
+
+    if (enteredOTP === sessionOtp && pendingUser) {
         try {
-            const { email, password, dob } = request.session.pendingUser;
+            const { email, password, dob } = pendingUser;
 
-            // Insert only after OTP is correct
-            const newUserId = await dbconnection.addUser(email, dob, password);
+            // Add user to DB (make sure addUser handles duplicates safely)
+            await dbconnection.addUser(email, dob, password);
 
-            // Clear session temp data
+            // Clear session data after successful registration
             delete request.session.pendingUser;
             delete request.session.otp;
 
             return response.redirect("/login");
+
         } catch (err) {
-            console.error("DB insert error after OTP:", err);
-            return response.render("otp", { error: true, user: null, mail: null });
+            console.error("DB insert error after OTP verification:", err);
+            return response.render("otp", {
+                error: "Failed to create user. Please try again.",
+                user: null,
+                mail: pendingUser.email
+            });
         }
     } else {
         return response.render("otp", {
-            error: true,
+            error: "Invalid OTP. Please try again.",
             user: null,
-            mail: request.session.pendingUser?.email || ""
+            mail: pendingUser?.email || ""
         });
     }
 });
+
 
 // ---------------- LOGIN ----------------
 router.get("/login", (request, response) => {

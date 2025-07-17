@@ -81,6 +81,32 @@
 
 
         <script>
+                // Password Match Validation
+    const form = document.querySelector('form');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm-password');
+
+    form.addEventListener('submit', function (e) {
+        if (passwordInput.value.trim() === '' || confirmPasswordInput.value.trim() === '') {
+            e.preventDefault();
+            errorToast.textContent = 'Both password fields are required.';
+            errorToast.style.display = 'block';
+            setTimeout(() => {
+                errorToast.style.display = 'none';
+            }, 5000);
+            return;
+        }
+
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            e.preventDefault(); // Stop form submission
+            errorToast.textContent = 'Both password field do not match.';
+            errorToast.style.display = 'block';
+            setTimeout(() => {
+                errorToast.style.display = 'none';
+            }, 5000);
+        }
+    });
+
             // Check if there is an error message
             const errorMessage = document.getElementById('error-message');
             const errorToast = document.getElementById('error-toast');
