@@ -76,7 +76,7 @@ router.get('/promo/:code', (req, res) => {
     try {
       const promo = db.prepare(`
         SELECT * FROM Promo
-        WHERE code = ? AND uses > 0 AND DATE(vaild_till) >= DATE('now')
+        WHERE code = ? AND uses > 0 AND DATE(valid_till) >= DATE('now')
       `).get(code);
   
       if (!promo) {

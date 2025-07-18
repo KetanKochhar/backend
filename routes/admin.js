@@ -54,7 +54,7 @@ router.post('/add-promo', (req, res) => {
 
   try {
     const stmt = db.prepare(`
-      INSERT INTO Promo (code, discount, uses, vaild_till)
+      INSERT INTO Promo (code, discount, uses, valid_till)
       VALUES (?, ?, ?, ?)
     `);
     console.log(valid_till)

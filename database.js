@@ -130,5 +130,7 @@ db.exec(`
     );
 `);
 
+db.prepare(`ALTER TABLE Promo ADD COLUMN valid_till DATE`).run();
+
 
 module.exports = db;
