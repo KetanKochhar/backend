@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const path = require('path');
 const fs = require("fs")
 const session = require("express-session");
+const passport = require("./passport"); // your passport file path
+
 
 const app = express();
 
@@ -138,7 +140,7 @@ const productorderroutes = require("./routes/productorder");
 app.use("/", productorderroutes);
 
 
-
+const authRoutes = require("./routes/auth"); // your auth route file
 //routes ka use kar raha hoon from dirrent files 
 const loginroutes = require("./routes/login");
 const profileroutes = require("./routes/profile")
@@ -157,11 +159,16 @@ app.use("/", addproductroutes);
 app.use("/", myordersroutes);
 app.use("/", designroutes);
 app.use("/", adminroutes);
+app.use("/", authRoutes);
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use((req, res, next) => {
   res.status(404).render("nf");
 });
+
+
 
 app.listen(port, () => {
     // console.log(`App is running on the 127.0.0.1:${port}`);
