@@ -165,6 +165,16 @@
                 ₹<%= design.price + finalPrice %>
               </span></p>
           </div>
+<div class="promo-code-section">
+  <h3>Have a promo code?</h3>
+  <div>
+    <input type="text" id="promoCodeInput" placeholder="Enter promo code">
+    <button type="button" id="applyPromoBtn">Apply</button>
+  </div>
+  <p id="promoStatusMessage" style="margin-top: 5px;"></p>
+</div>
+
+
           <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
           <div class="size-selector">
             <h3>Select Size</h3>
@@ -303,6 +313,18 @@
         let total_price = 0;
         let quantity = 0
         let basePrice1 = 0;
+        let promoDiscount = 0;
+        let promoCodeApplied = null;
+        let  applyPromoBtn = document.getElementById("applyPromoBtn")
+        let  promoCodeInput = document.getElementById("promoCodeInput")
+        let  promoStatusMessage = document.getElementById("promoStatusMessage")
+
+        function updateTotal() {
+          let total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+          const discountedTotal = total - (total * promoDiscount / 100);
+          document.getElementById("total").textContent = discountedTotal.toFixed(2);
+        }
+
 
         if (<%= design.type === "sports" %>) {
           basePrice1 = 220;
@@ -320,49 +342,49 @@
         const basePrice = basePrice1;
 
         function updatePricing() {
-          const qty = parseInt(qtyInput.value);
-          let bulkDiscountPercent = 0;
+  const qty = parseInt(qtyInput.value);
+  let bulkDiscountPercent = 0;
 
-          if (qty >= 50) bulkDiscountPercent = 20;
-          else if (qty >= 10) bulkDiscountPercent = 10;
-          else if (qty >= 100) bulkDiscountPercent = 30;
+  if      (qty >= 100) bulkDiscountPercent = 30;
+  else if (qty >=  50) bulkDiscountPercent = 20;
+  else if (qty >=  10) bulkDiscountPercent = 10;
 
-          const bulkDiscountPerItem = basePrice * bulkDiscountPercent / 100;
+  const bulkDiscPerItem = basePrice * bulkDiscountPercent / 100;
+  const baseWithDesign = basePrice + designPrice;
+  const promoDiscPerItem = promoDiscount ? baseWithDesign * promoDiscount / 100 : 0;
 
-          const finalPerItemPrice = (basePrice + designPrice) - bulkDiscountPerItem;
-          const totalPrice = Math.round(finalPerItemPrice * qty);
+  const finalPriceEach = baseWithDesign - bulkDiscPerItem - promoDiscPerItem;
+  const totalPrice = Math.round(finalPriceEach * qty);
 
-          const totalBulkDiscount = bulkDiscountPerItem * qty;
-          const totalSaved = totalBulkDiscount;
+  const totalDisc = (bulkDiscPerItem + promoDiscPerItem) * qty;
 
-          const tshirtPrice = basePrice * qty;
+  total_price = totalPrice;
 
-          total_price = totalPrice;
-          quantity = qty;
-          if (totalBulkDiscount > 0) {
-            bulkDiscountRow.style.display = 'flex';
-          }
-          else {
-            bulkDiscountRow.style.display = 'none';
-          }
+  if (bulkDiscountPercent || promoDiscount) {
+    bulkDiscountRow.style.display = 'flex';
+  } else {
+    bulkDiscountRow.style.display = 'none';
+  }
 
-          finalPriceDisplay1.textContent = `₹${totalPrice}`;
-          finalPriceDisplay.textContent = `₹${totalPrice}`;
-          tshirtPricetext.textContent = `₹${tshirtPrice}`;
-          designPricetext.textContent = `₹${designPrice * qty}`;
-          discountInfo.textContent = bulkDiscountPercent > 0
-            ? `🎉 ${bulkDiscountPercent}% bulk discount applied`
-            : "";
+  finalPriceDisplay1.textContent = `₹${totalPrice}`;
+  finalPriceDisplay.textContent = `₹${totalPrice}`;
+  tshirtPricetext.textContent = `₹${basePrice * qty}`;
+  designPricetext.textContent = `₹${designPrice * qty}`;
 
-          youSavedText.textContent =
-            `You saved ₹${Math.round(totalSaved)}`;
-          youSavedText1.textContent =
-            `You saved ₹${Math.round(totalSaved)}`;
-          bulkDiscountAmount.textContent =
-            `- ₹${Math.round(totalBulkDiscount)}`;
-          quantityText.textContent =
-            qty;
-        }
+  let discountLabel = "";
+  if (bulkDiscountPercent) discountLabel += `🎉 ${bulkDiscountPercent}% bulk `;
+  if (promoDiscount) {
+    if (discountLabel) discountLabel += " + ";
+    discountLabel += `🎁 ${promoDiscount}% promo`;
+  }
+  discountInfo.textContent = discountLabel;
+  youSavedText.textContent = `You saved ₹${Math.round(totalDisc)}`;
+  youSavedText1.textContent = `You saved ₹${Math.round(totalDisc)}`;
+  bulkDiscountAmount.textContent = `- ₹${Math.round(totalDisc)}`;
+  quantityText.textContent = qty;
+}
+
+
 
         increaseBtn.addEventListener("click", () => {
           qtyInput.value = parseInt(qtyInput.value) + 1;
@@ -614,7 +636,49 @@
         applyResponsiveImageHeight();
         window.addEventListener("resize", applyResponsiveImageHeight);
 
+
       </script>
+      <script>
+document.addEventListener("DOMContentLoaded", () => {
+  applyPromoBtn.addEventListener("click", async () => {
+  const code = promoCodeInput.value.trim();
+  promoStatusMessage.style.color = "#333";
+  // alert(code)
+
+  if (!code) {
+    promoStatusMessage.textContent = "Please enter a promo code.";
+    promoDiscount = 0;
+    updatePricing();
+    return;
+  }
+
+  try {
+    const res = await fetch(`/promo/${encodeURIComponent(code)}`);
+    const data = await res.json();
+    console.log(data['success'])
+    if (data.success) {
+      promoDiscount = data.promo.discount;
+      promoCodeApplied = code.toUpperCase();
+      promoStatusMessage.style.color = "green";
+      promoStatusMessage.textContent = `Applied: ${promoDiscount}% off with "${promoCodeApplied}"`;
+    } else {
+      promoDiscount = 0;
+      promoCodeApplied = null;
+      promoStatusMessage.style.color = "red";
+      promoStatusMessage.textContent = data.message || "Invalid promo code";
+    }
+  } catch (_) {
+    promoDiscount = 0;
+    promoCodeApplied = null;
+    promoStatusMessage.style.color = "red";
+    promoStatusMessage.textContent = "Error verifying promo code.";
+  }
+
+  updatePricing();
+});
+
+});
+</script>
 
 </body>
 

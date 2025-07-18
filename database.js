@@ -78,7 +78,8 @@ db.exec(`
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         code TEXT NOT NULL,
         discount INTEGER NOT NULL,
-        uses INTEGER NOT NULL
+        uses INTEGER NOT NULL,
+        vaild_till DATE NOT NULL
     );
     CREATE TABLE IF NOT EXISTS Addresses (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

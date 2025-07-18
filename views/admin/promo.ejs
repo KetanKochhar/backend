@@ -3,21 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADD the PROMO code </title>
+    <title>Add Promo Code</title>
 </head>
 <body>
-    <form action="/add-promo" method="post">
-        <input type="text" name="code" id="code" placeholder="Enter the promo code">
-        <input type="number" name="dis" id="dis" placeholder="Enter the discount percentage">
-        <input type="number" name="uses" id="uses" placeholder="Enter the max number of uses for this coupon">
-        <input type="submit" value="ADD">
+    <h1>Add a New Promo Code</h1>
+    <form action="/add-promo" method="POST">
+        <label for="code">Promo Code:</label>
+        <input type="text" name="code" id="code" placeholder="e.g. SUMMER10" required>
+
+        <label for="dis">Discount %:</label>
+        <input type="number" name="dis" id="dis" placeholder="e.g. 10" min="1" max="100" required>
+
+        <label for="uses">Max Uses:</label>
+        <input type="number" name="uses" id="uses" placeholder="e.g. 50" min="1" required>
+
+        <label for="valid_till">Valid Till:</label>
+        <input type="date" name="valid_till" id="valid_till" required>
+
+        <input type="submit" value="Add Promo Code">
     </form>
-    <% promo.forEach(promo  => { %>
-        <div class="data">
-            <% if (promo.uses != 0) { %>
-                <p><%= promo.code %> <%= promo.discount %> <%= promo.uses %></p>
-            <% } %>
-        </div>
+
+    <h2>Active Promo Codes</h2>
+    <% promo.forEach(promo => { %>
+        <% if (promo.uses > 0) { %>
+            <div class="promo">
+                <p>
+                    <strong>Code:</strong> <%= promo.code %> |
+                    <strong>Discount:</strong> <%= promo.discount %>% |
+                    <strong>Uses Left:</strong> <%= promo.uses %> |
+                    <strong>Valid Till:</strong> <%= promo.vaild_till %>
+                </p>
+            </div>
+        <% } %>
     <% }) %>
 </body>
 </html>

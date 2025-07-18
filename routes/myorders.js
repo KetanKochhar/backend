@@ -1,5 +1,7 @@
 const express = require('express');
 const auth = require('../utils/auth');
+const sqlite3 = require('better-sqlite3');
+const db = new sqlite3('database/customwear.db');
 const dbconnection = require("../utils/db")
 
 const router = express.Router();
@@ -68,4 +70,29 @@ router.get('/myorders', auth.isAuthenticated, async (req, res) => {
     }
 });
 
+router.get('/promo/:code', (req, res) => {
+    const code = req.params.code.toUpperCase();
+  
+    try {
+      const promo = db.prepare(`
+        SELECT * FROM Promo
+        WHERE code = ? AND uses > 0 AND DATE(vaild_till) >= DATE('now')
+      `).get(code);
+  
+      if (!promo) {
+        return res.status(404).json({ success: false, message: 'Invalid or expired promo code' });
+      }
+  
+      res.json({
+        success: true,
+        promo: {
+          code: promo.code,
+          discount: promo.discount
+        }
+      });
+    } catch (err) {
+      console.error('Error checking promo code:', err);
+      res.status(500).json({ success: false, message: 'Server error' });
+    }
+  });
 module.exports = router;

@@ -45,11 +45,34 @@ router.get("/admin/promo", auth.isAdmin, async (req, res) => {
   res.render("admin/promo", { promo });
 });
 
-router.post("/add-promo", (req, res) => {
-  const { code, dis, uses } = req.body;
-  dbconnection.addpromo(code, dis, uses);
-  res.redirect("/admin");
+router.post('/add-promo', (req, res) => {
+  const { code, dis, uses, valid_till } = req.body;
+
+  if (!code || !dis || !uses || !valid_till) {
+    return res.status(400).send("Missing required fields");
+  }
+
+  try {
+    const stmt = db.prepare(`
+      INSERT INTO Promo (code, discount, uses, vaild_till)
+      VALUES (?, ?, ?, ?)
+    `);
+    console.log(valid_till)
+
+    stmt.run(
+      code.toUpperCase(),
+      parseInt(dis),
+      parseInt(uses),
+      valid_till // Must be in 'YYYY-MM-DD' format from <input type="date">
+    );
+
+    res.redirect('/admin');
+  } catch (err) {
+    console.error("Failed to add promo code:", err);
+    res.status(500).send("Server error");
+  }
 });
+
 
 // Order Management
 router.get('/admin/order', auth.isAdmin, async (req, res) => {
