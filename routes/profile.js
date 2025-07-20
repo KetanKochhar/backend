@@ -83,17 +83,29 @@ router.get('/order/:designId', auth.isAuthenticated, async (req, res) => {
       price: design.price
     };
 
+    // 🛑 If address not found, redirect back with toast flag
+    if (!user.name || !user.phone_number || !address || !address.address || !address.pincode) {
+      return res.render('order', {
+        user: user,         // ✅ Use the full DB user object
+        address: address,
+        design: designData,
+        showShippingToast: true
+      });
+    }
     res.render('order', {
       user: user,         // ✅ Use the full DB user object
       address: address,
-      design: designData
+      design: designData,
+      showShippingToast: false
     });
+
 
   } catch (error) {
     console.error("Error loading order page:", error);
     res.status(500).send("Internal Server Error hai bhai");
   }
 });
+
 
 router.post('/confirm-order', async (req, res) => {
   try {
@@ -287,7 +299,7 @@ router.delete('/api/delete-design/:id', async (req, res) => {
 
   try {
     const deleted = await dbconnection.deleteDesignById(id);
-    
+
     if (deleted.deletedCount === 0) {
       return res.status(404).json({ error: 'Design not found' });
     }

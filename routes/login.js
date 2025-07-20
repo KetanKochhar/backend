@@ -121,7 +121,7 @@ router.get("/signup", (request, response) => {
 });
 
 router.post("/signup", async (req, res) => {
-    const { mail, pass, dob } = req.body;
+    const { mail, pass, lastname, firstname } = req.body;
 
     try {
         const exists = await dbconnection.checkMailId(mail);
@@ -131,7 +131,7 @@ router.post("/signup", async (req, res) => {
             return res.render("signup", {
                 error: "Email already exists",
                 user: req.session.user,
-                formData: { mail, dob }
+                formData: { mail, lastname, firstname }
             });
         }
 
@@ -141,7 +141,8 @@ router.post("/signup", async (req, res) => {
         req.session.pendingUser = {
             email: mail,
             password: pass,
-            dob: dob
+            lastname: lastname,
+            firstname: firstname
         };
 
         req.session.otp = otp;
@@ -154,7 +155,7 @@ router.post("/signup", async (req, res) => {
         return res.status(500).render("signup", {
             error: "Server error. Try again.",
             user: req.session.user,
-            formData: { mail, dob }
+            formData: { mail, lastname, firstname }
         });
     }
 });
@@ -181,10 +182,10 @@ router.post("/otp", async (request, response) => {
 
     if (enteredOTP === sessionOtp && pendingUser) {
         try {
-            const { email, password, dob } = pendingUser;
+            const { email, password, lastname, firstname } = pendingUser;
 
             // Add user to DB (make sure addUser handles duplicates safely)
-            await dbconnection.addUser(email, dob, password);
+            await dbconnection.addUser(email, password, lastname, firstname);
 
             // Clear session data after successful registration
             delete request.session.pendingUser;

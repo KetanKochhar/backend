@@ -8,22 +8,32 @@ router.get('/porder-now/:id', async (req, res) => {
     if (!user) {
         return res.redirect('/login');
     }
-
+    
     try {
         const productId = req.params.id;
-
+        
         const product = await dbconnection.getProductById(productId); // Returns one product
         const user = await dbconnection.getUserByEmail(req.session.email);
         const address = await dbconnection.GetAddress(user.id);
-
+        
         if (!product) {
             return res.status(404).send("Product not found");
         }
-
+        
+        // 🛑 If address not found, redirect back with toast flag
+        if (!user.name || !user.phone_number || !address || !address.address || !address.pincode) {
+            return res.render('productorder', {
+                user: user,
+                product: product,
+                address: address,
+                showShippingToast: true
+            });
+        }
         res.render("productorder", {
             user: user,
             product: product,
-            address: address
+            address: address,
+            showShippingToast: false
         });
     } catch (err) {
         console.error("Error loading order page:", err);

@@ -157,14 +157,17 @@
                         </span>
                     </p>
                 </div>
-                <div class="promo-code-section">
-                    <h3>Have a promo code?</h3>
-                    <div>
-                      <input type="text" id="promoCodeInput" placeholder="Enter promo code">
-                      <button type="button" id="applyPromoBtn">Apply</button>
+                <!-- <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
+                <center>
+                    <div class="promo-code-section">
+                        <h3>Have a promo code?</h3>
+                        <div>
+                            <input type="text" id="promoCodeInput" placeholder="Enter promo code">
+                            <button type="button" id="applyPromoBtn">Apply</button>
+                        </div>
+                        <p id="promoStatusMessage" style="margin-top: 5px;"></p>
                     </div>
-                    <p id="promoStatusMessage" style="margin-top: 5px;"></p>
-                  </div>
+                </center> -->
                 <hr style="border: none; height: 2px; background-color: #163109; margin: 20px 0 20px" />
                 <div class="size-selector">
                     <h3>Select Size</h3>
@@ -220,6 +223,11 @@
                         <span class="value discount" id="bulkDiscountAmount">- ₹0</span>
                     </div>
 
+                    <div class="summary-item" id="promoDiscountRow" style="display: none">
+                        <span class="label">Promo Discount</span>
+                        <span class="value discount" id="promoDiscountAmount">- ₹0</span>
+                    </div>
+
                     <div class="summary-item">
                         <span class="label">Delivery</span>
                         <span class="value delivery">FREE</span>
@@ -239,13 +247,20 @@
                         <!-- Will be updated by JS -->
                     </p>
 
-                    <button class="pay-button">Order Now</button>
+                    <% if (showShippingToast) { %>
+                        <!-- Button shown when shipping info is missing -->
+                        <button id="disabledOrderBtn" class="pay-button1" style="background-color: #ccc;">Order
+                            Now</button>
+                        <% } else { %>
+                            <!-- Real Order button shown when shipping info is present -->
+                            <button id="activeOrderBtn" class="pay-button">Order Now</button>
+                            <% } %>
 
-                    <p class="summary-terms">
-                        By placing this order, you agree to our<br />
-                        <a href="/privacy-policy">Privacy Policy</a> and
-                        <a href="/Terms-And-Conditions">Terms & Conditions</a>.
-                    </p>
+                                <p class="summary-terms">
+                                    By placing this order, you agree to our<br />
+                                    <a href="/privacy-policy">Privacy Policy</a> and
+                                    <a href="/Terms-And-Conditions">Terms & Conditions</a>.
+                                </p>
                 </div>
 
             </div>
@@ -291,6 +306,7 @@
                 const youSavedText = document.getElementById("youSavedText");
                 const youSavedText1 = document.getElementById("youSavedText1");
                 const bulkDiscountAmount = document.getElementById("bulkDiscountAmount");
+                const promoDiscountAmount = document.getElementById("promoDiscountAmount");
                 const baseDiscountAmount = document.getElementById("baseDiscountAmount");
                 const bulkDiscountRow = document.getElementById("bulkDiscountRow");
                 const quantityText = document.getElementById("quantityText");
@@ -298,64 +314,125 @@
                 let total_price = 0;
                 let quantity = 0
                 let promoDiscount = 0;
-        let promoCodeApplied = null;
-        let  applyPromoBtn = document.getElementById("applyPromoBtn")
-        let  promoCodeInput = document.getElementById("promoCodeInput")
-        let  promoStatusMessage = document.getElementById("promoStatusMessage")
+                let promoCodeApplied = null;
+                let applyPromoBtn = document.getElementById("applyPromoBtn")
+                let promoCodeInput = document.getElementById("promoCodeInput")
+                let promoStatusMessage = document.getElementById("promoStatusMessage")
 
-        function updateTotal() {
-          let total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-          const discountedTotal = total - (total * promoDiscount / 100);
-          document.getElementById("total").textContent = discountedTotal.toFixed(2);
-        }
+                function updateTotal() {
+                    let total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                    const discountedTotal = total - (total * promoDiscount / 100);
+                    document.getElementById("total").textContent = discountedTotal.toFixed(2);
+                }
 
 
                 const actualPrice = <%= product.actual_price %>; // MRP
                 const basePrice = <%= product.price %>; // After normal discount
 
                 function updatePricing() {
-  const qty = parseInt(qtyInput.value);
-  let bulkDiscountPercent = 0;
+                    const qty = parseInt(qtyInput.value);
+                    let bulkDiscountPercent = 0;
 
-  if      (qty >= 100) bulkDiscountPercent = 30;
-  else if (qty >=  50) bulkDiscountPercent = 20;
-  else if (qty >=  10) bulkDiscountPercent = 10;
+                    if (qty >= 100) bulkDiscountPercent = 30;
+                    else if (qty >= 50) bulkDiscountPercent = 20;
+                    else if (qty >= 10) bulkDiscountPercent = 10;
 
-  const bulkDiscPerItem = basePrice * bulkDiscountPercent / 100;
-  const baseWithDesign = basePrice + designPrice;
-  const promoDiscPerItem = promoDiscount ? baseWithDesign * promoDiscount / 100 : 0;
+                    const baseDiscountPerItem = actualPrice - basePrice;
+                    const bulkDiscountPerItem = basePrice * bulkDiscountPercent / 100;
+                    const promoDiscountPerItem = promoDiscount ? baseDiscountPerItem * promoDiscount / 100 : 0;
+                    console.log(promoDiscountPerItem);
 
-  const finalPriceEach = baseWithDesign - bulkDiscPerItem - promoDiscPerItem;
-  const totalPrice = Math.round(finalPriceEach * qty);
+                    const finalPerItemPrice = basePrice - bulkDiscountPerItem - promoDiscountPerItem;
+                    const mrp = Math.round(actualPrice * qty);
+                    const totalPrice = Math.round(finalPerItemPrice * qty);
 
-  const totalDisc = (bulkDiscPerItem + promoDiscPerItem) * qty;
+                    const totalBaseDiscount = baseDiscountPerItem * qty;
+                    const totalBulkDiscount = bulkDiscountPerItem * qty;
+                    const totalPromoDiscount = promoDiscountPerItem * qty;
+                    const totalSaved = totalBaseDiscount + totalBulkDiscount + totalPromoDiscount;
 
-  total_price = totalPrice;
+                    total_price = totalPrice;
+                    quantity = qty;
 
-  if (bulkDiscountPercent || promoDiscount) {
-    bulkDiscountRow.style.display = 'flex';
-  } else {
-    bulkDiscountRow.style.display = 'none';
-  }
+                    if (totalBulkDiscount > 0) {
+                        bulkDiscountRow.style.display = 'flex';
+                    }
+                    else {
+                        bulkDiscountRow.style.display = 'none';
+                    }
+
+                    if (promoDiscount) {
+                        promoDiscountRow.style.display = 'flex';
+                    }
+                    else {
+                        promoDiscountRow.style.display = 'none';
+                    }
 
 
-  finalPriceDisplay1.textContent = `₹${totalPrice}`;
-  finalPriceDisplay.textContent = `₹${totalPrice}`;
-  tshirtPricetext.textContent = `₹${basePrice * qty}`;
-  designPricetext.textContent = `₹${designPrice * qty}`;
 
-  let discountLabel = "";
-  if (bulkDiscountPercent) discountLabel += `🎉 ${bulkDiscountPercent}% bulk `;
-  if (promoDiscount) {
-    if (discountLabel) discountLabel += " + ";
-    discountLabel += `🎁 ${promoDiscount}% promo`;
-  }
-  discountInfo.textContent = discountLabel;
-  youSavedText.textContent = `You saved ₹${Math.round(totalDisc)}`;
-  youSavedText1.textContent = `You saved ₹${Math.round(totalDisc)}`;
-  bulkDiscountAmount.textContent = `- ₹${Math.round(totalDisc)}`;
-  quantityText.textContent = qty;
-}
+
+                    finalPriceDisplay1.textContent = `₹${totalPrice}`;
+                    finalPriceDisplay.textContent = `₹${totalPrice}`;
+                    let discountLabel = "";
+                    if (bulkDiscountPercent) discountLabel += `🎉 ${bulkDiscountPercent}% bulk `;
+                    if (promoDiscount) {
+                        if (discountLabel) discountLabel += " + ";
+                        discountLabel += `🎁 ${promoDiscount}% promo`;
+                    }
+                    discountInfo.textContent = bulkDiscountPercent > 0
+                        ? `🎉 ${bulkDiscountPercent}% bulk discount applied`
+                        : "";
+
+                    youSavedText.textContent =
+                        `You saved ₹${Math.round(totalSaved)}`;
+                    youSavedText1.textContent =
+                        `You saved ₹${Math.round(totalSaved)}`;
+                    bulkDiscountAmount.textContent =
+                        `- ₹${Math.round(totalBulkDiscount)}`;
+                    quantityText.textContent =
+                        qty;
+                    baseDiscountAmount.textContent =
+                        `- ₹${Math.round(totalBaseDiscount)}`;
+                    promoDiscountAmount.textContent =
+                        `- ₹${Math.round(totalPromoDiscount)}`;
+                    MRP.textContent =
+                        `₹${Math.round(mrp)}`;
+
+                }
+                const disabledOrderBtn = document.getElementById("disabledOrderBtn");
+                const activeOrderBtn = document.getElementById("activeOrderBtn");
+
+                if (disabledOrderBtn) {
+                    disabledOrderBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        const toast = document.createElement("div");
+                        toast.innerHTML = `
+                            <div style="
+                            position: fixed;
+                            top: 20px;
+                            right: 20px;
+                            background-color: #ffc107;
+                            color: #000;
+                            padding: 16px 24px;
+                            border-radius: 8px;
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+                            z-index: 9999;
+                            font-family: Poppins, sans-serif;
+                            font-size: 15px;
+                            ">
+                            🚫 Please complete your <b>Shipping Info</b> before placing an order.
+                            <br><br>
+                            <a href="/profile" style="color: blue; font-weight: bold; text-decoration: underline;">
+                                Go to Profile
+                            </a>
+                            </div>
+                        `;
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.remove(), 7000);
+                    });
+                }
+
+
 
 
                 increaseBtn.addEventListener("click", () => {
@@ -582,48 +659,48 @@
                 document.getElementById('shippingToggle').classList.add('rotate');
 
             </script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-      applyPromoBtn.addEventListener("click", async () => {
-      const code = promoCodeInput.value.trim();
-      promoStatusMessage.style.color = "#333";
-      // alert(code)
-    
-      if (!code) {
-        promoStatusMessage.textContent = "Please enter a promo code.";
-        promoDiscount = 0;
-        updatePricing();
-        return;
-      }
-    
-      try {
-        const res = await fetch(`/promo/${encodeURIComponent(code)}`);
-        const data = await res.json();
-        console.log(data['success'])
-        if (data.success) {
-          promoDiscount = data.promo.discount;
-          promoCodeApplied = code.toUpperCase();
-          promoStatusMessage.style.color = "green";
-          promoStatusMessage.textContent = `Applied: ${promoDiscount}% off with "${promoCodeApplied}"`;
-        } else {
-          promoDiscount = 0;
-          promoCodeApplied = null;
-          promoStatusMessage.style.color = "red";
-          promoStatusMessage.textContent = data.message || "Invalid promo code";
-        }
-      } catch (_) {
-        promoDiscount = 0;
-        promoCodeApplied = null;
-        promoStatusMessage.style.color = "red";
-        promoStatusMessage.textContent = "Error verifying promo code.";
-      }
-    
-      updatePricing();
-    });
-    
-    });
-    </script>
-    
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    applyPromoBtn.addEventListener("click", async () => {
+                        const code = promoCodeInput.value.trim();
+                        promoStatusMessage.style.color = "#333";
+                        // alert(code)
+
+                        if (!code) {
+                            promoStatusMessage.textContent = "Please enter a promo code.";
+                            promoDiscount = 0;
+                            updatePricing();
+                            return;
+                        }
+
+                        try {
+                            const res = await fetch(`/promo/${encodeURIComponent(code)}`);
+                            const data = await res.json();
+                            console.log(data['success'])
+                            if (data.success) {
+                                promoDiscount = data.promo.discount;
+                                promoCodeApplied = code.toUpperCase();
+                                promoStatusMessage.style.color = "green";
+                                promoStatusMessage.textContent = `Applied: ${promoDiscount}% off with "${promoCodeApplied}"`;
+                            } else {
+                                promoDiscount = 0;
+                                promoCodeApplied = null;
+                                promoStatusMessage.style.color = "red";
+                                promoStatusMessage.textContent = data.message || "Invalid promo code";
+                            }
+                        } catch (_) {
+                            promoDiscount = 0;
+                            promoCodeApplied = null;
+                            promoStatusMessage.style.color = "red";
+                            promoStatusMessage.textContent = "Error verifying promo code.";
+                        }
+
+                        updatePricing();
+                    });
+
+                });
+            </script>
+
 </body>
 
 </html>
