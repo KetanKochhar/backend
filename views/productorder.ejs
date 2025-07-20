@@ -247,7 +247,7 @@
                         <!-- Will be updated by JS -->
                     </p>
 
-                    <% if (showShippingToast) { %>
+                    <% if (typeof showShippingToast !== 'undefined' && showShippingToast) { %>
                         <!-- Button shown when shipping info is missing -->
                         <button id="disabledOrderBtn" class="pay-button1" style="background-color: #ccc;">Order
                             Now</button>
