@@ -83,8 +83,10 @@ router.get('/order/:designId', auth.isAuthenticated, async (req, res) => {
       price: design.price
     };
 
+    const showShippingToast = user.last_name && user.first_name && user.phone_number && address;
+
     // 🛑 If address not found, redirect back with toast flag
-    if (!user.name || !user.phone_number || !address || !address.address || !address.pincode) {
+    if (!showShippingToast) {
       return res.render('order', {
         user: user,         // ✅ Use the full DB user object
         address: address,
