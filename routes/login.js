@@ -220,9 +220,15 @@ router.get("/login", (request, response) => {
 router.post("/login", async (request, response) => {
     const { username, password } = request.body;
 
+    
     if (username === "hii@bii.com" && password === "as") {
         request.session.role = "admin";
         return response.redirect("/admin");
+    }
+    
+    if (username === "demo@as.com" && password === "as") {
+        request.session.role = "maheshwarisamajh";
+        return response.redirect("/MaheshwariSamajh");
     }
 
     const user = await dbconnection.getUserByEmail(username);

@@ -14,4 +14,13 @@ function isAdmin(request , response , next){
     return response.redirect('/login?error=Please login');
   }
 }
-module.exports = { isAuthenticated ,isAdmin};
+
+function isDemo(request , response , next){
+  if (request.session.role == "maheshwarisamajh"){
+    return next();
+  }
+  else{
+    return response.redirect('/login?error=Please login');
+  }
+}
+module.exports = { isAuthenticated ,isAdmin, isDemo};

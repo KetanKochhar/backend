@@ -135,6 +135,9 @@ app.get('/api/graphics/:category', (req, res) => {
 
 
 app.use('/admin', require('./routes/admin'));
+app.use("/maheshwarisamajh", require("./routes/MaheshwariSamajh"));
+
+
 
 const productorderroutes = require("./routes/productorder");
 app.use("/", productorderroutes);
@@ -149,6 +152,7 @@ const addproductroutes = require("./routes/addproduct")
 const myordersroutes = require("./routes/myorders")
 const designroutes = require("./routes/design")
 const adminroutes = require("./routes/admin");
+const maheshwarisamajhroutes = require("./routes/MaheshwariSamajh");
 const { request } = require('http');
 
 //sare routes ko call kar raha hoon phele import kia tha 
@@ -159,6 +163,7 @@ app.use("/", addproductroutes);
 app.use("/", myordersroutes);
 app.use("/", designroutes);
 app.use("/", adminroutes);
+app.use("/", maheshwarisamajhroutes);
 app.use("/", authRoutes);
 
 app.use(passport.initialize());
