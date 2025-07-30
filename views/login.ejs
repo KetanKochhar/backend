@@ -83,7 +83,7 @@
         </div>
 
         <div id="error-toast" class="error-toast"></div>
-        <div id="inAppBrowserModal" class="hidden">
+        <div id="inAppBrowserModal">
             <div class="modal-box">
                 <h2>⚠ Google Sign-In Not Supported</h2>
                 <p>
@@ -112,24 +112,37 @@
                         errorToast.style.display = 'none';
                     }, 3000);
                 }
-                function isInAppBrowser() {
-                    const ua = navigator.userAgent || navigator.vendor || window.opera;
-                    return (
-                        ua.includes("Instagram") ||
-                        ua.includes("FBAN") || ua.includes("FBAV") || // Facebook
-                        ua.includes("Line/") ||
-                        ua.includes("Snapchat")
-                    );
-                }
+                // Function to check if the browser is an in-app browser (Instagram, Facebook, etc.)
+    function isInAppBrowser() {
+        const ua = navigator.userAgent || navigator.vendor || window.opera;
 
-                document.addEventListener("DOMContentLoaded", function () {
-                    if (isInAppBrowser()) {
-                        const modal = document.getElementById("inAppBrowserModal");
-                        if (modal) {
-                            modal.classList.remove("hidden");
-                        }
-                    }
-                });
+        const inAppIndicators = [
+            "Instagram",       // Instagram app
+            "FBAN", "FBAV",    // Facebook app
+            "Line/",           // Line app
+            "Snapchat",        // Snapchat
+            "Twitter",         // Twitter app
+            "LinkedInApp"      // LinkedIn app
+        ];
+
+        console.log(inAppIndicators.some(indicator => ua.includes(indicator)))
+        
+        return inAppIndicators.some(indicator => ua.includes(indicator));
+    }
+    
+    // On page load, check and show modal if needed
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("inAppBrowserModal");
+        if (isInAppBrowser() && modal) {
+            console.log("chrome")
+            modal.style.display = "flex";
+        } else if (modal) {
+            console.log("Another browser")
+            modal.style.display = "none";
+        }
+    });
+
+
             </script>
 </body>
 
