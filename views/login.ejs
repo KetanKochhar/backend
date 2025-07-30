@@ -90,7 +90,9 @@
                     You're using an in-app browser.<br>
                     Please open this page in Chrome or Safari for best experience.
                 </p>
-                <a href="https://customwear.co.in/login">Open in Browser</a>
+                <a id="openInBrowserLink" class="open-browser-btn">
+                    Open in Browser
+                </a>
             </div>
         </div>
 
@@ -113,34 +115,47 @@
                     }, 3000);
                 }
                 // Function to check if the browser is an in-app browser (Instagram, Facebook, etc.)
-    function isInAppBrowser() {
-        const ua = navigator.userAgent || navigator.vendor || window.opera;
+                function isInAppBrowser() {
+                    const ua = navigator.userAgent || navigator.vendor || window.opera;
 
-        const inAppIndicators = [
-            "Instagram",       // Instagram app
-            "FBAN", "FBAV",    // Facebook app
-            "Line/",           // Line app
-            "Snapchat",        // Snapchat
-            "Twitter",         // Twitter app
-            "LinkedInApp"      // LinkedIn app
-        ];
+                    const inAppIndicators = [
+                        "Instagram",       // Instagram app
+                        "FBAN", "FBAV",    // Facebook app
+                        "Line/",           // Line app
+                        "Snapchat",        // Snapchat
+                        "Twitter",         // Twitter app
+                        "LinkedInApp"      // LinkedIn app
+                    ];
 
-        console.log(inAppIndicators.some(indicator => ua.includes(indicator)))
-        
-        return inAppIndicators.some(indicator => ua.includes(indicator));
-    }
-    
-    // On page load, check and show modal if needed
-    document.addEventListener("DOMContentLoaded", function () {
-        const modal = document.getElementById("inAppBrowserModal");
-        if (isInAppBrowser() && modal) {
-            console.log("chrome")
-            modal.style.display = "flex";
-        } else if (modal) {
-            console.log("Another browser")
-            modal.style.display = "none";
-        }
-    });
+                    console.log(inAppIndicators.some(indicator => ua.includes(indicator)))
+
+                    return inAppIndicators.some(indicator => ua.includes(indicator));
+                }
+
+                // On page load, check and show modal if needed
+                document.addEventListener("DOMContentLoaded", function () {
+                    const modal = document.getElementById("inAppBrowserModal");
+                    if (isInAppBrowser() && modal) {
+                        console.log("chrome")
+                        modal.style.display = "flex";
+                    } else if (modal) {
+                        console.log("Another browser")
+                        modal.style.display = "none";
+                    }
+                });
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    const ua = navigator.userAgent.toLowerCase();
+                    const openLink = document.getElementById("openInBrowserLink");
+
+                    if (ua.includes("android")) {
+                        // Android Chrome intent
+                        openLink.setAttribute("href", "intent://customwear.co.in/login#Intent;scheme=https;package=com.android.chrome;end");
+                    } else {
+                        // iOS and fallback
+                        openLink.setAttribute("href", "https://customwear.co.in/login");
+                    }
+                });
 
 
             </script>
