@@ -68,7 +68,7 @@
                                 <hr><span>OR</span>
                                 <hr>
                             </div>
-                            <a href = "/auth/google" class="GoogleSignin"
+                            <a href="/auth/google" class="GoogleSignin"
                                 style="display: inline-flex; align-items: center; padding: 10px 20px; gap:10px; justify-content: center">
                                 <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"
                                     fill="none" viewBox="0 0 16 16" class=" " stroke="none"
@@ -114,6 +114,18 @@
 
         <div id="error-toast" class="error-toast"></div>
 
+        <div id="inAppBrowserModal" class="hidden">
+            <div class="modal-box">
+                <h2>⚠ Google Sign-In Not Supported</h2>
+                <p>
+                    You're using an in-app browser.<br>
+                    Please open this page in Chrome or Safari for best experience.
+                </p>
+                <a href="https://customwear.co.in/signup">Open in Browser</a>
+            </div>
+        </div>
+
+
 
         <script>
             // Password Match Validation
@@ -156,6 +168,25 @@
                     errorToast.style.display = 'none';
                 }, 5000);
             }
+
+            function isInAppBrowser() {
+                const ua = navigator.userAgent || navigator.vendor || window.opera;
+                return (
+                    ua.includes("Instagram") ||
+                    ua.includes("FBAN") || ua.includes("FBAV") || // Facebook
+                    ua.includes("Line/") ||
+                    ua.includes("Snapchat")
+                );
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                if (isInAppBrowser()) {
+                    const modal = document.getElementById("inAppBrowserModal");
+                    if (modal) {
+                        modal.classList.remove("hidden");
+                    }
+                }
+            });
         </script>
         <%- include('partials/footer', { user: user }) %>
 </body>
