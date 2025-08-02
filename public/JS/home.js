@@ -148,15 +148,49 @@ function addToCart(productId) {
     });
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const skeleton = document.getElementById('product-skeleton');
-    const productGrid = document.getElementById('product-section');
+window.addEventListener('DOMContentLoaded', () => {
+  const skeleton = document.getElementById('product-skeleton');
+  const productGrid = document.getElementById('product-section');
+  const productImages = productGrid.querySelectorAll("img");
 
-    setTimeout(() => {
+  let loadedCount = 0;
+  const totalImages = productImages.length;
+
+  // Show content (called when all images are loaded or timeout reached)
+  const showContent = () => {
+    if (!skeleton.classList.contains('hidden')) {
       skeleton.style.display = 'none';
       productGrid.classList.remove('hidden');
-    }, 1200); // adjust time as needed
-  });
+      skeleton.classList.add('hidden'); // to avoid running multiple times
+    }
+  };
+
+  // Image load handler
+  const handleImageLoad = () => {
+    loadedCount++;
+    if (loadedCount === totalImages) {
+      showContent();
+    }
+  };
+
+  // Attach listeners
+  if (totalImages === 0) {
+    showContent(); // No images? show immediately
+  } else {
+    productImages.forEach(img => {
+      if (img.complete) {
+        handleImageLoad();
+      } else {
+        img.addEventListener('load', handleImageLoad);
+        img.addEventListener('error', handleImageLoad); // fallback
+      }
+    });
+  }
+
+  // ⏳ Fallback timeout in case some images never load
+  setTimeout(showContent, 3000); // max wait = 3 seconds
+});
+
 
 // // function updateFilterBarHeight() {
 // //     if (window.innerWidth > 768) {
