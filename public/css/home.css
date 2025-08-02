@@ -900,7 +900,7 @@ body {
     .product-grid,
     .skeleton-grid {
         padding: 0 10px 0 10px;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 0fr));
+        grid-template-columns: repeat(auto-fill, minmax(170px, 0fr));
         gap: 5px;
     }
 
