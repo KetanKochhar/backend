@@ -148,47 +148,38 @@ function addToCart(productId) {
     });
   }
 
-window.addEventListener('DOMContentLoaded', () => {
-  const skeleton = document.getElementById('product-skeleton');
-  const productGrid = document.getElementById('product-section');
-  const productImages = productGrid.querySelectorAll("img");
+document.addEventListener('DOMContentLoaded', () => {
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const wrapper = entry.target;
+        const img = wrapper.querySelector('.lazy-image');
+        const card = wrapper.querySelector('.product-card');
+        const skeleton = wrapper.querySelector('.skeleton-card');
 
-  let loadedCount = 0;
-  const totalImages = productImages.length;
+        // Load image
+        img.src = img.dataset.src;
 
-  // Show content (called when all images are loaded or timeout reached)
-  const showContent = () => {
-    if (!skeleton.classList.contains('hidden')) {
-      skeleton.style.display = 'none';
-      productGrid.classList.remove('hidden');
-      skeleton.classList.add('hidden'); // to avoid running multiple times
-    }
-  };
+        img.onload = () => {
+          skeleton.style.display = 'none';
+          card.classList.remove('hidden');
+        };
 
-  // Image load handler
-  const handleImageLoad = () => {
-    loadedCount++;
-    if (loadedCount === totalImages) {
-      showContent();
-    }
-  };
+        img.onerror = () => {
+          skeleton.style.display = 'none';
+          card.classList.remove('hidden');
+        };
 
-  // Attach listeners
-  if (totalImages === 0) {
-    showContent(); // No images? show immediately
-  } else {
-    productImages.forEach(img => {
-      if (img.complete) {
-        handleImageLoad();
-      } else {
-        img.addEventListener('load', handleImageLoad);
-        img.addEventListener('error', handleImageLoad); // fallback
+        obs.unobserve(wrapper); // Load only once
       }
     });
-  }
+  }, {
+    threshold: 0.2
+  });
 
-  // ⏳ Fallback timeout in case some images never load
-  setTimeout(showContent, 3000); // max wait = 3 seconds
+  document.querySelectorAll('.product-card-wrapper').forEach(wrapper => {
+    observer.observe(wrapper);
+  });
 });
 
 

@@ -428,6 +428,10 @@ body {
     gap: 10px;
 }
 
+.product-card-wrapper {
+  position: relative;
+}
+
 /* Product card */
 .product-card,
 .skeleton-card {
@@ -435,6 +439,15 @@ body {
     border-radius: 5px;
     position: relative;
     background: #fff;
+}
+
+.skeleton-card {
+    
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.product-card.hidden {
+  display: none;
 }
 
 .product-card img,
