@@ -422,6 +422,7 @@ body {
 /* Product grid */
 .product-grid,
 .skeleton-grid {
+    justify-content: center;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 0fr));
     gap: 10px;
