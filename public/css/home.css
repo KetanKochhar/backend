@@ -899,6 +899,7 @@ body {
 
     .product-grid,
     .skeleton-grid {
+        justify-content: center;
         padding: 0 5px 0 5px;
         grid-template-columns: repeat(auto-fill, minmax(170px, 0fr));
         gap: 5px;
@@ -916,6 +917,7 @@ body {
 @media (max-width: 320px) {
     .product-grid,
     .skeleton-grid {
+        justify-content: center;
         padding: 0 2px 0 2px;
         grid-template-columns: repeat(auto-fill, minmax(149px, 0fr));
         gap: 2px;
