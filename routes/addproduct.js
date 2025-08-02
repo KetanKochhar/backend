@@ -5,10 +5,10 @@ const { name } = require('ejs');
 const router = express.Router();
 
 
-router.get("/shop", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const products = await dbconnection.getAllProducts(); // fixed
-    res.render("Shop", { user: req.session.user, products });
+    res.render("home", { user: req.session.user, products });
   } catch (err) {
     console.error("Error fetching products:", err);
     res.status(500).send("Something went wrong.");

@@ -39,10 +39,10 @@ app.use(session({
     }
 }));
 
-app.get("/", (request, response) => {
-    // console.log(request.path);
-    response.render("home", { user: request.session.user });
-});
+// app.get("/", (request, response) => {
+//     // console.log(request.path);
+//     response.render("home", { user: request.session.user });
+// });
 
 
 app.get("/privacy-policy", (request, response) => {

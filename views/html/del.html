@@ -1,71 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Simplify Fabric.js Textbox JSON</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clothes for Men - CustomWear</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* General Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body Styling */
+body {
+  background-color: #fff;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #777;
+}
+.breadcrumb a {
+  color: #333;
+  text-decoration: none;
+}
+
+/* Container */
+.container {
+  display: flex;
+  gap: 40px;
+}
+
+/* Sidebar Filters */
+.filters {
+  width: 220px;
+  border-right: 1px solid #e0e0e0;
+  padding-right: 20px;
+}
+.filters h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+.filters details {
+  margin-bottom: 20px;
+}
+.filters summary {
+  font-weight: bold;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.filters label {
+  display: block;
+  margin: 5px 0;
+  font-size: 14px;
+}
+.filters .show-link {
+  color: #028a0f;
+  font-size: 13px;
+  text-decoration: underline;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+/* Products Section */
+.products {
+  flex: 1;
+}
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.products-header h2 {
+  font-size: 22px;
+}
+.products-header span {
+  font-weight: normal;
+  color: #888;
+  font-size: 16px;
+}
+.sort-btn {
+  border: 1px solid #ccc;
+  background-color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* Product Card */
+.product-card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 12px;
+  background-color: #fff;
+  position: relative;
+  transition: box-shadow 0.3s ease;
+}
+.product-card:hover {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+.product-card p {
+  margin: 8px 0;
+  font-size: 14px;
+}
+.product-card del {
+  color: #999;
+  margin-left: 5px;
+}
+.product-card .discount {
+  color: green;
+  font-weight: bold;
+  margin-left: 5px;
+}
+.product-card .fabric {
+  font-size: 12px;
+  color: #555;
+  background-color: #f1f1f1;
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 3px;
+}
+
+/* Badge */
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #00c853;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 3px;
+}
+
+  </style>
 </head>
-
 <body>
-    <h2>Fabric.js Textbox JSON Simplifier</h2>
+  <nav class="breadcrumb">
+    <a href="#">Home</a> &gt;
+    <span>Men Clothing</span>
+  </nav>
 
-    <textarea id="inputJson" rows="20" cols="100" placeholder="Paste full Fabric.js JSON here"></textarea>
-    <br><br>
-    <button onclick="simplifyJson()">Simplify JSON</button>
-    <br><br>
-    <h3>Output:</h3>
-    <pre id="outputJson" style="background:#f4f4f4; padding:10px;"></pre>
+  <main class="container">
+    <aside class="filters">
+      <h3>Filters</h3>
 
-    <script>
-        function simplifyJson() {
-            try {
-                const input = document.getElementById('inputJson').value;
-                const original = JSON.parse(input);
+      <details open>
+        <summary>Category</summary>
+        <label><input type="checkbox"> T-Shirt</label>
+        <label><input type="checkbox"> Hoodies</label>
+        <label><input type="checkbox"> Joggers</label>
+        <label><input type="checkbox"> Sweatshirt</label>
+        <label><input type="checkbox"> Pant</label>
+        <a href="#" class="show-link">Show</a>
+      </details>
 
-                const simplified = {
-                    type: "textbox",
-                    version: original.version,
-                    originX: original.originX,
-                    originY: original.originY,
-                    left: 250, // new fixed position
-                    top: 150,
-                    width: original.width,
-                    height: original.height,
-                    fill: original.fill,
-                    fontFamily: original.fontFamily,
-                    fontSize: original.fontSize,
-                    text: original.text,
-                    textAlign: original.textAlign,
-                    clipPath: {
-                        type: "group",
-                        originX: original.clipPath.originX,
-                        originY: original.clipPath.originY,
-                        left: 250, // match textbox
-                        top: 150,
-                        width: original.clipPath.width,
-                        height: original.clipPath.height,
-                        objects: [
-                            {
-                                type: "rect",
-                                originX: "center",
-                                originY: "center",
-                                left: 0,
-                                top: 0,
-                                width: original.clipPath.objects[0].width,
-                                height: original.clipPath.objects[0].height,
-                                fill: original.clipPath.objects[0].fill
-                            }
-                        ],
-                        absolutePositioned: true
-                    }
-                };
+      <details open>
+        <summary>Sizes</summary>
+        <label><input type="checkbox"> XS</label>
+        <label><input type="checkbox"> S</label>
+        <label><input type="checkbox"> M</label>
+        <label><input type="checkbox"> L</label>
+        <label><input type="checkbox"> XL</label>
+        <a href="#" class="show-link">Show</a>
+      </details>
 
-                document.getElementById('outputJson').textContent = JSON.stringify(simplified, null, 2);
-            } catch (e) {
-                alert("Invalid JSON input.");
-            }
-        }
-    </script>
+      <details open>
+        <summary>Brand</summary>
+        <label><input type="checkbox"> Bewakoof&reg;</label>
+        <label><input type="checkbox"> Bewakoof Air&reg; 1.0</label>
+      </details>
+    </aside>
+
+    <section class="products">
+      <div class="products-header">
+        <h2>Clothes for Men <span>3217 Products</span></h2>
+        <button class="sort-btn">Sort by: <strong>Popularity</strong> <i class="fas fa-chevron-down"></i></button>
+      </div>
+
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="badge">BUY 2 FOR 999</div>
+          <img src="/images/brown-beast.png" alt="Brown Beast T-shirt">
+          <p><strong>Bewakoof&reg;</strong></p>
+          <p>Men's Brown Beast Within Graphic Printed Oversized</p>
+          <p><strong>₹549</strong> <del>₹1,299</del> <span class="discount">57% off</span></p>
+          <p class="fabric">PREMIUM DENSE FABRIC</p>
+        </div>
+
+        <div class="product-card">
+          <div class="badge">BUY 2 FOR 999</div>
+          <img src="/images/black-panther.png" alt="Black Panther T-shirt">
+          <p><strong>Bewakoof X Marvel</strong></p>
+          <p>Men's Green Wakanda Forever Graphic Printed Oversized</p>
+          <p><strong>₹699</strong> <del>₹1,449</del> <span class="discount">51% off</span></p>
+          <p class="fabric">PREMIUM DENSE FABRIC</p>
+        </div>
+
+        <div class="product-card">
+          <div class="badge">BUY 3 FOR 999</div>
+          <img src="/images/ironman.png" alt="Ironman T-shirt">
+          <p><strong>Bewakoof X Marvel</strong></p>
+          <p>Men's Black Iron Man Of War Graphic Printed T-shirt</p>
+          <p><strong>₹449</strong> <del>₹1,099</del> <span class="discount">59% off</span></p>
+          <p class="fabric">100% COTTON</p>
+        </div>
+      </div>
+    </section>
+  </main>
 </body>
-
 </html>
