@@ -157,6 +157,20 @@
                     }
                 });
 
+                document.addEventListener("DOMContentLoaded", function () {
+                    const modal = document.getElementById("inAppBrowserModal");
+                    const modalBox = modal.querySelector(".modal-box");
+
+                    if (modal) {
+                        // Close modal when clicking outside the modal box
+                        modal.addEventListener("click", function (event) {
+                            if (!modalBox.contains(event.target)) {
+                                modal.style.display = "none";
+                            }
+                        });
+                    }
+                });
+
 
             </script>
 </body>
