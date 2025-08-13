@@ -934,10 +934,8 @@ body {
     .transparency-panel {
         transform: scale(0.7);
     }
-
     .toast {
-        left: 30vw;
-    }
+    left: 30vw;
 }
 
 @media (max-width: 520px) {
@@ -1095,4 +1093,5 @@ body {
 
 canvas {
     touch-action: none;
+}
 }

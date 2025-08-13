@@ -1702,7 +1702,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const maxLogoWidth = 4, maxLogoHeight = 4;
         const maxMediumWidth = 8, maxMediumHeight = 11;
         const maxLargeWidth = 11, maxLargeHeight = 16;
-x
+
         if ((width <= maxLogoWidth && height <= maxLogoHeight) || (width <= maxLogoHeight && height <= maxLogoWidth)) {
             return 100;
         } else if ((width <= maxMediumWidth && height <= maxMediumHeight) || (width <= maxMediumHeight && height <= maxMediumWidth)) {
