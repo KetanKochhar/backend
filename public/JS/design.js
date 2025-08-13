@@ -1160,7 +1160,7 @@ document.addEventListener('DOMContentLoaded', function () {
             hoverCursor: 'pointer',
             opacity: 1,
             customType: 'text',
-            price: 190
+            price: 150
         });
 
         canvas.add(textObj);
@@ -1169,7 +1169,7 @@ document.addEventListener('DOMContentLoaded', function () {
         canvas.renderAll();
         textObj.enterEditing();
 
-        totalPrice += 190; // 💰 Add default price to total
+        totalPrice += 150; // 💰 Add default price to total
         updateTotalPriceDisplay();
 
         updateGraphicSizeDisplay(textObj); // 👈 Optional: to show size label and recalculate category
@@ -1702,7 +1702,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const maxLogoWidth = 4, maxLogoHeight = 4;
         const maxMediumWidth = 8, maxMediumHeight = 11;
         const maxLargeWidth = 11, maxLargeHeight = 16;
-
+x
         if ((width <= maxLogoWidth && height <= maxLogoHeight) || (width <= maxLogoHeight && height <= maxLogoWidth)) {
             return 100;
         } else if ((width <= maxMediumWidth && height <= maxMediumHeight) || (width <= maxMediumHeight && height <= maxMediumWidth)) {

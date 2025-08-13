@@ -223,8 +223,7 @@ body {
 }
 
 /* Bottom icon */
-.bottom-icon,
-.price {
+.bottom-icon {
     cursor: pointer;
     position: relative;
     padding: 10px;
@@ -884,8 +883,7 @@ body {
         align-items: flex-end;
     }
 
-    .bottom-icon,
-    .price {
+    .bottom-icon {
         padding: 0.5rem;
         /* same as p-2 */
         background-color: white;
@@ -936,8 +934,10 @@ body {
     .transparency-panel {
         transform: scale(0.7);
     }
+
     .toast {
-    left: 30vw;
+        left: 30vw;
+    }
 }
 
 @media (max-width: 520px) {
@@ -1095,8 +1095,4 @@ body {
 
 canvas {
     touch-action: none;
-}
-
-.price {
-    cursor: auto;
 }
